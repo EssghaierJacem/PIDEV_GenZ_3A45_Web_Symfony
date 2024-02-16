@@ -1,0 +1,38 @@
+{% extends 'frontbase.html.twig' %}
+
+{% block title %}Destinations{% endblock %}
+
+{% block body %}
+
+    <section class="breadcrumbs">
+            <div class="container">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2>List des destinations</h2>
+                    <ol>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="portfolio.html">Destinations</a></li>
+
+                    </ol>
+                </div>
+            </div>
+        </section>
+         <section id="portfolio-details" class="portfolio-details">
+         <div class="container">
+       <div class="row">
+           {% for destination in destinations %}
+               <div class="col-md-4 mb-4">
+                   <div class="card">
+                       <div class="card-body">
+                           <h5 class="card-title">{{ destination.getPays() }}</h5>
+                           <h6 class="card-subtitle mb-2 text-muted">{{ destination.getVille() }}</h6>
+                           <p class="card-text">{{ destination.getDescription() }}</p>
+                           <a href="{{ path('app_destination_details_show', {'id': destination.getId()}) }}" class="btn btn-primary">Show Details</a>
+                       </div>
+                   </div>
+               </div>
+           {% endfor %}
+       </div>
+       </div>
+        </section>
+
+{% endblock %}

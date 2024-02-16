@@ -1,0 +1,47 @@
+
+{% extends 'backbase.html.twig' %}
+
+{% block title %}Edit Destination{% endblock %}
+
+{% block body %}
+    <h1>Edit Destination</h1>
+    {{ form_start(form) }}
+    <div class="form-group">
+        {{ form_label(form.pays) }}
+        {{ form_widget(form.pays, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.ville) }}
+        {{ form_widget(form.ville, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.description) }}
+        {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.attractions) }}
+        {{ form_widget(form.attractions, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.accomodation) }}
+        {{ form_widget(form.accomodation, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.devise) }}
+        {{ form_widget(form.devise, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.multimedia) }}
+        {{ form_widget(form.multimedia, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.accessibilite) }}
+        {{ form_widget(form.accessibilite, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.cuisine_locale) }}
+        {{ form_widget(form.cuisine_locale, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    {{ form_end(form) }}
+{% endblock %}

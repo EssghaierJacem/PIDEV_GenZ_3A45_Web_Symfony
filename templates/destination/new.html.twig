@@ -1,0 +1,29 @@
+{% extends 'backbase.html.twig' %}
+
+{% block title %}Create a new Destination{% endblock %}
+
+{% block body %}
+   <div class="midde_cont">
+                     <div class="container-fluid">
+                        <div class="row column_title">
+                           <div class="col-md-12">
+                              <div class="page_title">
+                                 <h2>Create A new destination</h2>
+                              </div>
+                           </div>
+                   </div>
+
+    {{ form_start(form) }}
+    {{ form_row(form.pays) }}
+    {{ form_row(form.ville) }}
+    {{ form_row(form.description) }}
+    {{ form_row(form.attractions) }}
+    {{ form_row(form.accomodation) }}
+    {{ form_row(form.devise) }}
+    {{ form_row(form.multimedia) }}
+    {{ form_row(form.accessibilite) }}
+    {{ form_row(form.cuisine_locale) }}
+
+    <button type="submit" class="btn btn-primary">Create</button>
+    {{ form_end(form) }}
+{% endblock %}

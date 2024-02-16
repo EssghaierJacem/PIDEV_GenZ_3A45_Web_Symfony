@@ -1,0 +1,127 @@
+{% extends 'backbase.html.twig' %}
+
+          {% block javascripts %}
+			<script src="{{ asset('BackVendor/js/jquery.min.js') }}"></script>
+			<script src="{{ asset('BackVendor/js/popper.min.js') }}"></script>
+			<script src="{{ asset('BackVendor/js/bootstrap.min.js') }}"></script>
+			<script src="{{ asset('BackVendor/js/animate.js') }}"></script>
+            <script src="{{ asset('BackVendor/js/bootstrap-select.js') }}"></script>
+            <script src="{{ asset('BackVendor/js/owl.carousel.js') }}"></script>
+            <script src="{{ asset('BackVendor/js/Chart.min.js') }}"></script>
+            <script src="{{ asset('BackVendor/js/utils.js') }}"></script>
+            <script src="{{ asset('BackVendor/js/analyser.js') }}"></script>
+			<script src="{{ asset('BackVendor/js/perfect-scrollbar.min.js') }}"></script>
+			<script src="{{ asset('BackVendor/js/custom.js') }}"></script>
+            <script src="{{ asset('BackVendor/js/chart_jacem_vol.js') }}"></script>
+          {% endblock %}
+
+{% block title %}Dashboard - Vol{% endblock %}
+
+{% block body %}
+
+     <div class="midde_cont">
+        <div class="container-fluid">
+         <div class="row column_title">
+           <div class="col-md-12">
+               <div class="page_title">
+                   <h2>Tableau de bord - Vol</h2>
+               </div>
+            </div>
+      </div>
+      <div class="row column1">
+                              <div class="col-md-6 col-lg-3">
+                                 <div class="full counter_section margin_bottom_30">
+                                    <div class="couter_icon">
+                                       <div>
+                                          <i class="fa fa-user yellow_color"></i>
+                                       </div>
+                                    </div>
+                                    <div class="counter_no">
+                                       <div>
+                                          <p class="total_no">{{ userCount }}</p>
+                                          <p class="head_couter">Clients</p>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="col-md-6 col-lg-3">
+                                <!-- Average Duration Calculation -->
+                                    {% set totalDuration = 0 %}
+                                    {% set volCount = vols|length %}
+                                           {% for vol in vols %}
+                                            {% set totalDuration = totalDuration + vol.getDureeVol() %}
+                                           {% endfor %}
+                                        {% if volCount > 0 %}
+                                            {% set averageDuration = totalDuration / volCount %}
+                                        {% else %}
+                                            {% set averageDuration = 0 %}
+                                        {% endif %}
+                                        {% set averageDuration = averageDuration|number_format(0, '.', '') %}
+                                 <div class="full counter_section margin_bottom_30">
+                                    <div class="couter_icon">
+                                       <div>
+                                          <i class="fa fa-cloud-download blue1_color"></i>
+                                       </div>
+                                    </div>
+                                    <div class="counter_no">
+                                       <div>
+                                           <p class="total_no">{{ averageDuration }}</p>
+                                          <p class="head_couter">Nombre de vols</p>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="col-md-6 col-lg-3">
+                                 <div class="full counter_section margin_bottom_30">
+                                    <div class="couter_icon">
+                                       <div>
+                                          <i class="fa fa-clock-o green_color"></i>
+                                       </div>
+                                    </div>
+                                    <div class="counter_no">
+                                       <div>
+                                          <p class="total_no">{{ volCount }}</p>
+                                          <p class="head_couter">Temps de vol moyen</p>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="col-md-6 col-lg-3">
+                                 <div class="full counter_section margin_bottom_30">
+                                    <div class="couter_icon">
+                                       <div>
+                                          <i class="fa fa-comments-o red_color"></i>
+                                       </div>
+                                    </div>
+                                    <div class="counter_no">
+                                       <div>
+                                          <p class="total_no">{{ avisCount }}</p>
+                                          <p class="head_couter">Avis</p>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                     <div class="row column2 graph margin_bottom_30">
+                        <div class="col-md-l2 col-lg-12">
+                           <div class="white_shd full">
+                              <div class="full graph_head">
+                                 <div class="heading1 margin_0">
+                                    <h2>Compagnies Aeriennes</h2>
+                                 </div>
+                              </div>
+                              <div class="full graph_revenue">
+                                 <div class="row">
+                                    <div class="col-md-12">
+                                       <div class="content">
+                                          <div class="area_chart">
+                                             <canvas height="120" id="canvas"></canvas>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+{% endblock %}

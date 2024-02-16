@@ -1,0 +1,93 @@
+{% extends 'backbase.html.twig' %}
+
+{% block title %}Vol Details{% endblock %}
+
+{% block body %}
+     <div class="midde_cont">
+                      <div class="container-fluid">
+                         <div class="row column_title">
+                            <div class="col-md-12">
+                               <div class="page_title">
+                                  <h2>Vol Details </h2>
+                               </div>
+                            </div>
+                    </div>
+     <div class="col-md-12">
+     <div class="white_shd full margin_bottom_15">
+     <div class="full graph_head">
+     <div class="heading1 margin_0">
+           <h2>Détails Vol : {{vol.numVol}}</h2>
+     </div>
+     </div>
+
+    <div class="full progress_bar_inner">
+         <div class="row">
+            <div class="col-md-8">
+               <div class="msg_list_main">
+                   <ul class="msg_list">
+                    <li>
+                      <span>
+                      <span class="name_user">ID</span>
+                      <span class="msg_user">{{ vol.id }}</span>
+                      </span>
+                    </li>
+                    <li>
+                      <span>
+                      <span class="name_user">Compagnie Aerienne</span>
+                      <span class="msg_user">{{ vol.compagnieA }}</span>
+                      </span>
+                    </li>
+                    <li>
+                      <span>
+                      <span class="name_user">Num Vol</span>
+                      <span class="msg_user">{{ vol.numVol }}</span>
+                      </span>
+                    </li>
+                    <li>
+                      <span>
+                      <span class="name_user">Aeroport du Départ</span>
+                      <span class="msg_user">{{ vol.aeroportDepart }}</span>
+                      </span>
+                    </li>
+                    <li>
+                      <span>
+                      <span class="name_user">Aeroport d'Arrivé</span>
+                      <span class="msg_user">{{ vol.aeroportArrivee }}</span>
+                      </span>
+                    </li>
+                    <li>
+                      <span>
+                      <span class="name_user">Date Départ</span>
+                      <span class="msg_user">{{ vol.dateDepart|date('Y-m-d') }}</span>
+                      </span>
+                    </li>
+                    <li>
+                      <span>
+                      <span class="name_user">Date Arrivé</span>
+                      <span class="msg_user">{{ vol.dateArrivee|date('Y-m-d') }}</span>
+                      </span>
+                    </li>
+                    <li>
+                      <span>
+                      <span class="name_user">Durée vols</span>
+                      <span class="msg_user">{{ vol.dureeVol }} mins</span>
+                      </span>
+                    </li>
+                    <li>
+                      <span>
+                      <span class="name_user">Tarif</span>
+                      <span class="msg_user">{{ vol.tarif }} DT</span>
+                      </span>
+                     </li>
+                    </ul>
+               </div>
+            </div>
+         </div>
+    </div>
+    </div>
+    </div>
+
+
+
+
+{% endblock %}

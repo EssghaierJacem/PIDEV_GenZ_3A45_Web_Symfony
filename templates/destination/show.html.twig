@@ -1,0 +1,39 @@
+{% extends 'backbase.html.twig' %}
+
+{% block title %}Destination Details{% endblock %}
+
+{% block body %}
+                    <div class="midde_cont">
+                      <div class="container-fluid">
+                         <div class="row column_title">
+                            <div class="col-md-12">
+                               <div class="page_title">
+                                  <h2>Destination Details</h2>
+                               </div>
+                            </div>
+                    </div>
+    <dl>
+        <dt>ID:</dt>
+        <dd>{{ destination.id }}</dd>
+        <dt>Country:</dt>
+        <dd>{{ destination.pays }}</dd>
+        <dt>City:</dt>
+        <dd>{{ destination.ville }}</dd>
+        <dt>Description:</dt>
+        <dd>{{ destination.description }}</dd>
+        <dt>Attractions:</dt>
+        <dd>{{ destination.attractions }}</dd>
+        <dt>Accommodation:</dt>
+        <dd>{{ destination.accomodation }}</dd>
+        <dt>Currency:</dt>
+        <dd>{{ destination.devise }}</dd>
+        <dt>Multimedia:</dt>
+        <dd>{{ destination.multimedia }}</dd>
+        <dt>Accessibility:</dt>
+        <dd>{{ destination.accessibilite }}</dd>
+        <dt>Local Cuisine:</dt>
+        <dd>{{ destination.cuisineLocale }}</dd>
+
+        <!-- Add more details as needed -->
+    </dl>
+{% endblock %}

@@ -1,0 +1,111 @@
+{% extends 'backbase.html.twig' %}
+
+{% block title %}Edit Vol{% endblock %}
+
+{% block body %}
+            <div class="middle_cont">
+                <div class="container-fluid">
+                    <div class="row column_title">
+                        <div class="col-md-12">
+                            <div class="page_title">
+                                <h2>Modifier Vol</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="white_shd full margin_bottom_30">
+                      <div class="full graph_head">
+                       <div class="heading1 margin_0">
+                            <h2>Vol ID : {{ vol.id }}</h2>
+                       </div>
+                    </div>
+
+                        {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+                        <div class="row" style="margin-left: 10px; margin-top: 10px;">
+                            <!-- Left side -->
+                            <div class="col-sm-6" style="margin-top: 15px;">
+                                <!-- Compagnie -->
+                                <div class="form-group">
+                                    {{ form_label(form.compagnieA, 'Compagnie A', {'label_attr': {'class': 'control-label col-sm-3'}}) }}
+                                    <div class="col-sm-9">
+                                        {{ form_widget(form.compagnieA, {'attr': {'class': 'form-control'}}) }}
+                                    </div>
+                                </div>
+                                <!-- Aeroport Depart -->
+                                <div class="form-group">
+                                    {{ form_label(form.aeroportDepart, 'Aéroport de départ', {'label_attr': {'class': 'control-label col-sm-4'}}) }}
+                                    <div class="col-sm-9">
+                                        {{ form_widget(form.aeroportDepart, {'attr': {'class': 'form-control'}}) }}
+                                    </div>
+                                </div>
+                                <!-- Date Depart -->
+                                <div class="form-group">
+                                    {{ form_label(form.dateDepart, 'Date de départ', {'label_attr': {'class': 'control-label col-sm-4'}}) }}
+                                    <div class="col-sm-9">
+                                        {{ form_widget(form.dateDepart, {'attr': {'class': 'form-control'}}) }}
+                                    </div>
+                                </div>
+                                <!-- Duree Vol -->
+                                <div class="form-group">
+                                    {{ form_label(form.duree_vol, 'Durée du vol', {'label_attr': {'class': 'control-label col-sm-3'}}) }}
+                                    <div class="col-sm-9">
+                                        {{ form_widget(form.duree_vol, {'attr': {'class': 'form-control'}}) }}
+                                    </div>
+                                </div>
+                                <!-- Destination -->
+                                <div class="form-group">
+                                    {{ form_label(form.destination, 'Destination', {'label_attr': {'class': 'control-label col-sm-3'}}) }}
+                                    <div class="col-sm-9">
+                                        {{ form_widget(form.destination, {'attr': {'class': 'form-control'}}) }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right side -->
+                            <div class="col-sm-6" style="margin-top: 15px;">
+                                <!-- Num Vol -->
+                                <div class="form-group">
+                                    {{ form_label(form.num_vol, 'Numéro de vol', {'label_attr': {'class': 'control-label col-sm-3'}}) }}
+                                    <div class="col-sm-9">
+                                        {{ form_widget(form.num_vol, {'attr': {'class': 'form-control'}}) }}
+                                    </div>
+                                </div>
+                                <!-- Aeroport Arrivee -->
+                                <div class="form-group">
+                                    {{ form_label(form.aeroportArrivee, 'Aéroport d\'arrivée', {'label_attr': {'class': 'control-label col-sm-4'}}) }}
+                                    <div class="col-sm-9">
+                                        {{ form_widget(form.aeroportArrivee, {'attr': {'class': 'form-control'}}) }}
+                                    </div>
+                                </div>
+                                <!-- Date Arrivee -->
+                                <div class="form-group">
+                                    {{ form_label(form.dateArrivee, 'Date d\'arrivée', {'label_attr': {'class': 'control-label col-sm-4'}}) }}
+                                    <div class="col-sm-9">
+                                        {{ form_widget(form.dateArrivee, {'attr': {'class': 'form-control'}}) }}
+                                    </div>
+                                </div>
+                                <!-- Tarif -->
+                                <div class="form-group">
+                                    {{ form_label(form.tarif, 'Tarif', {'label_attr': {'class': 'control-label col-sm-3'}}) }}
+                                    <div class="col-sm-9">
+                                        {{ form_widget(form.tarif, {'attr': {'class': 'form-control'}}) }}
+                                    </div>
+                                </div>
+                                <div class="form-group" style="margin-top: 40px;">
+                                    <div class="col-sm-9">
+                                         <button type="submit" class="btn btn-primary mx-auto d-block">Save changes</button>
+                                     </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

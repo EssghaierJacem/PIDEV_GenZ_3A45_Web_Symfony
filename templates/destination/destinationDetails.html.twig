@@ -1,0 +1,11 @@
+{% extends 'frontbase.html.twig' %}
+
+{% block title %}Destination Details{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>{{ destination.getPays() }}</h1>
+        <h2>{{ destination.getVille() }}</h2>
+        <p>{{ destination.getDescription() }}</p>
+    </div>
+{% endblock %}
