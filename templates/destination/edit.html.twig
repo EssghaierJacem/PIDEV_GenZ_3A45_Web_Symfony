@@ -1,47 +1,111 @@
-
 {% extends 'backbase.html.twig' %}
 
-{% block title %}Edit Destination{% endblock %}
+{% block title %}Modifier Destination{% endblock %}
 
 {% block body %}
-    <h1>Edit Destination</h1>
-    {{ form_start(form) }}
-    <div class="form-group">
-        {{ form_label(form.pays) }}
-        {{ form_widget(form.pays, {'attr': {'class': 'form-control'}}) }}
+    <div class="middle_cont">
+        <div class="container-fluid">
+            <div class="row column_title">
+                <div class="col-md-12">
+                    <div class="page_title">
+                        <h2>Modifier Destination</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="white_shd full margin_bottom_30">
+                    <div class="full graph_head">
+                        <div class="heading1 margin_0">
+                            <h2>Destination ID : {{ destination.id }}</h2>
+                        </div>
+                    </div>
+
+                    {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+                    <div class="row" style="margin-left: 10px; margin-top: 10px;">
+                        <!-- Left side -->
+                        <div class="col-sm-6" style="margin-top: 15px;">
+                            <!-- Pays -->
+                            <div class="form-group">
+                                {{ form_label(form.pays, 'Pays', {'label_attr': {'class': 'control-label col-sm-3'}}) }}
+                                <div class="col-sm-9">
+                                    {{ form_widget(form.pays, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                            <!-- Ville -->
+                            <div class="form-group">
+                                {{ form_label(form.ville, 'Ville', {'label_attr': {'class': 'control-label col-sm-3'}}) }}
+                                <div class="col-sm-9">
+                                    {{ form_widget(form.ville, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                            <!-- Description -->
+                            <div class="form-group">
+                                {{ form_label(form.description, 'Description', {'label_attr': {'class': 'control-label col-sm-3'}}) }}
+                                <div class="col-sm-9">
+                                    {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                            <!-- Attractions -->
+                            <div class="form-group">
+                                {{ form_label(form.attractions, 'Attractions', {'label_attr': {'class': 'control-label col-sm-3'}}) }}
+                                <div class="col-sm-9">
+                                    {{ form_widget(form.attractions, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                            <!-- Local Cuisine -->
+                            <div class="form-group">
+                                {{ form_label(form.cuisine_locale, 'Local Cuisine', {'label_attr': {'class': 'control-label col-sm-3'}}) }}
+                                <div class="col-sm-9">
+                                    {{ form_widget(form.cuisine_locale, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right side -->
+                        <div class="col-sm-6" style="margin-top: 15px;">
+                            <!-- Accommodation -->
+                            <div class="form-group">
+                                {{ form_label(form.accomodation, 'Accommodation', {'label_attr': {'class': 'control-label col-sm-3'}}) }}
+                                <div class="col-sm-9">
+                                    {{ form_widget(form.accomodation, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                            <!-- Devise -->
+                            <div class="form-group">
+                                {{ form_label(form.devise, 'Devise', {'label_attr': {'class': 'control-label col-sm-3'}}) }}
+                                <div class="col-sm-9">
+                                    {{ form_widget(form.devise, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                            <!-- Multimedia -->
+                            <div class="form-group">
+                                {{ form_label(form.multimedia, 'Multimedia', {'label_attr': {'class': 'control-label col-sm-3'}}) }}
+                                <div class="col-sm-9">
+                                    {{ form_widget(form.multimedia, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                            <!-- Accessibility -->
+                            <div class="form-group">
+                                {{ form_label(form.accessibilite, 'Accessibility', {'label_attr': {'class': 'control-label col-sm-3'}}) }}
+                                <div class="col-sm-9">
+                                    {{ form_widget(form.accessibilite, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                            <!-- Save Button -->
+                            <div class="form-group" style="margin-top: 40px;">
+                                <div class="col-sm-9">
+                                    <button type="submit" class="btn btn-primary mx-auto d-block">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        {{ form_label(form.ville) }}
-        {{ form_widget(form.ville, {'attr': {'class': 'form-control'}}) }}
-    </div>
-    <div class="form-group">
-        {{ form_label(form.description) }}
-        {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
-    </div>
-    <div class="form-group">
-        {{ form_label(form.attractions) }}
-        {{ form_widget(form.attractions, {'attr': {'class': 'form-control'}}) }}
-    </div>
-    <div class="form-group">
-        {{ form_label(form.accomodation) }}
-        {{ form_widget(form.accomodation, {'attr': {'class': 'form-control'}}) }}
-    </div>
-    <div class="form-group">
-        {{ form_label(form.devise) }}
-        {{ form_widget(form.devise, {'attr': {'class': 'form-control'}}) }}
-    </div>
-    <div class="form-group">
-        {{ form_label(form.multimedia) }}
-        {{ form_widget(form.multimedia, {'attr': {'class': 'form-control'}}) }}
-    </div>
-    <div class="form-group">
-        {{ form_label(form.accessibilite) }}
-        {{ form_widget(form.accessibilite, {'attr': {'class': 'form-control'}}) }}
-    </div>
-    <div class="form-group">
-        {{ form_label(form.cuisine_locale) }}
-        {{ form_widget(form.cuisine_locale, {'attr': {'class': 'form-control'}}) }}
-    </div>
-    <button type="submit" class="btn btn-primary">Save</button>
-    {{ form_end(form) }}
+</div>
 {% endblock %}

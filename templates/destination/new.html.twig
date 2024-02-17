@@ -1,29 +1,76 @@
 {% extends 'backbase.html.twig' %}
 
-{% block title %}Create a new Destination{% endblock %}
+{% block title %}New Destination{% endblock %}
 
 {% block body %}
-   <div class="midde_cont">
-                     <div class="container-fluid">
-                        <div class="row column_title">
-                           <div class="col-md-12">
-                              <div class="page_title">
-                                 <h2>Create A new destination</h2>
-                              </div>
-                           </div>
-                   </div>
-
-    {{ form_start(form) }}
-    {{ form_row(form.pays) }}
-    {{ form_row(form.ville) }}
-    {{ form_row(form.description) }}
-    {{ form_row(form.attractions) }}
-    {{ form_row(form.accomodation) }}
-    {{ form_row(form.devise) }}
-    {{ form_row(form.multimedia) }}
-    {{ form_row(form.accessibilite) }}
-    {{ form_row(form.cuisine_locale) }}
-
-    <button type="submit" class="btn btn-primary">Create</button>
-    {{ form_end(form) }}
+    <div class="midde_cont">
+        <div class="container-fluid">
+            <div class="row column_title">
+                <div class="col-md-12">
+                    <div class="page_title">
+                        <h2>Ajouter une nouvelle destination</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row column1">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <div class="white_shd full margin_bottom_30">
+                        <div class="full graph_head">
+                            <div class="heading1 margin_0">
+                                <h2>Destination</h2>
+                            </div>
+                        </div>
+                        <div class="full price_table padding_infor_info">
+                            {{ form_start(form) }}
+                            <div class="form-group">
+                                <fieldset>
+                                    <div class="field">
+                                        {{ form_label(form.pays, 'Pays') }}
+                                        {{ form_widget(form.pays, {'attr': {'class': 'form-control'}}) }}
+                                    </div>
+                                    <div class="field">
+                                        {{ form_label(form.ville, 'Ville') }}
+                                        {{ form_widget(form.ville, {'attr': {'class': 'form-control'}}) }}
+                                    </div>
+                                    <div class="field">
+                                        {{ form_label(form.description, 'Description') }}
+                                        {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                                    </div>
+                                    <div class="field">
+                                        {{ form_label(form.attractions, 'Attractions') }}
+                                        {{ form_widget(form.attractions, {'attr': {'class': 'form-control'}}) }}
+                                    </div>
+                                    <div class="field">
+                                        {{ form_label(form.accomodation, 'Accommodation') }}
+                                        {{ form_widget(form.accomodation, {'attr': {'class': 'form-control'}}) }}
+                                    </div>
+                                    <div class="field">
+                                        {{ form_label(form.devise, 'Devise') }}
+                                        {{ form_widget(form.devise, {'attr': {'class': 'form-control'}}) }}
+                                    </div>
+                                    <div class="field">
+                                        {{ form_label(form.multimedia, 'Multimedia') }}
+                                        {{ form_widget(form.multimedia, {'attr': {'class': 'form-control'}}) }}
+                                    </div>
+                                    <div class="field">
+                                        {{ form_label(form.cuisine_locale, 'Local Cuisine') }}
+                                        {{ form_widget(form.cuisine_locale, {'attr': {'class': 'form-control'}}) }}
+                                    </div>
+                                    <div class="field">
+                                        {{ form_label(form.accessibilite, 'Accessibility') }}
+                                        {{ form_widget(form.accessibilite, {'attr': {'class': 'form-control'}}) }}
+                                    </div>
+                                    <div class="center" style="margin-top: 20px;">
+                                        <button type="submit" class="btn btn-primary">Create</button>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

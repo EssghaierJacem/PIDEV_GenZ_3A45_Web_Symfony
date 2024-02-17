@@ -13,14 +13,16 @@
                             </div>
                     </div>
 
-    <a href="{{ path('app_destination_new') }}" class="btn btn-primary mb-3">Add New Destination</a>
-
-    <table class="table">
+    <div class="table_row">
+    <div class="table-responsive">
+    <table class="table table-striped">
         <thead>
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">Country</th>
-                <th scope="col">City</th>
+                <th scope="col">ID</th>
+                <th scope="col">Pays</th>
+                <th scope="col">Ville</th>
+                <th scope="col">Attractions</th>
+                <th scope="col">Devise</th>
                 <th scope="col">Actions</th>
             </tr>
         </thead>
@@ -30,6 +32,8 @@
                     <th scope="row">{{ destination.id }}</th>
                     <td>{{ destination.pays }}</td>
                     <td>{{ destination.ville }}</td>
+                    <td>{{ destination.attractions }}</td>
+                    <td>{{ destination.devise }}</td>
                     <td>
                         <a href="{{ path('app_destination_show', {'id': destination.id}) }}" class="btn btn-info btn-sm">Show</a>
                         <a href="{{ path('app_destination_edit', {'id': destination.id}) }}" class="btn btn-primary btn-sm">Edit</a>
@@ -46,4 +50,6 @@
             {% endfor %}
         </tbody>
     </table>
+    </div>
+    </div>
 {% endblock %}

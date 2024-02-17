@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Vol;
 use App\Form\VolType;
 use App\Repository\VolRepository;
+use App\Repository\DestinationRepository;
 use App\Repository\UserRepository;
 use App\Repository\AvisRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -26,12 +27,13 @@ class VolController extends AbstractController
     }
 
     #[Route('/vol_dashboard', name: 'dashboard_vol')]
-    public function dashboardVol(VolRepository $volRepository, userRepository $userRepository,avisRepository $avisRepository): Response
+    public function dashboardVol(VolRepository $volRepository, userRepository $userRepository,avisRepository $avisRepository,destinationRepository $destinationRepository): Response
     {
         $vols = $volRepository->findAll();
         $userCount = $userRepository->count([]);
         $volCount = $volRepository->count([]);
         $avisCount = $avisRepository->count([]);
+        $destinations = $destinationRepository->findAll();
 
 
         return $this->render('vol/volDashboard.html.twig', [
@@ -39,6 +41,7 @@ class VolController extends AbstractController
             'userCount' => $userCount,
             'volCount' => $volCount,
             'avisCount' => $avisCount,
+            'destinations' => $destinations,
         ]);
     }
 
