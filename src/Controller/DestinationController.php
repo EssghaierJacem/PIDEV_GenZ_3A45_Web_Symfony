@@ -22,6 +22,7 @@ class DestinationController extends AbstractController
             'destinations' => $destinations,
         ]);
     }
+
     #[Route('/show_destination', name: 'app_destinations')]
     public function destinations(DestinationRepository $destinationRepository): Response
     {

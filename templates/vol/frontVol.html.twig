@@ -4,47 +4,63 @@
 
 {% block body %}
     <section class="breadcrumbs">
-                <div class="container">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h2>List of Vols</h2>
-                        <ol>
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href={{ path('app_vol') }}>Vol</a></li>
-                        </ol>
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>List of Vols</h2>
+                <ol>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href={{ path('app_vol') }}>Vol</a></li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <section id="filters-and-details" class="py-5">
+        <div class="container">
+            <div class="row">
+                <!-- Filters and Date Selection -->
+                <div class="col-lg-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Filter and Date Selection</h5>
+                            <!-- Add your filter and date selection inputs here -->
+                            <div class="form-group">
+                                <label for="date">Select Date:</label>
+                                <input type="date" class="form-control" id="date">
+                            </div>
+                            <!-- Add more filters or inputs as needed -->
+                        </div>
                     </div>
                 </div>
-            </section>
-    <section id="portfolio-details" class="portfolio-details">
-                <div class="container">
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Compagnie</th>
-                <th scope="col">Numéro de Vol</th>
-                <th scope="col">Départ</th>
-                <th scope="col">Arrivée</th>
-                <th scope="col">Infos</th>
 
-            </tr>
-        </thead>
-        <tbody>
-            {% for vol in vols %}
-                <tr>
-                    <th scope="row">{{ vol.id }}</th>
-                    <td>{{ vol.compagnieA }}</td>
-                    <td>{{ vol.getNumVol() }}</td>
-                    <td>{{ vol.aeroportDepart }}</td>
-                    <td>{{ vol.aeroportArrivee }}</td>
-                    <td><a href="{{ path('app_vol_details_show', {'id': vol.id}) }}" class="btn btn-primary btn-sm">More Details</a></td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="6">No vols found.</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    </div>
-            </section>
+                <!-- Flight Details -->
+                <div class="col-lg-8">
+                    {% for vol in vols %}
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <h5 class="card-title">{{ vol.compagnieA }}</h5>
+                                        <p class="card-text">Numéro de Vol: {{ vol.getNumVol() }}</p>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <p class="card-text">{{ vol.aeroportDepart }} to {{ vol.aeroportArrivee }}</p>
+                                        <p class="card-text">{{ vol.dateDepart|date('Y-m-d') }} to {{ vol.dateArrivee|date('Y-m-d') }}</p>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <p class="card-text">Prix: {{ vol.tarif }}</p>
+                                        <a href="{{ path('app_vol_details_show', {'id': vol.id}) }}" class="btn btn-primary">More Details</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-warning" role="alert">
+                            No vols found.
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}
