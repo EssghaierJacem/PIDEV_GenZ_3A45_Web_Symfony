@@ -26,7 +26,7 @@ class VolController extends AbstractController
         ]);
     }
 
-    #[Route('/vol_dashboard', name: 'dashboard_vol')]
+    #[Route('/dest_vol', name: 'dashboard_vol')]
     public function dashboardVol(VolRepository $volRepository, userRepository $userRepository,avisRepository $avisRepository,destinationRepository $destinationRepository): Response
     {
         $vols = $volRepository->findAll();
