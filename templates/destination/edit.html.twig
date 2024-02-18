@@ -20,7 +20,7 @@
                         </div>
                     </div>
 
-                    {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+                    {{ form_start(form, {'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'}}) }}
 
                     <div class="row" style="margin-left: 10px; margin-top: 10px;">
                         <!-- Left side -->
@@ -30,6 +30,9 @@
                                 {{ form_label(form.pays, 'Pays', {'label_attr': {'class': 'control-label col-sm-3'}}) }}
                                 <div class="col-sm-9">
                                     {{ form_widget(form.pays, {'attr': {'class': 'form-control'}}) }}
+                                        <div class="custom-error-message" style="color: red; font-size: 14px; margin-top: 5px; margin-bottom: 10px;">
+                                        {{ form_errors(form.pays) }}
+                                    </div>
                                 </div>
                             </div>
                             <!-- Ville -->
@@ -37,6 +40,9 @@
                                 {{ form_label(form.ville, 'Ville', {'label_attr': {'class': 'control-label col-sm-3'}}) }}
                                 <div class="col-sm-9">
                                     {{ form_widget(form.ville, {'attr': {'class': 'form-control'}}) }}
+                                        <div class="custom-error-message" style="color: red; font-size: 14px; margin-top: 5px; margin-bottom: 10px;">
+                                        {{ form_errors(form.ville) }}
+                                    </div>
                                 </div>
                             </div>
                             <!-- Description -->
@@ -44,6 +50,9 @@
                                 {{ form_label(form.description, 'Description', {'label_attr': {'class': 'control-label col-sm-3'}}) }}
                                 <div class="col-sm-9">
                                     {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                                        <div class="custom-error-message" style="color: red; font-size: 14px; margin-top: 5px; margin-bottom: 10px;">
+                                        {{ form_errors(form.description) }}
+                                    </div>
                                 </div>
                             </div>
                             <!-- Attractions -->
@@ -51,6 +60,9 @@
                                 {{ form_label(form.attractions, 'Attractions', {'label_attr': {'class': 'control-label col-sm-3'}}) }}
                                 <div class="col-sm-9">
                                     {{ form_widget(form.attractions, {'attr': {'class': 'form-control'}}) }}
+                                        <div class="custom-error-message" style="color: red; font-size: 14px; margin-top: 5px; margin-bottom: 10px;">
+                                        {{ form_errors(form.attractions) }}
+                                    </div>
                                 </div>
                             </div>
                             <!-- Local Cuisine -->
@@ -58,6 +70,9 @@
                                 {{ form_label(form.cuisine_locale, 'Local Cuisine', {'label_attr': {'class': 'control-label col-sm-3'}}) }}
                                 <div class="col-sm-9">
                                     {{ form_widget(form.cuisine_locale, {'attr': {'class': 'form-control'}}) }}
+                                        <div class="custom-error-message" style="color: red; font-size: 14px; margin-top: 5px; margin-bottom: 10px;">
+                                        {{ form_errors(form.cuisine_locale) }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -69,6 +84,9 @@
                                 {{ form_label(form.accomodation, 'Accommodation', {'label_attr': {'class': 'control-label col-sm-3'}}) }}
                                 <div class="col-sm-9">
                                     {{ form_widget(form.accomodation, {'attr': {'class': 'form-control'}}) }}
+                                        <div class="custom-error-message" style="color: red; font-size: 14px; margin-top: 5px; margin-bottom: 10px;">
+                                        {{ form_errors(form.accomodation) }}
+                                    </div>
                                 </div>
                             </div>
                             <!-- Devise -->
@@ -76,6 +94,9 @@
                                 {{ form_label(form.devise, 'Devise', {'label_attr': {'class': 'control-label col-sm-3'}}) }}
                                 <div class="col-sm-9">
                                     {{ form_widget(form.devise, {'attr': {'class': 'form-control'}}) }}
+                                        <div class="custom-error-message" style="color: red; font-size: 14px; margin-top: 5px; margin-bottom: 10px;">
+                                        {{ form_errors(form.devise) }}
+                                    </div>
                                 </div>
                             </div>
                             <!-- Multimedia -->
@@ -83,6 +104,9 @@
                                 {{ form_label(form.multimedia, 'Multimedia', {'label_attr': {'class': 'control-label col-sm-3'}}) }}
                                 <div class="col-sm-9">
                                     {{ form_widget(form.multimedia, {'attr': {'class': 'form-control'}}) }}
+                                        <div class="custom-error-message" style="color: red; font-size: 14px; margin-top: 5px; margin-bottom: 10px;">
+                                        {{ form_errors(form.multimedia) }}
+                                    </div>
                                 </div>
                             </div>
                             <!-- Accessibility -->
@@ -90,6 +114,9 @@
                                 {{ form_label(form.accessibilite, 'Accessibility', {'label_attr': {'class': 'control-label col-sm-3'}}) }}
                                 <div class="col-sm-9">
                                     {{ form_widget(form.accessibilite, {'attr': {'class': 'form-control'}}) }}
+                                        <div class="custom-error-message" style="color: red; font-size: 14px; margin-top: 5px; margin-bottom: 10px;">
+                                        {{ form_errors(form.accessibilite) }}
+                                    </div>
                                 </div>
                             </div>
                             <!-- Save Button -->
@@ -102,10 +129,8 @@
                     </div>
 
                     {{ form_end(form) }}
-                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock %}

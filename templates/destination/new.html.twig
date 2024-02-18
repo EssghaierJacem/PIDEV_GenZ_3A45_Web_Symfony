@@ -22,44 +22,71 @@
                             </div>
                         </div>
                         <div class="full price_table padding_infor_info">
-                            {{ form_start(form) }}
+                            {{ form_start(form, {'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate', 'id': 'destination-form'}}) }}
                             <div class="form-group">
                                 <fieldset>
                                     <div class="field">
                                         {{ form_label(form.pays, 'Pays') }}
                                         {{ form_widget(form.pays, {'attr': {'class': 'form-control'}}) }}
+                                        <div class="custom-error-message" style="color: red; font-size: 14px; margin-top: 5px; margin-bottom: 10px;">
+                                           {{ form_errors(form.pays) }}
+                                        </div>
                                     </div>
                                     <div class="field">
                                         {{ form_label(form.ville, 'Ville') }}
                                         {{ form_widget(form.ville, {'attr': {'class': 'form-control'}}) }}
+                                        <div class="custom-error-message" style="color: red; font-size: 14px; margin-top: 5px; margin-bottom: 10px;">
+                                           {{ form_errors(form.ville) }}
+                                        </div>
                                     </div>
                                     <div class="field">
                                         {{ form_label(form.description, 'Description') }}
                                         {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                                        <div class="custom-error-message" style="color: red; font-size: 14px; margin-top: 5px; margin-bottom: 10px;">
+                                           {{ form_errors(form.description) }}
+                                        </div>
                                     </div>
                                     <div class="field">
                                         {{ form_label(form.attractions, 'Attractions') }}
                                         {{ form_widget(form.attractions, {'attr': {'class': 'form-control'}}) }}
+                                        <div class="custom-error-message" style="color: red; font-size: 14px; margin-top: 5px; margin-bottom: 10px;">
+                                           {{ form_errors(form.attractions) }}
+                                        </div>
                                     </div>
                                     <div class="field">
                                         {{ form_label(form.accomodation, 'Accommodation') }}
                                         {{ form_widget(form.accomodation, {'attr': {'class': 'form-control'}}) }}
+                                        <div class="custom-error-message" style="color: red; font-size: 14px; margin-top: 5px; margin-bottom: 10px;">
+                                           {{ form_errors(form.accomodation) }}
+                                        </div>
                                     </div>
                                     <div class="field">
                                         {{ form_label(form.devise, 'Devise') }}
                                         {{ form_widget(form.devise, {'attr': {'class': 'form-control'}}) }}
+                                        <div class="custom-error-message" style="color: red; font-size: 14px; margin-top: 5px; margin-bottom: 10px;">
+                                           {{ form_errors(form.devise) }}
+                                        </div>
                                     </div>
                                     <div class="field">
                                         {{ form_label(form.multimedia, 'Multimedia') }}
                                         {{ form_widget(form.multimedia, {'attr': {'class': 'form-control'}}) }}
+                                        <div class="custom-error-message" style="color: red; font-size: 14px; margin-top: 5px; margin-bottom: 10px;">
+                                           {{ form_errors(form.multimedia) }}
+                                        </div>
                                     </div>
                                     <div class="field">
                                         {{ form_label(form.cuisine_locale, 'Local Cuisine') }}
                                         {{ form_widget(form.cuisine_locale, {'attr': {'class': 'form-control'}}) }}
+                                        <div class="custom-error-message" style="color: red; font-size: 14px; margin-top: 5px; margin-bottom: 10px;">
+                                           {{ form_errors(form.cuisine_locale) }}
+                                        </div>
                                     </div>
                                     <div class="field">
                                         {{ form_label(form.accessibilite, 'Accessibility') }}
                                         {{ form_widget(form.accessibilite, {'attr': {'class': 'form-control'}}) }}
+                                        <div class="custom-error-message" style="color: red; font-size: 14px; margin-top: 5px; margin-bottom: 10px;">
+                                           {{ form_errors(form.accessibilite) }}
+                                        </div>
                                     </div>
                                     <div class="center" style="margin-top: 20px;">
                                         <button type="submit" class="btn btn-primary">Create</button>
