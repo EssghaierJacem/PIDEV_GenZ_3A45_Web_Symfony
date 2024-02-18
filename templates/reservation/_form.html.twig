@@ -1,0 +1,95 @@
+
+{% extends 'frontbase.html.twig' %}
+{% block body %}
+
+        <section class="breadcrumbs">
+            <div class="container">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2>Portfolio Details</h2>
+                    <ol>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="portfolio.html">Your Entity</a></li>
+                        <li>Addition mta3 Entity mtaaek</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <section id="portfolio-details" class="portfolio-details">
+            <div class="container">
+                <!-- ======= Starts Here ======= -->
+<div class="container">
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+  
+
+        <div class="form-group">
+            {{ form_label(form.nom_client, 'nom_client', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.nom_client, {'attr': {'class': 'form-control'}}) }}
+            {% if form_errors(form.nom_client) is not empty %}
+                <div class="alert text-danger">
+                    {{ form_errors(form.nom_client) }}
+                </div>
+            {% endif %}
+        </div>
+         <div class="form-group">
+            {{ form_label(form.prenom_client, 'prenom_client', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.prenom_client, {'attr': {'class': 'form-control'}}) }}
+            {% if form_errors(form.prenom_client) is not empty %}
+                <div class="alert text-danger">
+                    {{ form_errors(form.prenom_client) }}
+                </div>
+            {% endif %}
+        </div>
+           <div class="form-group">
+            {{ form_label(form.num_tel, 'num_tel', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.num_tel, {'attr': {'class': 'form-control'}}) }}
+            {% if form_errors(form.num_tel) is not empty %}
+                <div class="alert text-danger">
+                    {{ form_errors(form.num_tel) }}
+                </div>
+            {% endif %}
+        </div>
+          
+           <div class="form-group">
+            {{ form_label(form.quantite, 'quantite', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.quantite, {'attr': {'class': 'form-control'}}) }}
+            {% if form_errors(form.quantite) is not empty %}
+                <div class="alert text-danger">
+                    {{ form_errors(form.quantite) }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.date_reservation, 'date_reservation', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.date_reservation, {'attr': {'class': 'form-control'}}) }}
+            {% if form_errors(form.date_reservation) is not empty %}
+                <div class="alert text-danger">
+                    {{ form_errors(form.date_reservation) }}
+                </div>
+
+            {% endif %}
+        </div>
+                
+            </div>
+            
+    
+
+
+        
+
+        
+
+        <div class="text-end mt-4">
+            <button type="submit" class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+        </div>
+        {{ form_end(form) }}
+    
+    
+</div>
+                <!-- ======= Ends Here ======= -->
+            
+        </section>
+
+
+{% endblock %} 

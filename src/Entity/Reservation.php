@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ReservationRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ReservationRepository::class)]
 class Reservation
@@ -15,15 +16,18 @@ class Reservation
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "vous devez mettre le type de votre vehicule !!!")]
     private ?string $nom_client = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank(message: "vous devez mettre le type de votre vehicule !!!")]
     private ?string $prenom_client = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $num_tel = null;
+    #[Assert\Length( min : 8,minMessage :"Entrer num au min de 8 caracteres")]    private ?int $num_tel = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\NotBlank(message: "vous devez mettre le type de votre vehicule !!!")]
     private ?int $quantite = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]

@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\CommandeRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CommandeRepository::class)]
 class Commande
@@ -15,21 +16,31 @@ class Commande
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank(message: "vous devez mettre le type de votre vehicule !!!")]
     private ?string $num_commande = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\Length( min: 3, minMessage: 'type de véhicule doit avoir au minimum 3 caractaire',),]
+    #[Assert\NotBlank(message: "vous devez mettre le type de votre vehicule !!!")]
     private ?float $prix = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Positive(message: "le code doit etre possitif")]
+    #[Assert\NotBlank(message: "vous devez mettre le type de votre vehicule !!!")]
     private ?string $code_promo = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length( min: 3, minMessage: 'type de véhicule doit avoir au minimum 3 caractaire',),]
+    #[Assert\NotBlank(message: "vous devez mettre le type de votre vehicule !!!")]
     private ?string $type_paiement = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length( min : 10,minMessage :"Entrer une adresse au min de 10 caracteres")]
+    #[Assert\NotBlank(message: "vous devez mettre le type de votre vehicule !!!")]
     private ?string $email = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[Assert\NotBlank(message: "vous devez mettre le type de votre vehicule !!!")]
     private ?\DateTimeInterface $date_commande = null;
 
     #[ORM\OneToOne(mappedBy: 'commande', cascade: ['persist', 'remove'])]
@@ -133,4 +144,5 @@ class Commande
 
         return $this;
     }
+    
 }
