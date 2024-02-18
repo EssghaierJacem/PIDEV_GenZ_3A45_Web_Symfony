@@ -37,10 +37,10 @@
         <dd class="col-sm-9">{{ vol.dateArrivee|date('Y-m-d H:i:s') }}</dd>
 
         <dt class="col-sm-3">Tarif</dt>
-        <dd class="col-sm-9">{{ vol.tarif }} EUR</dd>
+        <dd class="col-sm-9">{{ vol.tarif }} DT</dd>
 
         <dt class="col-sm-3">Destination</dt>
-        <dd class="col-sm-9">{{ vol.destination }}</dd>
+        <dd class="col-sm-9">{{ destination.getPays() }} - {{ destination.getVille() }} </dd>
     </dl>
         </div>
             </section>

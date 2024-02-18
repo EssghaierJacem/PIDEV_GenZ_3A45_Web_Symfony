@@ -32,7 +32,7 @@ class Destination
         minMessage: 'Minimum 15 caractères',
         maxMessage: 'Maximum 200 caractères',
     )]
-    #[Assert\NotBlank(message:"Il faut décrire ce pays !")]
+    #[Assert\NotBlank(message:"Il faut décrire ce pays!")]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $description = null;
 
@@ -42,6 +42,7 @@ class Destination
         minMessage: 'Minimum 5 caractères',
         maxMessage: 'Maximum 50 caractères',
     )]
+    #[Assert\NotBlank(message: "Veulliez mentioner quelques attractions!")]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $attractions = null;
 
@@ -51,8 +52,10 @@ class Destination
         minMessage: 'Minimum 5 caractères',
         maxMessage: 'Maximum 30 caractères',
     )]
+    #[Assert\NotBlank(message: "Veulliez entrer une accomodation!")]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $accomodation = null;
+
     #[Assert\Currency(message: 'Il faut attribuer une vraie devise')]
     #[ORM\Column(length: 255)]
     private ?string $devise = null;
@@ -70,6 +73,7 @@ class Destination
         minMessage: 'Minimum 5 caractères',
         maxMessage: 'Maximum 50 caractères',
     )]
+    #[Assert\NotBlank(message: "Veulliez mentionner quelques repas!")]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $cuisine_locale = null;
 

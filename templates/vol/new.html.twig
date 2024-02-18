@@ -23,44 +23,71 @@
                               </div>
                                <div class="full price_table padding_infor_info">
 
-        {{ form_start(form) }}
+                    {{ form_start(form, {'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'}}) }}
         <div class="form-group">
             <fieldset>
                 <div class="field">
                     {{ form_label(form.compagnieA, 'Compagnie') }}
                     {{ form_widget(form.compagnieA, {'attr': {'class': 'form-control'}}) }}
+                     <div class="custom-error-message" style="color: red; font-size: 14px; margin-top: 5px; margin-bottom: 10px;">
+                      {{ form_errors(form.compagnieA) }}
+                     </div>
                 </div>
                 <div class="field">
                     {{ form_label(form.num_vol, 'Num Vol') }}
                     {{ form_widget(form.num_vol, {'attr': {'class': 'form-control'}}) }}
+                    <div class="custom-error-message" style="color: red; font-size: 14px; margin-top: 5px; margin-bottom: 10px;">
+                       {{ form_errors(form.num_vol) }}
+                    </div>
                 </div>
                 <div class="field">
                     {{ form_label(form.aeroportDepart, 'Départ') }}
                     {{ form_widget(form.aeroportDepart, {'attr': {'class': 'form-control'}}) }}
+                    <div class="custom-error-message" style="color: red; font-size: 14px; margin-top: 5px; margin-bottom: 10px;">
+                       {{ form_errors(form.aeroportDepart) }}
+                    </div>
                 </div>
                 <div class="field">
                     {{ form_label(form.aeroportArrivee, 'Arrivée') }}
                     {{ form_widget(form.aeroportArrivee, {'attr': {'class': 'form-control'}}) }}
+                    <div class="custom-error-message" style="color: red; font-size: 14px; margin-top: 5px; margin-bottom: 10px;">
+                       {{ form_errors(form.aeroportArrivee) }}
+                    </div>
                 </div>
                 <div class="field">
                     {{ form_label(form.dateDepart, 'Date Départ') }}
                     {{ form_widget(form.dateDepart, {'attr': {'class': 'form-control'}}) }}
+                    <div class="custom-error-message" style="color: red; font-size: 14px; margin-top: 5px; margin-bottom: 10px;">
+                       {{ form_errors(form.dateDepart) }}
+                    </div>
                 </div>
                 <div class="field">
                     {{ form_label(form.dateArrivee, 'Date Arrivée') }}
                     {{ form_widget(form.dateArrivee, {'attr': {'class': 'form-control'}}) }}
+                    <div class="custom-error-message" style="color: red; font-size: 14px; margin-top: 5px; margin-bottom: 10px;">
+                       {{ form_errors(form.dateArrivee) }}
+                    </div>
                 </div>
                 <div class="field">
                     {{ form_label(form.duree_vol, 'Durée Vol') }}
                     {{ form_widget(form.duree_vol, {'attr': {'class': 'form-control'}}) }}
+                     <div class="custom-error-message" style="color: red; font-size: 14px; margin-top: 5px; margin-bottom: 10px;">
+                        {{ form_errors(form.duree_vol) }}
+                     </div>
                 </div>
                 <div class="field">
                     {{ form_label(form.tarif, 'Tarif') }}
                     {{ form_widget(form.tarif, {'attr': {'class': 'form-control'}}) }}
+                    <div class="custom-error-message" style="color: red; font-size: 14px; margin-top: 5px; margin-bottom: 10px;">
+                       {{ form_errors(form.tarif) }}
+                    </div>
                 </div>
                 <div class="field">
                     {{ form_label(form.destination, 'Destination') }}
                     {{ form_widget(form.destination, {'attr': {'class': 'form-control'}}) }}
+                     <div class="custom-error-message" style="color: red; font-size: 14px; margin-top: 5px; margin-bottom: 10px;">
+                        {{ form_errors(form.destination) }}
+                     </div>
                 </div>
                  <div class="center" style="margin-top: 20px;">
                 <button type="submit" class="btn btn-primary">Save</button>
