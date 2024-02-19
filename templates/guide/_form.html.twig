@@ -1,0 +1,89 @@
+{% extends 'backbase.html.twig' %}
+
+{% block body %}
+
+ 
+
+<section id="portfolio-details" class="portfolio-details">
+    <div class="container">
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+        <div class="form-group">
+            {{ form_label(form.nom, 'Nom', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+            {% if form_errors(form.nom) is not empty %}
+                <div class="alert text-danger">
+                    {{ form_errors(form.nom) }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.prenom, 'Prénom', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.prenom, {'attr': {'class': 'form-control'}}) }}
+            {% if form_errors(form.prenom) is not empty %}
+                <div class="alert text-danger">
+                    {{ form_errors(form.prenom) }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.nationalite, 'Nationalité', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.nationalite, {'attr': {'class': 'form-control'}}) }}
+            {% if form_errors(form.nationalite) is not empty %}
+                <div class="alert text-danger">
+                    {{ form_errors(form.nationalite) }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.languesParlees, 'Langues parlées', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.languesParlees, {'attr': {'class': 'form-control'}}) }}
+            {% if form_errors(form.languesParlees) is not empty %}
+                <div class="alert text-danger">
+                    {{ form_errors(form.languesParlees) }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.experiences, 'Expériences', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.experiences, {'attr': {'class': 'form-control'}}) }}
+            {% if form_errors(form.experiences) is not empty %}
+                <div class="alert text-danger">
+                    {{ form_errors(form.experiences) }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.tarifHoraire, 'Tarif Horaire', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.tarifHoraire, {'attr': {'class': 'form-control'}}) }}
+            {% if form_errors(form.tarifHoraire) is not empty %}
+                <div class="alert text-danger">
+                    {{ form_errors(form.tarifHoraire) }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.num_tel, 'Numéro de téléphone', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.num_tel, {'attr': {'class': 'form-control'}}) }}
+            {% if form_errors(form.num_tel) is not empty %}
+                <div class="alert text-danger">
+                    {{ form_errors(form.num_tel) }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="text-end mt-4">
+            <button type="submit" class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+        </div>
+
+        {{ form_end(form) }}
+    </div>
+</section>
+
+{% endblock %}

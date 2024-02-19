@@ -6,6 +6,8 @@ use App\Repository\GuideRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: GuideRepository::class)]
 class Guide
@@ -16,24 +18,40 @@ class Guide
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length( min: 3, minMessage: '...',),]
+   
+    #[Assert\NotBlank(message: "...!!!")]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length( min: 3, minMessage: '...',),]
+    #[Assert\NotBlank(message: "... !!!")]
     private ?string $prenom = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length( min: 3, minMessage: '...',),]
+    #[Assert\NotBlank(message: "... !!!")]
     private ?string $nationalite = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length( min: 3, minMessage: '...',),]
+    #[Assert\NotBlank(message: "... !!!")]
     private ?string $languesParlees = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length( min: 3, minMessage: '...',),]
+    #[Assert\NotBlank(message: "... !!!")]
     private ?string $experiences = null;
 
     #[ORM\Column(nullable: true)]
+
+    #[Assert\NotBlank(message: "... !!!")]
     private ?float $tarifHoraire = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\Length( min: 3, minMessage: '...',),]
+
+    #[Assert\NotBlank(message: "... !!!")]
     private ?int $num_tel = null;
 
     #[ORM\OneToMany(mappedBy: 'guide', targetEntity: Tournee::class)]

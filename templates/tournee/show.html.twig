@@ -1,0 +1,76 @@
+{% extends 'backbase.html.twig' %}
+
+
+{% block body %}
+
+ <section class="breadcrumbs">
+            <div class="container">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2>Portfolio Details</h2>
+                    <ol>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="portfolio.html">Your Entity</a></li>
+                        <li>Addition mta3 Entity mtaaek</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+         <section class="breadcrumbs">
+         <div class="container">
+<title>Tournee</title>
+
+
+    <h1>Tournee</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ tournee.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ tournee.nom }}</td>
+            </tr>
+            <tr>
+                <th>DateDebut</th>
+                <td>{{ tournee.dateDebut ? tournee.dateDebut|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Duree</th>
+                <td>{{ tournee.duree }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ tournee.description }}</td>
+            </tr>
+            <tr>
+                <th>Tarif</th>
+                <td>{{ tournee.tarif }}</td>
+            </tr>
+            <tr>
+                <th>Monuments</th>
+                <td>{{ tournee.monuments }}</td>
+            </tr>
+            <tr>
+                <th>TrancheAge</th>
+                <td>{{ tournee.trancheAge }}</td>
+            </tr>
+            <tr>
+                <th>MoyenTransport</th>
+                <td>{{ tournee.moyenTransport }}</td>
+            </tr>
+        </tbody>
+    </table>
+  <div class="text-end mt-4">
+    <a href="{{ path('app_tournee_index') }}" class="btn btn-sm btn-info">back to list</a>
+    </div>
+
+    <a href="{{ path('app_tournee_edit', {'id': tournee.id}) }}" class="btn btn-sm btn-warning">edit</a>
+
+    {{ include('tournee/_delete_form.html.twig') }}
+
+    </div>
+    </section>
+
+{% endblock %}

@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\TourneeRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TourneeRepository::class)]
 class Tournee
@@ -15,33 +16,52 @@ class Tournee
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length( min: 3, minMessage: '...',),]
+    #[Assert\NotBlank(message: "... !!!")]
     private ?string $nom = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[Assert\GreaterThan('today' , message: "la date  de tournée doit etre supérieure à la date d'aujourd'hui !!")]
+    #[Assert\NotBlank(message: "... !!!")]
     private ?\DateTimeInterface $dateDebut = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank(message: "... !!!")]
+    #[Assert\Length( min: 3, minMessage: '...',),]
     private ?string $duree = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank(message: "... !!!")]
+    #[Assert\Length( min: 3, minMessage: '...',),]
     private ?string $description = null;
 
     #[ORM\Column(nullable: true)]
+    
+    #[Assert\NotBlank(message: "... !!!")]
     private ?float $tarif = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank(message: "... !!!")]
+    #[Assert\Length( min: 3, minMessage: '...',),]
     private ?string $monuments = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank(message: "...!!!")]
+    #[Assert\Length( min: 3, minMessage: '...',),]
     private ?string $trancheAge = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+   
+    #[Assert\NotBlank(message: "... !!!")]
+    #[Assert\Length( min: 3, minMessage: '...',),]
     private ?string $moyenTransport = null;
 
     #[ORM\ManyToOne(inversedBy: 'tournee')]
+    #[Assert\NotBlank(message: "vous devez choisir un pays !!!")]
     private ?Destination $destination = null;
 
     #[ORM\ManyToOne(inversedBy: 'tournees')]
+    #[Assert\NotBlank(message: "vous devez choisir un guide !!!")]
     private ?Guide $guide = null;
 
     public function getId(): ?int
