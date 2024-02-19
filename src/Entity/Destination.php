@@ -28,9 +28,9 @@ class Destination
 
     #[Assert\Length(
         min: 15,
-        max: 200,
+        max: 255,
         minMessage: 'Minimum 15 caractères',
-        maxMessage: 'Maximum 200 caractères',
+        maxMessage: 'Maximum 255 caractères',
     )]
     #[Assert\NotBlank(message:"Il faut décrire ce pays!")]
     #[ORM\Column(length: 255, nullable: true)]

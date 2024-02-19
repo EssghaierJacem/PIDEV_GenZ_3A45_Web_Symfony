@@ -102,9 +102,10 @@ class VolController extends AbstractController
 
 
     #[Route('/vol/show/{id}', name: 'app_vol_show')]
-    public function show(Request $request, $id, EntityManagerInterface $entityManager, VolRepository $volRepository): Response
+    public function show(Request $request, $id, EntityManagerInterface $entityManager, VolRepository $volRepository, DestinationRepository $destinationRepository): Response
     {
         $vol = $volRepository->find($id);
+        $destinations = $destinationRepository->findAll();
 
         if (!$vol) {
             throw $this->createNotFoundException('Vol not found');
@@ -112,6 +113,7 @@ class VolController extends AbstractController
 
         return $this->render('vol/show.html.twig', [
             'vol' => $vol,
+            'destination' => $destinations,
         ]);
     }
 

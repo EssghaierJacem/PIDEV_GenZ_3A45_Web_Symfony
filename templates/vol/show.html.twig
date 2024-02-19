@@ -1,93 +1,87 @@
 {% extends 'backbase.html.twig' %}
 
+
 {% block title %}Vol Details{% endblock %}
 
 {% block body %}
-     <div class="midde_cont">
+                    <div class="midde_cont">
                       <div class="container-fluid">
                          <div class="row column_title">
                             <div class="col-md-12">
-                               <div class="page_title">
-                                  <h2>Vol Details </h2>
-                               </div>
+                             <div class="page_title">
+                                <h2><a href="{{ path('backapp_vol') }}"  ">
+                                 <i class="fa fa-arrow-left">   &nbsp; </i>
+                                </a>Détail Vol</h2>
                             </div>
+                      </div>
                     </div>
-     <div class="col-md-12">
-     <div class="white_shd full margin_bottom_15">
-     <div class="full graph_head">
-     <div class="heading1 margin_0">
-           <h2>Détails Vol : {{vol.numVol}}</h2>
-     </div>
-     </div>
+                     </div>
+                      <div class="col-md-12">
+                            <div class="white_shd full margin_bottom_30">
+                                <div class="full graph_head">
+                                   <div class="heading1 margin_0">
+                                   <h2><i class="fa fa-file-text-o"></i> Rapport Vol : {{ vol.id }}</h2>
+                                       </div>
+                            </div>
+                      <div class="full">
+                        <div class="invoice_inner">
+                           <div class="row">
+                            <div class="col-md-4">
+                              <div class="full invoice_blog padding_infor_info padding-bottom_0">
+                                 <h4>Aéroport & Compagnie </h4>
+                                <p><strong>Compagnie Aerienne :</strong><br>
+                                 {{ vol.compagnieA }}<br>
+                               <strong>Aeroport du Départ :</strong><a href="#"><br>{{ vol.aeroportDepart }}</a><br>
+                               <strong>Aeroport d'Arrivée :</strong><a href="#"><br>{{ vol.aeroportArrivee }}</a>
+                           </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                    <div class="full invoice_blog padding_infor_info padding-bottom_0">
+                                      <h4>Informations sur le vol</h4>
+                                             <p><strong>Date du départ :</strong>
+                                                <br>{{ vol.dateDepart|date('Y-m-d') }}<br>
+                                                <strong>Date d'arrivée :</strong>
+                                                <br><a href="#">{{ vol.dateArrivee|date('Y-m-d') }}</a><br>
+                                                <strong>Durée vol : </strong><br><a href="#">{{ vol.dureeVol }} mins</a>
 
-    <div class="full progress_bar_inner">
-         <div class="row">
-            <div class="col-md-8">
-               <div class="msg_list_main">
-                   <ul class="msg_list">
-                    <li>
-                      <span>
-                      <span class="name_user">ID</span>
-                      <span class="msg_user">{{ vol.id }}</span>
-                      </span>
-                    </li>
-                    <li>
-                      <span>
-                      <span class="name_user">Compagnie Aerienne</span>
-                      <span class="msg_user">{{ vol.compagnieA }}</span>
-                      </span>
-                    </li>
-                    <li>
-                      <span>
-                      <span class="name_user">Num Vol</span>
-                      <span class="msg_user">{{ vol.numVol }}</span>
-                      </span>
-                    </li>
-                    <li>
-                      <span>
-                      <span class="name_user">Aeroport du Départ</span>
-                      <span class="msg_user">{{ vol.aeroportDepart }}</span>
-                      </span>
-                    </li>
-                    <li>
-                      <span>
-                      <span class="name_user">Aeroport d'Arrivé</span>
-                      <span class="msg_user">{{ vol.aeroportArrivee }}</span>
-                      </span>
-                    </li>
-                    <li>
-                      <span>
-                      <span class="name_user">Date Départ</span>
-                      <span class="msg_user">{{ vol.dateDepart|date('Y-m-d') }}</span>
-                      </span>
-                    </li>
-                    <li>
-                      <span>
-                      <span class="name_user">Date Arrivé</span>
-                      <span class="msg_user">{{ vol.dateArrivee|date('Y-m-d') }}</span>
-                      </span>
-                    </li>
-                    <li>
-                      <span>
-                      <span class="name_user">Durée vols</span>
-                      <span class="msg_user">{{ vol.dureeVol }} mins</span>
-                      </span>
-                    </li>
-                    <li>
-                      <span>
-                      <span class="name_user">Tarif</span>
-                      <span class="msg_user">{{ vol.tarif }} DT</span>
-                      </span>
-                     </li>
-                    </ul>
-               </div>
-            </div>
-         </div>
-    </div>
-    </div>
-    </div>
+                                             </p>
+                                          </div>
+                                       </div>
+                                       <div class="col-md-4">
+                                          <div class="full invoice_blog padding_infor_info padding-bottom_0">
+                                             <h4>Vol No - #{{ vol.numVOl }} </h4>
+                                             <p><strong>Pays :</strong><br> {{ vol.destination.pays }}
+                                             <p><strong>Ville  :</strong><br> {{ vol.destination.ville }}
+                                             <br><strong>Tarif :</strong><br> {{ vol.tarif }} DT
+                                             </p>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 </div>
+                              <div class="full gallery_section_inner padding_infor_info">
+                                  <div class="row">
+                                    <div class="col-sm-4 col-md-3 margin_bottom_30">
+                                       <div class="column">
+                                       </div>
+
+                                       </div>
+                                    </div>
+
+                        </div>
+                        <div style="text-align: center;">
+                                <button type="button" class="btn cur-p btn-warning">
+                                   <a href={{ path('app_vol_edit', {'id': vol.id}) }}" class="btn-get-started scrollto" style="color: white; text-decoration: none;">Modifier</a>
+                                </button>
+                                <button type="button" class="btn cur-p btn-danger">
+                                    <a href={{ path('app_vol_delete', {'id': vol.id}) }} class="btn-get-started scrollto" style="color: white; text-decoration: none;">Supprimer</a>
+                                </button>
+                        </div>
+
 
 
 
 
 {% endblock %}
+

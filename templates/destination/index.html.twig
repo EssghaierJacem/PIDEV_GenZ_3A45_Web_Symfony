@@ -35,13 +35,20 @@
                     <td>{{ destination.attractions }}</td>
                     <td>{{ destination.devise }}</td>
                     <td>
-                        <a href="{{ path('app_destination_show', {'id': destination.id}) }}" class="btn btn-info btn-sm">Show</a>
-                        <a href="{{ path('app_destination_edit', {'id': destination.id}) }}" class="btn btn-primary btn-sm">Edit</a>
+                        <a href="{{ path('app_destination_show', {'id': destination.id}) }}" class="btn cur-p btn-info">
+                            <i>Info</i>
+                        </a>
+                        <a href="{{ path('app_destination_edit', {'id': destination.id}) }}" class="btn cur-p btn-warning">
+                            <i>Mod</i>
+                        </a>
                         <form action="{{ path('app_destination_delete', {'id': destination.id}) }}" method="post" style="display: inline-block;">
                             <input type="hidden" name="_method" value="DELETE">
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this destination?')">Delete</button>
+                            <button type="submit" class="btn cur-p btn-danger" onclick="return confirm('Are you sure you want to delete this destination?')">
+                                <i>Supp</i>
+                            </button>
                         </form>
                     </td>
+
                 </tr>
             {% else %}
                 <tr>
@@ -52,4 +59,5 @@
     </table>
     </div>
     </div>
+
 {% endblock %}

@@ -7,32 +7,77 @@
                       <div class="container-fluid">
                          <div class="row column_title">
                             <div class="col-md-12">
-                               <div class="page_title">
-                                  <h2>Destination Details</h2>
-                               </div>
+                             <div class="page_title">
+                                <h2><a href="{{ path('app_destination') }}"  ">
+                                 <i class="fa fa-arrow-left">   &nbsp; </i>
+                                </a>Détail destination</h2>
                             </div>
+                      </div>
                     </div>
-    <dl>
-        <dt>ID:</dt>
-        <dd>{{ destination.id }}</dd>
-        <dt>Country:</dt>
-        <dd>{{ destination.pays }}</dd>
-        <dt>City:</dt>
-        <dd>{{ destination.ville }}</dd>
-        <dt>Description:</dt>
-        <dd>{{ destination.description }}</dd>
-        <dt>Attractions:</dt>
-        <dd>{{ destination.attractions }}</dd>
-        <dt>Accommodation:</dt>
-        <dd>{{ destination.accomodation }}</dd>
-        <dt>Currency:</dt>
-        <dd>{{ destination.devise }}</dd>
-        <dt>Multimedia:</dt>
-        <dd>{{ destination.multimedia }}</dd>
-        <dt>Accessibility:</dt>
-        <dd>{{ destination.accessibilite }}</dd>
-        <dt>Local Cuisine:</dt>
-        <dd>{{ destination.cuisineLocale }}</dd>
 
-    </dl>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="white_shd full margin_bottom_30">
+                              <div class="full graph_head">
+                                     <div class="heading1 margin_0">
+                             <h2><i class="fa fa-file-text-o"></i> Rapport Destination : {{ destination.id }}</h2>
+                         </div>
+                    </div>
+                    <div class="full">
+                        <div class="invoice_inner">
+                           <div class="row">
+                            <div class="col-md-4">
+                              <div class="full invoice_blog padding_infor_info padding-bottom_0">
+                                 <h4>Aspects du voyage</h4>
+                                <p><strong>Pays </strong><br>
+                                 {{ destination.pays }}<br>
+                               <strong>Ville</strong><a href="#"><br>{{ destination.ville }}</a><br>
+                               <strong>Attractions</strong><a href="#"><br>{{ destination.attractions }}</a>
+                           </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                                          <div class="full invoice_blog padding_infor_info padding-bottom_0">
+                                             <h4>Identité touristique</h4>
+                                             <p><strong>Accommodations</strong>
+                                                <br>{{ destination.attractions }}<br>
+                                                <strong>Cuisine locale</strong>
+                                                <br><a href="#">{{ destination.cuisineLocale }}</a><br>
+                                                <strong>Devise</strong><br><a href="#">{{ destination.devise }}</a>
+                                                <br><strong>Accessible : </strong>{{ destination.accessibilite }}
+                                             </p>
+                                          </div>
+                                       </div>
+                                       <div class="col-md-4">
+                                          <div class="full invoice_blog padding_infor_info padding-bottom_0">
+                                             <h4>Destination No - #{{ destination.id }} </h4>
+                                             <p><strong>Description : </strong>{{ destination.description }}<br>
+                                             </p>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              <div class="full gallery_section_inner padding_infor_info">
+                                  <div class="row">
+                                    <div class="col-sm-4 col-md-3 margin_bottom_30">
+                                       <div class="column">
+                                          <a data-fancybox="gallery" href="{{ destination.multimedia }}"><img class="img-responsive" src="{{ destination.multimedia }}" alt="Pas d'image trouvé" /></a>
+                                       </div>
+                                       <div class="heading_section">
+                                          <h4>Image du {{ destination.pays }} - {{ destination.ville }}</h4>
+                                       </div>
+                                    </div>
+
+                        </div>
+                        <div style="text-align: center;">
+                                <button type="button" class="btn cur-p btn-warning">
+                                   <a href={{ path('app_destination_edit', {'id': destination.id}) }}" class="btn-get-started scrollto" style="color: white; text-decoration: none;">Modifier</a>
+                                </button>
+                                <button type="button" class="btn cur-p btn-danger">
+                                    <a href={{ path('app_destination_delete', {'id': destination.id}) }} class="btn-get-started scrollto" style="color: white; text-decoration: none;">Supprimer</a>
+                                </button>
+                        </div>
+
+
+
 {% endblock %}
