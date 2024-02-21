@@ -22,6 +22,14 @@ class GuideController extends AbstractController
         ]);
     }
 
+    #[Route('/front', name: 'front_guide_index', methods: ['GET'])]
+    public function Frontindex(GuideRepository $guideRepository): Response
+    {
+        return $this->render('guide/frontindex.html.twig', [
+            'guides' => $guideRepository->findAll(),
+        ]);
+    }
+
     #[Route('/new', name: 'app_guide_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -46,6 +54,14 @@ class GuideController extends AbstractController
     public function show(Guide $guide): Response
     {
         return $this->render('guide/show.html.twig', [
+            'guide' => $guide,
+        ]);
+    }
+
+    #[Route('/front/{id}', name: 'front_guide_show', methods: ['GET'])]
+    public function Frontshow(Guide $guide): Response
+    {
+        return $this->render('guide/frontshow.html.twig', [
             'guide' => $guide,
         ]);
     }

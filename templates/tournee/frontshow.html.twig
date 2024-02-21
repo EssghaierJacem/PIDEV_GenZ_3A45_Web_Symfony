@@ -1,12 +1,22 @@
-{% extends 'backbase.html.twig' %}
+{% extends 'frontbase.html.twig' %}
 
 
 {% block body %}
 
- 
+ <section class="breadcrumbs">
+            <div class="container">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2>Portfolio Details</h2>
+                    <ol>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="portfolio.html">Tournées</a></li>
+                        <li>Détailles de la Tournée</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
          <section class="breadcrumbs">
          <div class="container">
-          <button onclick="history.back();" class="btn btn-dark">Retour</button>
 <title>Tournee</title>
 
 
@@ -54,13 +64,7 @@
     </table>
   <div class="text-end mt-4">
     <a href="{{ path('app_tournee_index') }}" class="btn btn-sm btn-info">back to list</a>
-    </div>
-
-    <a href="{{ path('app_tournee_edit', {'id': tournee.id}) }}" class="btn btn-sm btn-warning">edit</a>
-
-    {{ include('tournee/_delete_form.html.twig') }}
-
-    </div>
+   
     </section>
 
 {% endblock %}

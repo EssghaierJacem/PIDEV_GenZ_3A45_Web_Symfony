@@ -22,6 +22,14 @@ class TourneeController extends AbstractController
         ]);
     }
 
+    #[Route('/front', name: 'front_tournee_index', methods: ['GET'])]
+    public function Frontindex(TourneeRepository $tourneeRepository): Response
+    {
+        return $this->render('tournee/frontindex.html.twig', [
+            'tournees' => $tourneeRepository->findAll(),
+        ]);
+    }
+
     #[Route('/new', name: 'app_tournee_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -43,11 +51,20 @@ class TourneeController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+    
 
     #[Route('/{id}', name: 'app_tournee_show', methods: ['GET'])]
     public function show(Tournee $tournee): Response
     {
         return $this->render('tournee/show.html.twig', [
+            'tournee' => $tournee,
+        ]);
+    }
+
+    #[Route('/front/{id}', name: 'front_tournee_show', methods: ['GET'])]
+    public function Frontshow(Tournee $tournee): Response
+    {
+        return $this->render('tournee/frontshow.html.twig', [
             'tournee' => $tournee,
         ]);
     }
@@ -84,6 +101,11 @@ class TourneeController extends AbstractController
 
         return $this->redirectToRoute('app_tournee_index');
     }
+    
+
+    
+
+    
 
 }
   
