@@ -1,8 +1,14 @@
-{% extends 'frontbase.html.twig' %}
+{% extends 'backbase.html.twig' %}
 {% block body %}
                    <section class="breadcrumbs">
             <div class="container">
                 <div class="d-flex justify-content-between align-items-center">
+                    
+                    <ol>
+                       <!-- <li><a href="index.html">Home</a></li>
+                        <li><a href="portfolio.html">Your Entity</a></li>
+                        <li>Addition mta3 Entity mtaaek</li> -->
+                    </ol>
                 </div>
             </div>
         </section>
@@ -14,37 +20,38 @@
             <tr>
                 <th>Id</th>
                 <th>Num Commande</th>
-               <th>Prix</th> 
+                <th>Prix</th>
                 <th>Code Promo</th>
                 <th>Type Paiement</th>
                 <th>Email</th>
                 <th>Date Commande</th>
-                <th>Actions</th>
+                <th>actions</th>
             </tr>
         </thead>
         <tbody>
-            {% for commande in commandes %}
+        {% for commande in commandes %}
             <tr>
                 <td>{{ commande.id }}</td>
                 <td>{{ commande.numCommande }}</td>
-              <td>{{ commande.prix }}</td> 
+                <td>{{ commande.prix }}</td>
                 <td>{{ commande.codePromo }}</td>
                 <td>{{ commande.typePaiement }}</td>
                 <td>{{ commande.email }}</td>
                 <td>{{ commande.dateCommande ? commande.dateCommande|date('Y-m-d') : '' }}</td>
-                <td><a href="{{ path('app_commande_show', {'id': commande.id}) }}" class="btn btn-sm btn-info">Show</a></td>
-                <td><a href="{{ path('app_commande_edit', {'id': commande.id}) }}" class="btn btn-sm btn-warning">Edit</a></td>
-                <td><a href="{{ path('app_commande_delete', {'id':commande.id}) }}" class="badge bg-danger">Delete</a></td>
-            </tr>
-            {% else %}
+                
+                
+               
+                <td>{{ include('commande/backdelete.html.twig') }}</td>
+                </tr>
+        {% else %}
             <tr>
-                <td colspan="8">PAS DE COMMANDES</td>
+                <td colspan="8">no records found</td>
             </tr>
-            {% endfor %}
+        {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_commande_new') }}" class="badge bg-success">Create New</a>
-    </div>
+    
+</div>
     </section>
 {% endblock %}

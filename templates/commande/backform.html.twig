@@ -1,9 +1,15 @@
-{% extends 'frontbase.html.twig' %}
+{% extends 'backbase.html.twig' %}
 
 {% block body %}
 <section class="breadcrumbs">
     <div class="container">
         <div class="d-flex justify-content-between align-items-center">
+            <h2>Portfolio Details</h2>
+            <ol>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="portfolio.html">Your Entity</a></li>
+                <li>Addition mta3 Entity mtaaek</li>
+            </ol>
         </div>
     </div>
 </section>
@@ -23,15 +29,7 @@
                     </div>
                 {% endif %}
             </div>
-           <div class="form-group">
-                {{ form_label(form.prix, 'prix', {'label_attr': {'class': 'form-label'}}) }} 
-                {{ form_widget(form.prix, {'attr': {'class': 'form-control'}}) }}
-                {% if form_errors(form.prix) is not empty %}
-                    <div class="alert text-danger">
-                        {{ form_errors(form.prix) }}
-                    </div>
-                {% endif %}
-            </div>  
+           
             <div class="form-group">
                 {{ form_label(form.code_promo, 'code_promo', {'label_attr': {'class': 'form-label'}}) }}
                 {{ form_widget(form.code_promo, {'attr': {'class': 'form-control'}}) }}

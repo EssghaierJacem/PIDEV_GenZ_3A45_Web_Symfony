@@ -1,15 +1,15 @@
 
-{% extends 'frontbase.html.twig' %}
+{% extends 'backbase.html.twig' %}
 {% block body %}
 
         <section class="breadcrumbs">
             <div class="container">
                 <div class="d-flex justify-content-between align-items-center">
-                    
+                    <h2></h2>
                     <ol>
-                       <!-- <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html">Home</a></li>
                         <li><a href="portfolio.html">Your Entity</a></li>
-                        <li>Addition mta3 Entity mtaaek</li> -->
+                        <li>Addition mta3 Entity mtaaek</li>
                     </ol>
                 </div>
             </div>
@@ -80,7 +80,7 @@
 
         
 
-        <br> <br><div class="text-end mt-4">
+        <div class="text-end mt-4">
             <button type="submit" class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
         </div>
         {{ form_end(form) }}

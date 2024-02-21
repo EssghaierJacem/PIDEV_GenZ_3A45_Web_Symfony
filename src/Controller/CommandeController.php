@@ -21,6 +21,13 @@ class CommandeController extends AbstractController
             'commandes' => $commandeRepository->findAll(),
         ]);
     }
+    #[Route('/BackIndex', name: 'commande_index', methods: ['GET'])]
+    public function Backindex(CommandeRepository $commandeRepository): Response
+    {
+        return $this->render('commande/backindex.html.twig', [
+            'commandes' => $commandeRepository->findAll(),
+        ]);
+    }
 
     #[Route('/new', name: 'app_commande_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -86,4 +93,32 @@ class CommandeController extends AbstractController
 
         return $this->redirectToRoute('app_commande_index', [], Response::HTTP_SEE_OTHER);
     }
+    #[Route('/{id}/back_edit', name: 'back_edit', methods: ['GET', 'POST'])]
+    public function back_edit(Request $request, Commande  $commande, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(CommandeType::class, $commande);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_commande_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('commande/backedit.html.twig', [
+            'commande' => $commande,
+            'form' => $form,
+        ]);
+    }
+    #[Route('/{id}/delete', name: 'commande_delete', methods: ['POST'])]
+    public function deleteBack(Request $request, Commande $commande, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$commande->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($commande);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('commande_index', [], Response::HTTP_SEE_OTHER);
+    }
+
 }

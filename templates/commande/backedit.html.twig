@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+
+<title>Edit Commande</title>
+
+{% block body %}
+
+
+    {{ include('commande/backform.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('commande_index') }}">back to list</a>
+
+    {{ include('commande/_delete_form.html.twig') }}
+{% endblock %}

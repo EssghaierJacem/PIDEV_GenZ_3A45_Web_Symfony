@@ -16,21 +16,23 @@ class Reservation
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "vous devez mettre le type de votre vehicule !!!")]
+    #[Assert\NotBlank(message: "vous devez saisir le nom de client !!!")]
     private ?string $nom_client = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Assert\NotBlank(message: "vous devez mettre le type de votre vehicule !!!")]
+    #[Assert\NotBlank(message: "vous devez saisir le prenom de client !!!")]
     private ?string $prenom_client = null;
 
     #[ORM\Column(nullable: true)]
     #[Assert\Length( min : 8,minMessage :"Entrer num au min de 8 caracteres")]    private ?int $num_tel = null;
 
     #[ORM\Column(nullable: true)]
-    #[Assert\NotBlank(message: "vous devez mettre le type de votre vehicule !!!")]
+    #[Assert\NotBlank(message: "vous devez saisir le quantité !!!")]
     private ?int $quantite = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[Assert\NotBlank(message: "La date de réservation est requise.")]
+    #[Assert\GreaterThan("today", message: "La date de réservation doit être dans le futur.")]
     private ?\DateTimeInterface $date_reservation = null;
 
     #[ORM\Column(length: 255, nullable: true)]

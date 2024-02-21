@@ -22,6 +22,14 @@ class ReservationController extends AbstractController
         ]);
     }
 
+    #[Route('/backIndex', name: 'reservation_index', methods: ['GET'])]
+    public function Backindex(ReservationRepository $reservationRepository): Response
+    {
+        return $this->render('reservation/backindex.html.twig', [
+            'reservations' => $reservationRepository->findAll(),
+        ]);
+    }
+
     #[Route('/new', name: 'app_reservation_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -33,7 +41,11 @@ class ReservationController extends AbstractController
             $entityManager->persist($reservation);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash('success', 'reservation created successfully.');
+
+            return $this->redirectToRoute('app_reservation_index');
+
+           
         }
 
         return $this->renderForm('reservation/new.html.twig', [
@@ -41,7 +53,6 @@ class ReservationController extends AbstractController
             'form' => $form,
         ]);
     }
-
     #[Route('/{id}', name: 'app_reservation_show', methods: ['GET'])]
     public function show(Reservation $reservation): Response
     {
@@ -77,5 +88,32 @@ class ReservationController extends AbstractController
         }
 
         return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
+    }
+    #[Route('/{id}/back_edit', name: 'back_edit', methods: ['GET', 'POST'])]
+    public function back_edit(Request $request, Reservation $reservation, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(ReservationType::class, $reservation);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('reservation_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('reservation/backedit.html.twig', [
+            'reservation' => $reservation,
+            'form' => $form,
+        ]);
+    }
+    #[Route('/{id}/delete', name: 'reservation_delete', methods: ['POST'])]
+    public function deleteBack(Request $request, Reservation $reservation, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$reservation->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($reservation);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('reservation_index', [], Response::HTTP_SEE_OTHER);
     }
 }
