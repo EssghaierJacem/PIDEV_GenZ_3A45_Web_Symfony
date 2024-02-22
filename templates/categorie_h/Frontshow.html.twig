@@ -1,0 +1,47 @@
+{% extends 'frontbase.html.twig'%}
+
+{% block title %}
+	Détail Catégorie
+{% endblock %}
+{% block body %}
+	<section class="breadcrumbs">
+		<div class="container">
+			<div class="d-flex justify-content-between align-items-center">
+				<h2>Portfolio Details</h2>
+				<ol>
+					<li>
+						<a href="index.html">Home</a>
+					</li>
+					<li>
+						<a href="portfolio.html">Your Entity</a>
+					</li>
+					<li>Addition mta3 Entity mtaaek</li>
+				</ol>
+			</div>
+		</div>
+	</section>
+
+	<section id="portfolio-details" class="portfolio-details">
+		<div class="container">
+			<table class="table">
+				<tbody>
+					<tr>
+						<th>Id</th>
+						<td>{{ categorie_h.id }}</td>
+					</tr>
+					<tr>
+						<th>Type</th>
+						<td>{{ categorie_h.Type }}</td>
+					</tr>
+					<tr>
+						<th>Description</th>
+						<td>{{ categorie_h.description }}</td>
+					</tr>
+				</tbody>
+			</table>
+
+
+		</div>
+	</section>
+
+{% endblock %}

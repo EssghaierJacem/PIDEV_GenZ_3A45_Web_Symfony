@@ -1,0 +1,17 @@
+{% extends "backbase.html.twig" %}
+
+{% block title %}
+	Edit Accommodation
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<h1>Edit Accommodation</h1>
+
+		{{ include('hebergement/_form.html.twig', {'button_label': 'Update'}) }}
+
+		<a href="{{ path('app_hebergement_index') }}" class="btn btn-primary">Back to List</a>
+
+		{{ include('hebergement/_delete_form.html.twig') }}
+	</div>
+{% endblock %}
