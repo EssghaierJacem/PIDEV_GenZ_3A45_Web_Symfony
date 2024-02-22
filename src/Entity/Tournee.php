@@ -16,44 +16,44 @@ class Tournee
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\Length( min: 3, minMessage: '...',),]
-    #[Assert\NotBlank(message: "... !!!")]
+    #[Assert\Length( min: 3, minMessage: 'Le nom doit contenir au moins 3 lettres',),]
+    #[Assert\NotBlank(message: "Il faut saisir le nom !!!")]
     private ?string $nom = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     #[Assert\GreaterThan('today' , message: "la date  de tournée doit etre supérieure à la date d'aujourd'hui !!")]
-    #[Assert\NotBlank(message: "... !!!")]
+    #[Assert\NotBlank(message: "Il faut saisir la date !!!")]
     private ?\DateTimeInterface $dateDebut = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Assert\NotBlank(message: "... !!!")]
-    #[Assert\Length( min: 3, minMessage: '...',),]
+    #[Assert\NotBlank(message: "Il faut saisir la durée !!!")]
+    #[Assert\Length( min: 2, minMessage: 'La durée doit contenir au moins 2 lettres',),]
     private ?string $duree = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Assert\NotBlank(message: "... !!!")]
-    #[Assert\Length( min: 3, minMessage: '...',),]
+    #[Assert\NotBlank(message: "Il faut saisir la description !!!")]
+    #[Assert\Length( min: 10, minMessage: 'La description doit contenir au moins 10 lettres',),]
     private ?string $description = null;
 
     #[ORM\Column(nullable: true)]
-    
-    #[Assert\NotBlank(message: "... !!!")]
+    #[Assert\Length( min: 2, minMessage: 'Le tarif doit contenir au moins 2 chiffres',),]
+    #[Assert\NotBlank(message: "Il faut saisir le tarif !!!")]
     private ?float $tarif = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Assert\NotBlank(message: "... !!!")]
-    #[Assert\Length( min: 3, minMessage: '...',),]
+    #[Assert\NotBlank(message: "Il faut saisir les monuments !!!")]
+    #[Assert\Length( min: 4, minMessage: 'Les doivent contenir au moins 4 lettres',),]
     private ?string $monuments = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Assert\NotBlank(message: "...!!!")]
-    #[Assert\Length( min: 3, minMessage: '...',),]
+    #[Assert\NotBlank(message: "Il faut saisir la tranche d'àge!!!")]
+    #[Assert\Length( min: 3, minMessage: 'La description doit contenir au moins 3 caractères',),]
     private ?string $trancheAge = null;
 
     #[ORM\Column(length: 255, nullable: true)]
    
-    #[Assert\NotBlank(message: "... !!!")]
-    #[Assert\Length( min: 3, minMessage: '...',),]
+    #[Assert\NotBlank(message: "Il faut saisir le moyen de transport !!!")]
+    #[Assert\Length( min: 3, minMessage: 'Le moyen de transport doit contenir au moins 3 lettres',),]
     private ?string $moyenTransport = null;
 
     #[ORM\ManyToOne(inversedBy: 'tournee')]

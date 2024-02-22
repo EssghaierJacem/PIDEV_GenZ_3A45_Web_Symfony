@@ -8,12 +8,12 @@
  
          <section class="breadcrumbs">
          <div class="container">
-         <button onclick="history.back();" class="btn btn-dark">Retour</button>
+        
          
     <h1>Guide </h1>
-    <a href="{{ path('app_guide_new') }}" class="btn btn-success btn-lg btn-block">Create new</a>
+   
 
-    <table class="table">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Id</th>
@@ -23,7 +23,8 @@
                 <th>LanguesParlees</th>
                 <th>Experiences</th>
                 <th>TarifHoraire</th>
-                <th>Num_tel</th>
+                <th>Telephone</th>
+                <th>Actions</th>
                 
             </tr>
         </thead>
@@ -38,11 +39,11 @@
                 <td>{{ guide.experiences }}</td>
                 <td>{{ guide.tarifHoraire }}</td>
                 <td>{{ guide.numTel }}</td>
-                <td>
+                
                     <td><a href="{{ path('app_guide_show', {'id': guide.id}) }}" class="btn btn-sm btn-info">show</a></td>
                     <td><a href="{{ path('app_guide_edit', {'id': guide.id}) }}" class="btn btn-sm btn-warning">edit</a></td>
                     <td>{{ include('guide/_delete_form.html.twig') }}</td>
-                </td>
+                
             </tr>
         {% else %}
             <tr>
@@ -51,6 +52,7 @@
         {% endfor %}
         </tbody>
     </table>
+     <a href="{{ path('app_guide_new') }}" class="btn btn-success btn-lg btn-block">Create new</a>
 
     
      </div>

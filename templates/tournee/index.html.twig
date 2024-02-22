@@ -6,10 +6,10 @@
 
         <section class="breadcrumbs">
          <div class="container">
-         <button onclick="history.back();" class="btn btn-dark">Retour</button>
+        
 
     <h1>Tournée </h1>
-    <a href="{{ path('app_tournee_new') }}" class="btn btn-success btn-lg btn-block">Create new</a>
+    
     <table class="table table-striped ">
         <thead>
             <tr>
@@ -17,11 +17,12 @@
                 <th>Nom</th>
                 <th>DateDebut</th>
                 <th>Duree</th>
-                <th>Description</th>
+                {# <th>Description</th> #}
                 <th>Tarif</th>
                 <th>Monuments</th>
                 <th>TrancheAge</th>
                 <th>MoyenTransport</th>
+                <th>Actions</th>
                 
             </tr>
         </thead>
@@ -32,7 +33,7 @@
                 <td>{{ tournee.nom }}</td>
                 <td>{{ tournee.dateDebut ? tournee.dateDebut|date('Y-m-d') : '' }}</td>
                 <td>{{ tournee.duree }}</td>
-                <td>{{ tournee.description }}</td>
+                {# <td>{{ tournee.description }}</td> #}
                 <td>{{ tournee.tarif }}</td>
                 <td>{{ tournee.monuments }}</td>
                 <td>{{ tournee.trancheAge }}</td>
@@ -41,7 +42,7 @@
                     <td><a href="{{ path('app_tournee_show', {'id': tournee.id}) }}" class="btn btn-sm btn-info">show</a></td>
                     <td><a href="{{ path('app_tournee_edit', {'id': tournee.id}) }}" class="btn btn-sm btn-warning">edit</a></td>
                     <td> {{ include('tournee/_delete_form.html.twig') }}</td>
-                    
+                  
                 
             </tr>
         {% else %}
@@ -51,6 +52,7 @@
         {% endfor %}
         </tbody>
     </table>
+    <a href="{{ path('app_tournee_new') }}" class="btn btn-success btn-lg btn-block">Create new</a>
 
 
      </div>

@@ -2,21 +2,21 @@
 
 {% block body %}
 
-<section class="breadcrumbs">
-    <div class="container">
-        <div class="d-flex justify-content-between align-items-center">
-            <h2>Portfolio Details</h2>
-            <ol>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="portfolio.html">Your Entity</a></li>
-                <li>Addition mta3 Entity mtaaek</li>
-            </ol>
-        </div>
-    </div>
-</section>
+<div class="midde_cont">
+                      <div class="container-fluid">
+                         <div class="row column_title">
+                            <div class="col-md-12">
+                             <div class="page_title">
+                                <h2><a href="{{ path('app_tournee_index') }}"  ">
+                                 <i class="fa fa-arrow-left">   &nbsp; </i>
+                                </a> Tournee </h2>
+                            </div>
+                      </div>
+                    </div>
 
 <section id="portfolio-details" class="portfolio-details">
     <div class="container">
+    
         {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form-details'}}) }}
 
         <div class="row">
@@ -108,12 +108,12 @@
                 </div>
             </div>
         </div>
-
+    
         <div class="form-group">
             {{ form_label(form.destination, 'Destination', {'label_attr': {'class': 'form-label'}}) }}
             {{ form_widget(form.destination, {'attr': {'class': 'form-control'}}) }}
             {% if form_errors(form.destination) is not empty %}
-                <div class="alert text-danger">
+                <div class="alert text-danger" role="alert">
                     {{ form_errors(form.destination) }}
                 </div>
             {% endif %}
@@ -123,7 +123,7 @@
             {{ form_label(form.guide, 'Guide', {'label_attr': {'class': 'form-label'}}) }}
             {{ form_widget(form.guide, {'attr': {'class': 'form-control'}}) }}
             {% if form_errors(form.guide) is not empty %}
-                <div class="alert text-danger">
+                <div class="alert text-danger" role="alert">
                     {{ form_errors(form.guide) }}
                 </div>
             {% endif %}

@@ -1,9 +1,20 @@
 {% extends 'backbase.html.twig' %}
 {% block body %}
 
+<div class="midde_cont">
+                      <div class="container-fluid">
+                         <div class="row column_title">
+                            <div class="col-md-12">
+                             <div class="page_title">
+                                <h2><a href="{{ path('app_guide_index') }}"  ">
+                                 <i class="fa fa-arrow-left">   &nbsp; </i>
+                                </a> Guide </h2>
+                            </div>
+                      </div>
+                    </div>
         <section class="breadcrumbs">
          <div class="container">
-          <button onclick="history.back();" class="btn btn-dark">Retour</button>
+         
 <title>Guide</title>
 
 
@@ -56,7 +67,7 @@
     <a href="{{ path('app_guide_edit', {'id': guide.id}) }}" class="btn btn-sm btn-warning">edit</a>
     <a {{ include('guide/_delete_form.html.twig') }}
     </div>
-    <a href="{{ path('app_guide_index') }}" class="btn btn-sm btn-info">back to list</a>
+  
     
     </div>
     </section>
