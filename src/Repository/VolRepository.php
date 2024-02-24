@@ -21,6 +21,14 @@ class VolRepository extends ServiceEntityRepository
         parent::__construct($registry, Vol::class);
     }
 
+    public function paginatonQuery()
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.id','ASC')
+            ->getQuery()
+            ;
+    }
+
 //    /**
 //     * @return Vol[] Returns an array of Vol objects
 //     */

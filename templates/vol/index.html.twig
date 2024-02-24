@@ -27,7 +27,7 @@
         </thead>
 
         <tbody>
-            {% for vol in vols %}
+            {% for vol in pagination %}
                 <tr>
                     <th scope="row">{{ vol.id }}</th>
                     <td>{{ vol.compagnieA }}</td>
@@ -52,6 +52,7 @@
             </div>
         </tbody>
     </table>
+    {{ knp_pagination_render ( pagination ) }}
     </div>
     </div>
 {% endblock %}

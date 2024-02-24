@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Destination;
 use App\Form\DestinationType;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,22 +15,30 @@ use App\Repository\DestinationRepository;
 class DestinationController extends AbstractController
 {
     #[Route('/destination', name: 'app_destination')]
-    public function index(DestinationRepository $destinationRepository): Response
+    public function index(DestinationRepository $destinationRepository,Request $request, PaginatorInterface $paginator): Response
     {
-        $destinations = $destinationRepository->findAll();
+        $pagination = $paginator->paginate(
+            $destinationRepository->paginatonQuery(),
+            $request->query->get('page',1),
+            8
+        );
 
         return $this->render('destination/index.html.twig', [
-            'destinations' => $destinations,
+            'pagination' => $pagination
         ]);
     }
 
     #[Route('/show_destination', name: 'app_destinations')]
-    public function destinations(DestinationRepository $destinationRepository): Response
+    public function destinations(DestinationRepository $destinationRepository, Request $request, PaginatorInterface $paginator): Response
     {
-        $destinations = $destinationRepository->findAll();
+        $pagination = $paginator->paginate(
+            $destinationRepository->paginatonQuery(),
+            $request->query->get('page',1),
+            6
+        );
 
         return $this->render('destination/destinations.html.twig', [
-            'destinations' => $destinations,
+            'pagination' => $pagination
         ]);
     }
 

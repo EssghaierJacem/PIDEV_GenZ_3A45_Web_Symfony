@@ -27,7 +27,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for destination in destinations %}
+            {% for destination in pagination %}
                 <tr>
                     <th scope="row">{{ destination.id }}</th>
                     <td>{{ destination.pays }}</td>
@@ -57,6 +57,7 @@
             {% endfor %}
         </tbody>
     </table>
+                            {{ knp_pagination_render ( pagination ) }}
     </div>
     </div>
 

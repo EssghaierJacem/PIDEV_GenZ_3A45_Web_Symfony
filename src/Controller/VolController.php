@@ -9,6 +9,7 @@ use App\Repository\DestinationRepository;
 use App\Repository\UserRepository;
 use App\Repository\AvisRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,13 +17,17 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class VolController extends AbstractController
 {
-    #[Route('/show_vol', name: 'backapp_vol')]
-    public function index(VolRepository $volRepository): Response
+    #[Route('/vols', name: 'backapp_vol')]
+    public function index(VolRepository $volRepository, Request $request,PaginatorInterface $paginator): Response
     {
-        $vols = $volRepository->findAll();
+        $pagination = $paginator->paginate(
+            $volRepository->paginatonQuery(),
+            $request->query->get('page',1),
+            8
+        );
 
         return $this->render('vol/index.html.twig', [
-            'vols' => $vols,
+            'pagination' => $pagination
         ]);
     }
 
@@ -45,13 +50,17 @@ class VolController extends AbstractController
         ]);
     }
 
-    #[Route('/vols', name: 'app_vol')]
-    public function indexVol(VolRepository $volRepository): Response
+    #[Route('/show_vol', name: 'app_vol')]
+    public function indexVol(VolRepository $volRepository, Request $request,PaginatorInterface $paginator): Response
     {
-        $vols = $volRepository->findAll();
+        $pagination = $paginator->paginate(
+            $volRepository->paginatonQuery(),
+            $request->query->get('page',1),
+            5
+        );
 
         return $this->render('vol/frontVol.html.twig', [
-            'vols' => $vols,
+            'pagination' => $pagination
         ]);
     }
 

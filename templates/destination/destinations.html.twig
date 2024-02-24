@@ -81,7 +81,7 @@
             <!-- Right section for displaying destinations -->
             <div class="col-md-9 mb-4">
                 <div class="row destination-cards">
-                    {% for destination in destinations %}
+                    {% for destination in pagination %}
                     <div class="col-md-4 mb-4">
                         <div class="card h-100">
                             <img src="{{ destination.multimedia }}" class="card-img-top" alt="Destination Image" style="height: 200px; width: 100%; object-fit: center;  border-radius: 5px;">
@@ -96,6 +96,7 @@
                     </div>
                     {% endfor %}
                 </div>
+                {{ knp_pagination_render ( pagination ) }}
             </div>
         </div>
     </div>

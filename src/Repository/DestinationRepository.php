@@ -21,6 +21,14 @@ class DestinationRepository extends ServiceEntityRepository
         parent::__construct($registry, Destination::class);
     }
 
+    public function paginatonQuery()
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.id','ASC')
+            ->getQuery()
+            ;
+    }
+
 //    /**
 //     * @return Destination[] Returns an array of Destination objects
 //     */
