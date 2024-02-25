@@ -17,7 +17,7 @@ class Destination
     #[ORM\Column]
     private ?int $id = null;
     #[Assert\NotBlank(message:"Ce champ ne peut pas etre vide")]
-    #[Assert\Length(min:4, minMessage: 'Minmum 4 caractère')]
+    #[Assert\Country]
     #[ORM\Column(length: 255)]
     private ?string $pays = null;
 

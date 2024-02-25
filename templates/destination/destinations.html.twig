@@ -86,8 +86,8 @@
                         <div class="card h-100">
                             <img src="{{ destination.multimedia }}" class="card-img-top" alt="Destination Image" style="height: 200px; width: 100%; object-fit: center;  border-radius: 5px;">
                             <div class="card-body d-flex flex-column">
-                                <h5 class="card-title">{{ destination.pays }}</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">{{ destination.ville }}</h6>
+                                <h5 class="card-title">{{ destination.ville }}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">{{ destination.pays }}</h6>
                                 <p class="card-text" style="max-height: 80px; overflow: hidden; text-overflow: ellipsis;">{{ destination.description }}</p>
                                 <!-- Adjust max-height as needed -->
                                     <a href="{{ path('app_destination_details_show', {'id': destination.id}) }}" class="text-primary">Afficher plus...</a>

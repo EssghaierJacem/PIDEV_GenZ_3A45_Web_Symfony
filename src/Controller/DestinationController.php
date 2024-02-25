@@ -129,4 +129,23 @@ class DestinationController extends AbstractController
 
         return $this->redirectToRoute('app_destination');
     }
+    #[Route('/Destination_map', name: 'map')]
+    public function renderMap(): Response
+    {
+        // Retrieve destination data from your database
+        $destinations = $this->getDoctrine()->getRepository(Destination::class)->findAll();
+
+        $countryCounts = [];
+        foreach ($destinations as $destination) {
+            $country = $destination->getPays();
+            if (!isset($countryCounts[$country])) {
+                $countryCounts[$country] = 0;
+            }
+            $countryCounts[$country]++;
+        }
+
+        return $this->render('destination/map.html.twig', [
+            'countryCounts' => $countryCounts,
+        ]);
+    }
 }
