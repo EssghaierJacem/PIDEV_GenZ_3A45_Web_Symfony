@@ -17,7 +17,7 @@ class Destination
     #[ORM\Column]
     private ?int $id = null;
     #[Assert\NotBlank(message:"Ce champ ne peut pas etre vide")]
-    #[Assert\Country]
+    #[Assert\Length(min:4, minMessage: 'Minmum 4 caractère')]
     #[ORM\Column(length: 255)]
     private ?string $pays = null;
 
@@ -85,6 +85,11 @@ class Destination
 
     #[ORM\OneToMany(mappedBy: 'destination', targetEntity: Tournee::class)]
     private Collection $tournee;
+
+    #[Assert\NotBlank(message:"Ce champ ne peut pas etre vide")]
+    #[Assert\Country]
+    #[ORM\Column(length: 255)]
+    private ?string $abbrev = null;
 
     public function __construct()
     {
@@ -296,5 +301,17 @@ class Destination
     public function __toString()
     {
         return(string)$this->getPays();
+    }
+
+    public function getAbbrev(): ?string
+    {
+        return $this->abbrev;
+    }
+
+    public function setAbbrev(string $abbrev): static
+    {
+        $this->abbrev = $abbrev;
+
+        return $this;
     }
 }

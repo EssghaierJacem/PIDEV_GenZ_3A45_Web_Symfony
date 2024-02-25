@@ -4,11 +4,11 @@
 <section class="breadcrumbs">
     <div class="container">
         <div class="d-flex justify-content-between align-items-center">
-            <h2>Portfolio Details</h2>
+            <h2>Destination - Map</h2>
             <ol>
                 <li><a href="index.html">Home</a></li>
-                <li><a href="portfolio.html">Your Entity</a></li>
-                <li>Addition mta3 Entity mtaaek</li>
+                <li><a href="portfolio.html">Destinations</a></li>
+                <li>Map</li>
             </ol>
         </div>
     </div>
@@ -29,7 +29,7 @@
 
 
 <script>
-    // Retrieve country counts data passed from Symfony
+
     var countryCounts = {{ countryCounts | json_encode | raw }};
 
     // Prepare data for AnyChart Choropleth map
@@ -37,8 +37,8 @@
     for (var country in countryCounts) {
         if (countryCounts.hasOwnProperty(country)) {
             data.push({
-                id: country, // Assuming 'id' is the country code or identifier
-                value: countryCounts[country] // Count for each country
+                id: country,
+                value: countryCounts[country]
             });
         }
     }
@@ -78,18 +78,16 @@
         map.container('map-container');
 
         // Customize map settings
-        map.background().fill("#B3E5FC"); // Set background sea color
-        map.interactivity().zoomOnMouseWheel(true); // Enable zoom on mouse wheel
-        map.padding([10, 10, 10, 10]); // Add padding
+        map.background().fill("#B3E5FC");
+        map.interactivity().zoomOnMouseWheel(true);
+        map.padding([10, 10, 10, 10]);
 
         // Customize series settings
-        series.stroke("#fff"); // Set border color
-        series.hovered().fill("#FFC107"); // Set color on hover
+        series.stroke("#fff");
+        series.hovered().fill("#FFC107");
 
-        // Draw the map
         map.draw();
 
-        // Add legend
         map.legend(true);
 
         map.legend()
@@ -101,7 +99,7 @@
             .padding(50, 0, 0, 70)
             .paginator(false)
             .items(legendItems.map(function(item) {
-                return { text: item.label, iconFill: item.color }; // Assign color to legend item
+                return { text: item.label, iconFill: item.color };
             }));
     });
 </script>

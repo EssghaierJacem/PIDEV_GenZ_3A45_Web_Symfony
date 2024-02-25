@@ -18,6 +18,7 @@ class DestinationType extends AbstractType
     {
         $builder
             ->add('pays')
+            ->add('abbrev')
             ->add('ville')
             ->add('description')
             ->add('attractions')

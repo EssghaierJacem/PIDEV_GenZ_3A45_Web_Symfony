@@ -111,6 +111,15 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group">
+                               {{ form_label(form.abbrev, 'Abbréviation', {'label_attr': {'class': 'control-label col-sm-3'}}) }}
+                                <div class="col-sm-9">
+                                    {{ form_widget(form.abbrev, {'attr': {'class': 'form-control'}}) }}
+                                          <div class="custom-error-message" style="color: red; font-size: 14px; margin-top: 5px; margin-bottom: 10px;">
+                                          {{ form_errors(form.abbrev) }}
+                                          </div>
+                                     </div>
+                                </div>
                             <!-- Accessibility -->
                             <div class="form-group">
                                 {{ form_label(form.accessibilite, 'Accessibility', {'label_attr': {'class': 'control-label col-sm-3'}}) }}

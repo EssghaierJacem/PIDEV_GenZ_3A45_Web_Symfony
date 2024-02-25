@@ -130,14 +130,13 @@ class DestinationController extends AbstractController
         return $this->redirectToRoute('app_destination');
     }
     #[Route('/Destination_map', name: 'map')]
-    public function renderMap(): Response
+    public function renderMap(DestinationRepository $destinationRepository): Response
     {
-        // Retrieve destination data from your database
-        $destinations = $this->getDoctrine()->getRepository(Destination::class)->findAll();
+        $destinations = $destinationRepository->findAll();
 
         $countryCounts = [];
         foreach ($destinations as $destination) {
-            $country = $destination->getPays();
+            $country = $destination->getAbbrev();
             if (!isset($countryCounts[$country])) {
                 $countryCounts[$country] = 0;
             }

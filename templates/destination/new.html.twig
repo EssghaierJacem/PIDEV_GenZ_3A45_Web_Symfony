@@ -86,6 +86,13 @@
                                         </div>
                                     </div>
                                     <div class="field">
+                                        {{ form_label(form.abbrev, 'Abbréviation') }}
+                                        {{ form_widget(form.abbrev, {'attr': {'class': 'form-control'}}) }}
+                                        <div class="custom-error-message" style="color: red; font-size: 14px; margin-top: 5px; margin-bottom: 10px;">
+                                           {{ form_errors(form.abbrev) }}
+                                        </div>
+                                    </div>
+                                    <div class="field">
                                         {{ form_label(form.accessibilite, 'Accessibility') }}
                                         {{ form_widget(form.accessibilite, {'attr': {'class': 'form-control'}}) }}
                                         <div class="custom-error-message" style="color: red; font-size: 14px; margin-top: 5px; margin-bottom: 10px;">
