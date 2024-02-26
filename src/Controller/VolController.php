@@ -53,11 +53,22 @@ class VolController extends AbstractController
     }
 
     #[Route('/show_vol', name: 'app_vol')]
-    public function indexVol(VolRepository $volRepository, Request $request,PaginatorInterface $paginator): Response
+    public function indexVol(VolRepository $volRepository, Request $request, PaginatorInterface $paginator): Response
     {
+
+        $dateDepart = $request->query->get('date_depart');
+        $dateArrivee = $request->query->get('date_arrivee');
+
+
+        if ($dateDepart && $dateArrivee) {
+            $vols = $volRepository->findByDateInterval($dateDepart, $dateArrivee);
+        } else {
+            $vols = $volRepository->findAll();
+        }
+
         $pagination = $paginator->paginate(
-            $volRepository->paginatonQuery(),
-            $request->query->get('page',1),
+            $vols,
+            $request->query->get('page', 1),
             5
         );
 

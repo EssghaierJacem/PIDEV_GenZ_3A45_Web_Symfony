@@ -60,6 +60,16 @@ class VolRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+    public function findByDateInterval($dateDepart, $dateArrivee)
+    {
+        return $this->createQueryBuilder('v')
+            ->andWhere('v.dateDepart >= :dateDepart')
+            ->andWhere('v.dateArrivee <= :dateArrivee')
+            ->setParameter('dateDepart', $dateDepart)
+            ->setParameter('dateArrivee', $dateArrivee)
+            ->getQuery()
+            ->getResult();
+    }
 
 //    /**
 //     * @return Vol[] Returns an array of Vol objects

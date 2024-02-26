@@ -23,21 +23,18 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title text-primary">Filter and Date Selection</h5>
-                            <!-- Add your filter and date selection inputs here -->
-                            <div class="form-group">
-                                <label for="date" class="text-muted">Select Date:</label>
-                                <input type="date" class="form-control" id="date">
-                            </div>
-                            <div class="form-group">
-                                <label for="departure" class="text-muted">Departure Airport:</label>
-                                <input type="text" class="form-control" id="departure" placeholder="Enter departure airport">
-                            </div>
-                            <div class="form-group">
-                                <label for="arrival" class="text-muted">Arrival Airport:</label>
-                                <input type="text" class="form-control" id="arrival" placeholder="Enter arrival airport">
-                            </div>
-                            <!-- Add more filters or inputs as needed -->
-                            <button class="btn btn-primary btn-block" style="margin-bottom: 5px; margin-top: 15px;">Appliquez filters</button>
+                            <form id="searchForm" method="get" action="{{ path('app_vol') }}">
+                                <div class="form-group">
+                                    <label for="dateDepart" class="text-muted">Date de départ :</label>
+                                    <input type="date" class="form-control" id="dateDepart" name="date_depart">
+                                </div>
+                                <div class="form-group">
+                                    <label for="dateArrivee" class="text-muted">Date d'arrivée :</label>
+                                    <input type="date" class="form-control" id="dateArrivee" name="date_arrivee">
+                                </div>
+                                <!-- Add more filters or inputs as needed -->
+                                <button type="submit" class="btn btn-primary btn-block" style="margin-bottom: 5px; margin-top: 15px;">Apply Filters</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -73,4 +70,16 @@
             </div>
         </div>
     </section>
+
+    <script>
+        document.getElementById('searchForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const dateDepart = document.getElementById('dateDepart').value;
+            const dateArrivee = document.getElementById('dateArrivee').value;
+            const url = new URL(window.location.href);
+            url.searchParams.set('date_depart', dateDepart);
+            url.searchParams.set('date_arrivee', dateArrivee);
+            window.location.href = url.toString();
+        });
+    </script>
 {% endblock %}
