@@ -33,16 +33,25 @@ class DestinationController extends AbstractController
     #[Route('/show_destination', name: 'app_destinations')]
     public function destinations(DestinationRepository $destinationRepository, Request $request, PaginatorInterface $paginator): Response
     {
+        $keyword = $request->query->get('keyword');
+
         $d_destinations = $destinationRepository->findDistinctCountries();
+
+        if ($keyword) {
+            $destinations = $destinationRepository->searchByKeyword($keyword);
+        } else {
+            $destinations = $destinationRepository->paginatonQuery();
+        }
+
         $pagination = $paginator->paginate(
-            $destinationRepository->paginatonQuery(),
-            $request->query->get('page',1),
+            $destinations,
+            $request->query->get('page', 1),
             6
         );
 
         return $this->render('destination/destinations.html.twig', [
             'pagination' => $pagination,
-            'd_destinations' => $d_destinations
+            'd_destinations' => $d_destinations,
         ]);
     }
 

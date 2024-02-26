@@ -9,8 +9,8 @@
         <div class="d-flex justify-content-between align-items-center">
             <h2>Liste des destinations</h2>
             <ol>
-                <li><a href="{{path ('app_front') }}">Home</a></li>
-                <li><a href="{{ path('app_destinations')}}">Destinations</a></li>
+                <li><a href="{{ path('app_front') }}">Home</a></li>
+                <li><a href="{{ path('app_destinations') }}">Destinations</a></li>
             </ol>
         </div>
     </div>
@@ -25,81 +25,42 @@
                     <div class="card-body">
                         <!-- Search form -->
                         <h5 class="card-title">Chercher par pays</h5>
-                        <form action="#" method="GET">
+                        <form action="{{ path('app_destinations') }}" method="GET" id="destination-filter-form">
                             <div class="form-group">
-                                <input type="text" class="form-control" name="search" placeholder="Saisir une pays...">
+                                <input type="text" class="form-control" name="keyword" placeholder="Saisir un pays...">
                             </div>
-
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Rechercher</button>
+                            </div>
                         </form>
 
-                        <h5 class="card-title mt-4">Filter</h5>
-                            <div class="form-group">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="1" id="filter1">
-                                <label class="form-check-label" for="filter1">
-                                    Amérique-Nord
-                                </label>
-                            </div>
-                            <div class="form-group">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="1" id="filter1">
-                                <label class="form-check-label" for="filter1">
-                                    Afrique
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="1" id="filter1">
-                                <label class="form-check-label" for="filter1">
-                                    Europe
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="1" id="filter1">
-                                <label class="form-check-label" for="filter1">
-                                    Asie
-                                </label>
-                            </div>
-
-                            <div class="form-group mt-4">
-                                 <label for="priceRange">Varience Prix</label>
-                                 <input type="range" class="form-control-range" id="priceRange" min="0" max="999" value="0">
-                             </div>
-                            <div class="form-group">
-                                <label for="ratingRange">Qualité (0-5)</label>
-                                <input type="range" class="form-control-range" id="ratingRange" min="0" max="5" value="0">
-                            </div>
-                            <div class="form-group">
-                            <label><button type="submit" class="btn btn-primary">Search</button></label>
-                            </div>
-                        </div>
+                        <!-- Filter by country -->
+                        <h5 class="card-title mt-4">Filtrer par pays</h5>
+                        Comming soon
                     </div>
                 </div>
             </div>
-           </div>
-
-
             <!-- Right section for displaying destinations -->
             <div class="col-md-9 mb-4">
                 <div class="row destination-cards">
                     {% for destination in pagination %}
-                    <div class="col-md-4 mb-4">
-                        <div class="card h-100">
-                            <img src="{{ destination.multimedia }}" class="card-img-top" alt="Destination Image" style="height: 200px; width: 100%; object-fit: center;  border-radius: 5px;">
-                            <div class="card-body d-flex flex-column">
-                                <h5 class="card-title">{{ destination.pays }}</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">{{ destination.ville }}</h6>
-                                <p class="card-text" style="max-height: 80px; overflow: hidden; text-overflow: ellipsis;">{{ destination.description }}</p>
-                                <!-- Adjust max-height as needed -->
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <img src="{{ destination.multimedia }}" class="card-img-top" alt="Destination Image" style="height: 200px; width: 100%; object-fit: center; border-radius: 5px;">
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title">{{ destination.pays }}</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">{{ destination.ville }}</h6>
+                                    <p class="card-text" style="max-height: 80px; overflow: hidden; text-overflow: ellipsis;">{{ destination.description }}</p>
+                                    <!-- Adjust max-height as needed -->
                                     <a href="{{ path('app_destination_details_show', {'id': destination.id}) }}" class="text-primary">Afficher plus...</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     {% endfor %}
                 </div>
-                {{ knp_pagination_render ( pagination ) }}
+                {{ knp_pagination_render(pagination) }}
             </div>
         </div>
     </div>
 </section>
-
 {% endblock %}

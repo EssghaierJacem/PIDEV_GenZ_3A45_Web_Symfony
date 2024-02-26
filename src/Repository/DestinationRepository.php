@@ -70,6 +70,20 @@ class DestinationRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function searchByKeyword($keyword)
+    {
+        return $this->createQueryBuilder('d')
+            ->andWhere('d.pays LIKE :keyword 
+                      OR d.ville LIKE :keyword 
+                      OR d.description LIKE :keyword 
+                      OR d.attractions LIKE :keyword 
+                      OR d.devise LIKE :keyword')
+            ->setParameter('keyword', '%'.$keyword.'%')
+            ->getQuery()
+            ->getResult();
+    }
+
+
 //    /**
 //     * @return Destination[] Returns an array of Destination objects
 //     */
