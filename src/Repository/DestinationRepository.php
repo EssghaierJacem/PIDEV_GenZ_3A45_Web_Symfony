@@ -29,6 +29,47 @@ class DestinationRepository extends ServiceEntityRepository
             ;
     }
 
+    public function findDistinctCountries(): array
+    {
+        return $this->createQueryBuilder('d')
+            ->select('DISTINCT d.pays')
+            ->orderBy('d.pays', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+    public function findAllSortedByCriteria($criteria)
+    {
+        $entityManager = $this->getEntityManager();
+        $queryBuilder = $entityManager->createQueryBuilder();
+
+        switch ($criteria) {
+            case 'ID':
+                $orderBy = 'd.id';
+                break;
+            case 'PAYS':
+                $orderBy = 'd.pays';
+                break;
+            case 'VILLE':
+                $orderBy = 'd.ville';
+                break;
+            case 'ATTRACTIONS':
+                $orderBy = 'd.attractions';
+                break;
+            case 'DEVISE':
+                $orderBy = 'd.devise';
+                break;
+            default:
+                $orderBy = 'd.id';
+        }
+
+        return $queryBuilder
+            ->select('d')
+            ->from(Destination::class, 'd')
+            ->orderBy($orderBy, 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Destination[] Returns an array of Destination objects
 //     */

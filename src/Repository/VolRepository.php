@@ -28,6 +28,38 @@ class VolRepository extends ServiceEntityRepository
             ->getQuery()
             ;
     }
+    public function findAllSortedByCriteria($criteria)
+    {
+        $entityManager = $this->getEntityManager();
+        $queryBuilder = $entityManager->createQueryBuilder();
+
+        switch ($criteria) {
+            case 'ID':
+                $orderBy = 'v.id';
+                break;
+            case 'COMPAGNIE':
+                $orderBy = 'v.compagnieA';
+                break;
+            case 'NUM_VOL':
+                $orderBy = 'v.num_vol';
+                break;
+            case 'DEPART':
+                $orderBy = 'v.aeroportDepart';
+                break;
+            case 'ARRIVEE':
+                $orderBy = 'v.aeroportArrivee';
+                break;
+            default:
+                $orderBy = 'v.id';
+        }
+
+        return $queryBuilder
+            ->select('v')
+            ->from(Vol::class, 'v')
+            ->orderBy($orderBy, 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 
 //    /**
 //     * @return Vol[] Returns an array of Vol objects

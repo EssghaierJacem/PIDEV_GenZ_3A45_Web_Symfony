@@ -20,14 +20,16 @@ class VolController extends AbstractController
     #[Route('/vols', name: 'backapp_vol')]
     public function index(VolRepository $volRepository, Request $request,PaginatorInterface $paginator): Response
     {
+        $criteria = $request->query->get('criteria', 'ID');
         $pagination = $paginator->paginate(
-            $volRepository->paginatonQuery(),
+            $volRepository->findAllSortedByCriteria($criteria),
             $request->query->get('page',1),
             8
         );
 
         return $this->render('vol/index.html.twig', [
-            'pagination' => $pagination
+            'pagination' => $pagination,
+            'criteria' => $criteria
         ]);
     }
 

@@ -17,13 +17,14 @@
     <div class="table-responsive">
     <table class="table table-striped">
         <thead>
-                <th scope="col">ID</th>
-                <th scope="col">Compagnie</th>
-                <th scope="col">Numéro de Vol</th>
-                <th scope="col">Départ</th>
-                <th scope="col">Arrivée</th>
-                <th scope="col">Actions</th>
-            </tr>
+               <tr>
+                    <th scope="col" {% if criteria == 'ID' %}class="active"{% endif %}><a href="{{ path('backapp_vol', {'criteria': 'ID'}) }}">ID {% if criteria == 'ID' %}<i class="fa fa-caret-down"></i>{% endif %}</a></th>
+                    <th scope="col" {% if criteria == 'COMPAGNIE' %}class="active"{% endif %}><a href="{{ path('backapp_vol', {'criteria': 'COMPAGNIE'}) }}">Compagnie {% if criteria == 'COMPAGNIE' %}<i class="fa fa-caret-down"></i>{% endif %}</a></th>
+                    <th scope="col" {% if criteria == 'NUM_VOL' %}class="active"{% endif %}><a href="{{ path('backapp_vol', {'criteria': 'NUM_VOL'}) }}">Num_vol {% if criteria == 'NUM_VOL' %}<i class="fa fa-caret-down"></i>{% endif %}</a></th>
+                    <th scope="col" {% if criteria == 'DEPART' %}class="active"{% endif %}><a href="{{ path('backapp_vol', {'criteria': 'DEPART'}) }}">Départ {% if criteria == 'DEPART' %}<i class="fa fa-caret-down"></i>{% endif %}</a></th>
+                    <th scope="col" {% if criteria == 'ARRIVEE' %}class="active"{% endif %}><a href="{{ path('backapp_vol', {'criteria': 'ARRIVEE'}) }}">Arrivée {% if criteria == 'ARRIVEE' %}<i class="fa fa-caret-down"></i>{% endif %}</a></th>
+                    <th scope="col">Actions</th>
+               </tr>
         </thead>
 
         <tbody>

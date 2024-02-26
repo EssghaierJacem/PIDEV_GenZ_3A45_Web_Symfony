@@ -15,22 +15,25 @@ use App\Repository\DestinationRepository;
 class DestinationController extends AbstractController
 {
     #[Route('/destination', name: 'app_destination')]
-    public function index(DestinationRepository $destinationRepository,Request $request, PaginatorInterface $paginator): Response
+    public function index(DestinationRepository $destinationRepository, Request $request, PaginatorInterface $paginator): Response
     {
+        $criteria = $request->query->get('criteria', 'ID');
         $pagination = $paginator->paginate(
-            $destinationRepository->paginatonQuery(),
-            $request->query->get('page',1),
+            $destinationRepository->findAllSortedByCriteria($criteria),
+            $request->query->get('page', 1),
             8
         );
 
         return $this->render('destination/index.html.twig', [
-            'pagination' => $pagination
+            'pagination' => $pagination,
+            'criteria' => $criteria
         ]);
     }
 
     #[Route('/show_destination', name: 'app_destinations')]
     public function destinations(DestinationRepository $destinationRepository, Request $request, PaginatorInterface $paginator): Response
     {
+        $d_destinations = $destinationRepository->findDistinctCountries();
         $pagination = $paginator->paginate(
             $destinationRepository->paginatonQuery(),
             $request->query->get('page',1),
@@ -38,7 +41,8 @@ class DestinationController extends AbstractController
         );
 
         return $this->render('destination/destinations.html.twig', [
-            'pagination' => $pagination
+            'pagination' => $pagination,
+            'd_destinations' => $d_destinations
         ]);
     }
 
