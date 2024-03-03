@@ -3,17 +3,57 @@
 {% block title %}Vols{% endblock %}
 
 {% block body %}
-    <section class="breadcrumbs">
-        <div class="container">
-            <div class="d-flex justify-content-between align-items-center">
-                <h2>Vols disponibles</h2>
-                <ol>
-                    <li><a href="{{path('app_front')}}">Home</a></li>
-                    <li><a href="{{ path('app_vol') }}">Vol</a></li>
-                </ol>
-            </div>
-        </div>
-    </section>
+    <style>
+        .flight-details-box {
+            background-color: #F1F6FE;
+            padding: 15px;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            position: relative; /* Add relative positioning */
+        }
+
+        .flight-details-box .airline-logo {
+            width: 100px; /* Adjust width as needed */
+            height: 100px; /* Adjust height as needed */
+            margin-right: 10px;
+            float: left;
+            object-fit: cover; /* Maintain aspect ratio and cover container */
+        }
+
+        .flight-details-box .details {
+            overflow: hidden;
+            padding-top: 10px;
+        }
+
+        .flight-details-box .card-title {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .flight-details-box .card-text {
+            font-style: italic; /* Make the text italic */
+            margin-bottom: 5px;
+        }
+
+        .flight-details-box .more-details-btn {
+            position: absolute; /* Position the button absolutely */
+            bottom: 10px; /* Adjust bottom distance */
+            right: 10px; /* Adjust right distance */
+            padding: 5px 15px;
+        }
+
+        /* Make specific texts bold */
+        .bold-text {
+            font-weight: bold;
+        }
+
+        /* Make specific texts italic */
+        .italic-text {
+            font-style: italic;
+        }
+    </style>
 
     <section id="filters-and-details" class="py-5">
         <div class="container">
@@ -25,11 +65,11 @@
                             <h5 class="card-title text-primary">Filter and Date Selection</h5>
                             <form id="searchForm" method="get" action="{{ path('app_vol') }}">
                                 <div class="form-group">
-                                    <label for="dateDepart" class="text-muted">Date de départ :</label>
+                                    <label for="dateDepart" class="text-muted bold-text">Date de départ :</label>
                                     <input type="date" class="form-control" id="dateDepart" name="date_depart">
                                 </div>
                                 <div class="form-group">
-                                    <label for="dateArrivee" class="text-muted">Date d'arrivée :</label>
+                                    <label for="dateArrivee" class="text-muted bold-text">Date d'arrivée :</label>
                                     <input type="date" class="form-control" id="dateArrivee" name="date_arrivee">
                                 </div>
                                 <!-- Add more filters or inputs as needed -->
@@ -42,21 +82,33 @@
                 <!-- Flight Details -->
                 <div class="col-lg-8">
                     {% for vol in pagination %}
-                        <div class="card mb-4 border-primary shadow" style="background-color: #F1F6FE;">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-sm-4">
+                        <div class="flight-details-box">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <!-- Airline Logo -->
+                                    <img src="{{ vol.image }}" alt="Airline Logo" class="airline-logo">
+                                    <div class="details">
+                                        <!-- Airline Name -->
                                         <h5 class="card-title text-primary">{{ vol.compagnieA }}</h5>
-                                        <p class="card-text text-muted">Numéro de Vol: {{ vol.numVol }}</p>
+
+                                        <!-- From and To -->
+                                        <p class="card-text text-muted bold-text">From</p> <i class="italic-text">{{ vol.aeroportDepart }}</i> <p class="card-text text-muted bold-text">To</p> <i class="italic-text">{{ vol.aeroportArrivee }}</i></p>
                                     </div>
-                                    <div class="col-sm-4">
-                                        <p class="card-text text-muted">{{ vol.aeroportDepart }} to {{ vol.aeroportArrivee }}</p>
-                                        <p class="card-text text-muted">{{ vol.dateDepart|date('Y-m-d') }} to {{ vol.dateArrivee|date('Y-m-d') }}</p>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <p class="card-text text-muted">Prix: {{ vol.tarif }}</p>
-                                        <a href="{{ path('app_vol_details_show', {'id': vol.id}) }}" class="btn btn-primary animate__animated animate__fadeIn">More Details</a>
-                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <!-- Departure and Arrival Dates -->
+                                    <p class="card-text text-muted bold-text" style="margin-top: 38px;">Date de départ:</p>
+                                    <i class="italic-text">{{ vol.dateDepart|date('l, d, Y') }}</i><br>
+                                    <p class="card-text text-muted bold-text">Date d'arrivée:</p> <i class="italic-text">{{ vol.dateArrivee|date('l, d, Y') }}</i>
+                                </div>
+                                <div class="col-sm-4">
+                                    <!-- Price -->
+                                    <p class="card-text text-muted bold-text" style="margin-top: 38px;">Prix: </p>
+                                     <i class="italic-text">{{ vol.tarif }}</i><br>
+                                    <!-- Flight Class -->
+                                    <p class="card-text text-muted bold-text">Classe: </p></i><i class="italic-text">{{ vol.classe }}</i></p>
+                                    <!-- More Details Button -->
+                                    <a href="{{ path('app_vol_details_show', {'id': vol.id}) }}" class="btn btn-primary animate__animated animate__fadeIn more-details-btn">Plus détails</a>
                                 </div>
                             </div>
                         </div>
@@ -71,15 +123,4 @@
         </div>
     </section>
 
-    <script>
-        document.getElementById('searchForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const dateDepart = document.getElementById('dateDepart').value;
-            const dateArrivee = document.getElementById('dateArrivee').value;
-            const url = new URL(window.location.href);
-            url.searchParams.set('date_depart', dateDepart);
-            url.searchParams.set('date_arrivee', dateArrivee);
-            window.location.href = url.toString();
-        });
-    </script>
 {% endblock %}
