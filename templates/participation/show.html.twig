@@ -1,0 +1,35 @@
+{% extends 'backbase.html.twig' %}
+
+{% block body %}
+    <h1>Participants</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ participation.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ participation.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prenom</th>
+                <td>{{ participation.prenom }}</td>
+            </tr>
+            <tr>
+                <th>Tel</th>
+                <td>{{ participation.tel }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ participation.email }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_participation_index') }}">back to list</a>
+
+
+    {{ include('participation/_delete_form.html.twig') }}
+{% endblock %}
