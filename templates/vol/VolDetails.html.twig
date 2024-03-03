@@ -1,0 +1,90 @@
+{% extends 'frontbase.html.twig' %}
+
+{% block title %}Vol Details{% endblock %}
+
+{% block body %}
+    <section class="breadcrumbs">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>Vol Details</h2>
+                <ol>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="{{ path('app_vol') }}">Vols</a></li>
+                    <li>Vol Details</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio-details" class="portfolio-details">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="portfolio-info">
+                        <h3>Flight Information</h3>
+                        <ul>
+                            <li><strong>Compagnie:</strong> {{ vol.compagnieA }}</li>
+                            <li><strong>Numéro de Vol:</strong> {{ vol.numVol }}</li>
+                            <li><strong>Classe :</strong> {{ vol.Classe }}</li>
+                            <li><strong>Aéroport de Départ:</strong> {{ vol.aeroportDepart }}</li>
+                            <li><strong>Aéroport d'Arrivée:</strong> {{ vol.aeroportArrivee }}</li>
+                            <li><strong>Aéroport d'Escale : </strong>{{ vol.escale ?: " Pas d'escale" }}</li>
+                            <li><strong>Date de Départ:</strong> {{ vol.dateDepart|date('Y-m-d H:i:s') }}</li>
+                            <li><strong>Date d'Arrivée:</strong> {{ vol.dateArrivee|date('Y-m-d H:i:s') }}</li>
+                            <li><strong>Tarif:</strong> {{ vol.tarif }} DT.</li>
+                            <li><strong>Durée Vol</strong> {{ vol.dureeVol }} Mins.</li>
+                            <li><strong>Destination:</strong> {{ vol.destination.pays }} - {{ vol.destination.ville }}</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div id="flightMap" style="width: 100%; height: 490px;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+    <script>
+        // Retrieve departure, arrival, and layover coordinates
+        var departureCoordinates = {{ departureCoordinates|json_encode|raw }};
+        var arrivalCoordinates = {{ arrivalCoordinates|json_encode|raw }};
+        var layoverCoordinates = {{ layoverCoordinates ? layoverCoordinates|json_encode|raw : 'null' }};
+
+        // Initialize the map
+        var map = L.map('flightMap').setView([48, 2], 5);
+
+        // Add tile layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+        }).addTo(map);
+
+        // Add departure and arrival markers
+        var departureMarker = L.marker(departureCoordinates).addTo(map);
+        departureMarker.bindTooltip("Aéroport de Départ", {permanent: false, className: "airport-label"}).openTooltip();
+        var arrivalMarker = L.marker(arrivalCoordinates).addTo(map);
+        arrivalMarker.bindTooltip("Aéroport d'Arrivée", {permanent: false, className: "airport-label"}).openTooltip();
+
+
+        // Define the polyline options
+        var polylineOptions = {
+            color: 'pink',
+            weight: 4,
+            opacity: 1.2
+        };
+
+        // If layover exists, draw polyline from departure to layover to arrival
+        if (layoverCoordinates) {
+            var layoverMarker = L.marker(layoverCoordinates).addTo(map);
+            layoverMarker.bindTooltip("Aérport d'escale", {permanent: false, className: "airport-label"}).openTooltip();
+
+            var polyline = L.polyline([departureCoordinates, layoverCoordinates, arrivalCoordinates], polylineOptions).addTo(map);
+        } else {
+            // Otherwise, draw polyline only from departure to arrival
+            var polyline = L.polyline([departureCoordinates, arrivalCoordinates], polylineOptions).addTo(map);
+        }
+    </script>
+{% endblock %}

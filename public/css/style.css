@@ -92,6 +92,18 @@ h6 {
   color: #fff;
   line-height: 0;
 }
+.destination-cards .card {
+  display: flex;
+  flex-direction: column;
+}
+.destination-cards .card img {
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Adjust the values as needed */
+  border-radius: 30px; /* Optional: Add border radius for rounded corners */
+}
+.destination-cards .card-body {
+  flex: 1;
+}
+
 
 .back-to-top:hover {
   background: #3284f1;

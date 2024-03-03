@@ -6,6 +6,8 @@ use App\Repository\DestinationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: DestinationRepository::class)]
 class Destination
@@ -14,22 +16,47 @@ class Destination
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
+    #[Assert\NotBlank(message:"Ce champ ne peut pas etre vide")]
+    #[Assert\Length(min:4, minMessage: 'Minmum 4 caractère')]
     #[ORM\Column(length: 255)]
     private ?string $pays = null;
 
+    #[Assert\NotBlank(message:"Ce champ ne peut pas etre vide")]
+    #[Assert\Length(min:4, minMessage: 'Minmum 4 caractère')]
     #[ORM\Column(length: 255)]
     private ?string $ville = null;
 
+    #[Assert\Length(
+        min: 15,
+        max: 255,
+        minMessage: 'Minimum 15 caractères',
+        maxMessage: 'Maximum 255 caractères',
+    )]
+    #[Assert\NotBlank(message:"Il faut décrire ce pays!")]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $description = null;
 
+    #[Assert\Length(
+        min: 5,
+        max: 50,
+        minMessage: 'Minimum 5 caractères',
+        maxMessage: 'Maximum 50 caractères',
+    )]
+    #[Assert\NotBlank(message: "Veulliez mentioner quelques attractions!")]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $attractions = null;
 
+    #[Assert\Length(
+        min: 5,
+        max: 30,
+        minMessage: 'Minimum 5 caractères',
+        maxMessage: 'Maximum 30 caractères',
+    )]
+    #[Assert\NotBlank(message: "Veulliez entrer une accomodation!")]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $accomodation = null;
 
+    #[Assert\Currency(message: 'Il faut attribuer une vraie devise')]
     #[ORM\Column(length: 255)]
     private ?string $devise = null;
 
@@ -37,8 +64,16 @@ class Destination
     private ?string $multimedia = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\NotBlank(message: "Ce champ ne peut pas être vide")]
+    #[Assert\Type(type: 'bool', message: "La valeur doit être de type booléen")]
     private ?bool $accessibilite = null;
-
+    #[Assert\Length(
+        min: 5,
+        max: 50,
+        minMessage: 'Minimum 5 caractères',
+        maxMessage: 'Maximum 50 caractères',
+    )]
+    #[Assert\NotBlank(message: "Veulliez mentionner quelques repas!")]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $cuisine_locale = null;
 
@@ -50,6 +85,11 @@ class Destination
 
     #[ORM\OneToMany(mappedBy: 'destination', targetEntity: Tournee::class)]
     private Collection $tournee;
+
+    #[Assert\NotBlank(message:"Ce champ ne peut pas etre vide")]
+    #[Assert\Country]
+    #[ORM\Column(length: 255)]
+    private ?string $abbrev = null;
 
     public function __construct()
     {
@@ -254,6 +294,23 @@ class Destination
                 $tournee->setDestination(null);
             }
         }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return(string)$this->getPays();
+    }
+
+    public function getAbbrev(): ?string
+    {
+        return $this->abbrev;
+    }
+
+    public function setAbbrev(string $abbrev): static
+    {
+        $this->abbrev = $abbrev;
 
         return $this;
     }

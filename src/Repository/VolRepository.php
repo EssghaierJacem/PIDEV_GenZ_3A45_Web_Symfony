@@ -21,6 +21,71 @@ class VolRepository extends ServiceEntityRepository
         parent::__construct($registry, Vol::class);
     }
 
+    public function paginatonQuery()
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.id','ASC')
+            ->getQuery()
+            ;
+    }
+    public function findAllSortedByCriteria($criteria)
+    {
+        $entityManager = $this->getEntityManager();
+        $queryBuilder = $entityManager->createQueryBuilder();
+
+        switch ($criteria) {
+            case 'ID':
+                $orderBy = 'v.id';
+                break;
+            case 'COMPAGNIE':
+                $orderBy = 'v.compagnieA';
+                break;
+            case 'NUM_VOL':
+                $orderBy = 'v.num_vol';
+                break;
+            case 'DEPART':
+                $orderBy = 'v.aeroportDepart';
+                break;
+            case 'ARRIVEE':
+                $orderBy = 'v.aeroportArrivee';
+                break;
+            default:
+                $orderBy = 'v.id';
+        }
+
+        return $queryBuilder
+            ->select('v')
+            ->from(Vol::class, 'v')
+            ->orderBy($orderBy, 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+    public function findByDateInterval($dateDepart, $dateArrivee)
+    {
+        return $this->createQueryBuilder('v')
+            ->andWhere('v.dateDepart >= :dateDepart')
+            ->andWhere('v.dateArrivee <= :dateArrivee')
+            ->setParameter('dateDepart', $dateDepart)
+            ->setParameter('dateArrivee', $dateArrivee)
+            ->getQuery()
+            ->getResult();
+    }
+    /**
+     *
+     * @param int $limit
+     * @return array
+     */
+    public function findTopCompanies(int $limit): array
+    {
+        return $this->createQueryBuilder('v')
+            ->select('v.compagnieA as compagnieA, SUM(v.tarif) as totalRevenue')
+            ->groupBy('v.compagnieA')
+            ->orderBy('totalRevenue', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Vol[] Returns an array of Vol objects
 //     */

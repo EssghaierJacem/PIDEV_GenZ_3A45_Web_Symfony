@@ -1,0 +1,323 @@
+{% extends 'backbase.html.twig' %}
+
+{% block title %}Dashboard - Destination & Vol {% endblock %}
+
+{% block body %}
+
+<div class="midde_cont">
+    <div class="container-fluid">
+        <div class="row column_title">
+            <div class="col-md-12">
+                <div class="page_title">
+                    <h2>Tableau de bord : Destination & Vol</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row column1">
+            <div class="col-md-6 col-lg-3">
+                <div class="full counter_section margin_bottom_30">
+                    <div class="couter_icon">
+                        <div>
+                            <i class="fa fa-user yellow_color"></i>
+                        </div>
+                    </div>
+                    <div class="counter_no">
+                        <div>
+                            <p class="total_no">{{ userCount }}</p>
+                            <p class="head_couter">Clients</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <!-- Average Duration Calculation -->
+                {% set totalDuration = 0 %}
+                {% set volCount = vols|length %}
+                {% for vol in vols %}
+                {% set totalDuration = totalDuration + vol.getDureeVol() %}
+                {% endfor %}
+                {% if volCount > 0 %}
+                {% set averageDuration = totalDuration / volCount %}
+                {% else %}
+                {% set averageDuration = 0 %}
+                {% endif %}
+                {% set averageDuration = averageDuration|number_format(0, '.', '') %}
+                <div class="full counter_section margin_bottom_30">
+                    <div class="couter_icon">
+                        <div>
+                            <i class="fa fa-clock-o blue1_color"></i>
+                        </div>
+                    </div>
+                    <div class="counter_no">
+                        <div>
+                            <p class="total_no">{{ averageDuration }}</p>
+                            <p class="head_couter">Temps de vol moyen</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="full counter_section margin_bottom_30">
+                    <div class="couter_icon">
+                        <div>
+                            <i class="fa fa-fighter-jet green_color"></i>
+                        </div>
+                    </div>
+                    <div class="counter_no">
+                        <div>
+                            <p class="total_no">{{ volCount }}</p>
+                            <p class="head_couter">Nombre de vols</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="full counter_section margin_bottom_30">
+                    <div class="couter_icon">
+                        <div>
+                            <i class="fa fa-comments-o red_color"></i>
+                        </div>
+                    </div>
+                    <div class="counter_no">
+                        <div>
+                            <p class="total_no">{{ avisCount }}</p>
+                            <p class="head_couter">Avis</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Charts section -->
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="white_shd full margin_bottom_30">
+                    <div class="full graph_head">
+                        <div class="heading1 margin_0">
+                            <h2>Destinations plus visités</h2>
+                        </div>
+                    </div>
+                    <div class="map_section padding_infor_info">
+                        <canvas id="destinationChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="white_shd full margin_bottom_30">
+                    <div class="full graph_head">
+                        <div class="heading1 margin_0">
+                            <h2>Compagnies avec le plus de revenus</h2>
+                        </div>
+                    </div>
+                    <div class="map_section padding_infor_info">
+                        <canvas id="companyRevenueChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Charts section -->
+        <div class="row column4 graph">
+            <div class="col-md-6">
+                <div class="dash_blog">
+                    <div class="dash_blog_inner">
+                        <div class="dash_head">
+                            <h3><span><i class="fa fa-fighter-jet"></i> Vols </span><span class="plus_green_bt"><a href="{{ path ('app_vol_new')}}">+</a></span></h3>
+                        </div>
+                        <div class="list_cont">
+                            {% set VolCount = vols|length %}
+                            {% set surVol = vols|slice(0, 5)|length %}
+                            <p>Affichage de {{ surVol }} vols sur {{ VolCount }} </p>
+                        </div>
+                        <div class="task_list_main">
+                            <ul class="task_list">
+                                {% if vols|length == 0 %}
+                                <strong>Aucune vol est enregistrée</strong>
+                                {% else %}
+                                {% for vol in vols|slice(0, 5) %}
+                                <li>
+                                    <a href="#">{{ vol.compagnieA }} organise un vol du {{ vol.aeroportDepart }} à {{ vol.aeroportArrivee }}</a>
+                                    <br><strong>Num {{ vol.numVol }}</strong>
+                                </li>
+                                {% endfor %}
+                                {% endif %}
+                            </ul>
+                        </div>
+                        <div class="read_more">
+                            <div class="center"><a class="main_bt read_bt" href="{{ path('backapp_vol') }}">Montrer plus</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="dash_blog">
+                    <div class="dash_blog_inner">
+                        <div class="dash_head">
+                            <h3><span><i class="fa fa-location-arrow"></i> Destinations </span><span class="plus_green_bt"><a href="{{ path ('app_destination_new')}}">+</a></span></h3>
+                        </div>
+                        <div class="list_cont">
+                            {% set DestinationCount = destinations|length %}
+                            {% set surDestination = destinations|slice(0, 5)|length %}
+                            <p>Affichage de {{ surDestination }} destinations sur {{ DestinationCount }} </p>
+                        </div>
+                        <div class="task_list_main">
+                            <ul class="task_list">
+                                {% if destinations|length == 0 %}
+                                <li><strong>Aucune destination est enregistrée<strong></li>
+                                {% else %}
+                                {% for destination in destinations|slice(0, 5) %}
+                                <li>
+                                    <strong>{{ destination.pays }}</strong>
+                                    <br><a href="#">{{ destination.attractions  }}</a>
+                                </li>
+                                {% endfor %}
+                                {% endif %}
+                            </ul>
+                        </div>
+                        <div class="read_more">
+                            <div class="center"><a class="main_bt read_bt" href="{{path('app_destination') }}">Montrer plus</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    /////////////////////////////////////////  LINE CHART - DESTINATIONS //////////////////////////////////////////
+
+
+    fetch('{{ path('dashboard_vol') }}', {
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => response.json())
+    .then(destinations => {
+
+        // Sort destinations based on the number of users
+        destinations.sort((a, b) => b.users - a.users);
+
+        // Get top 5 destinations
+        const topDestinations = destinations.slice(0, 5);
+        topDestinations.sort((a, b) => a.pays.localeCompare(b.pays));
+
+
+        // Extract labels and data for chart
+        const destinationLabels = topDestinations.map(destination => destination.pays);
+        const destinationUserCounts = topDestinations.map(destination => destination.users);
+
+        // Chart data
+        const destinationChartData = {
+            labels: destinationLabels,
+            datasets: [{
+                label: 'Clients ayant visité cette destination',
+                data: destinationUserCounts,
+                backgroundColor: 'rgba(233, 30, 99, 0.5)',
+                borderColor: 'rgba(21, 40, 60, 1)',
+                borderWidth: 1,
+            }]
+        };
+
+        // Get canvas element
+        const destinationCanvas = document.getElementById('destinationChart').getContext('2d');
+
+        // Create bar chart for destinations
+        const destinationChart = new Chart(destinationCanvas, {
+            type: 'line',
+            data: destinationChartData,
+            options: {
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                        labels: {
+                            font: {
+                                size: 14,
+                                weight: 'bold'
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            font: {
+                                size: 14,
+                                weight: 'bold'
+                            }
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        stepSize: 1,
+                        ticks: {
+                            font: {
+                                size: 14,
+                                weight: 'bold'
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    })
+    .catch(error => {
+        console.error('Error fetching data:', error);
+    });
+
+    /////////////////////////////////////////  RADAR CHART - VOLS //////////////////////////////////////////
+
+        const topCompanies = {{ topCompanies|json_encode|raw }};
+
+        const companyLabels = topCompanies.map(company => company.compagnieA);
+        const companyRevenues = topCompanies.map(company => company.totalRevenue);
+
+        const radarChartData = {
+            labels: companyLabels,
+            datasets: [{
+                label: 'Revenue Total',
+                data: companyRevenues,
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(21, 40, 60, 1)',
+                borderWidth: 1
+            }]
+        };
+
+        const radarCanvas = document.getElementById('companyRevenueChart').getContext('2d');
+
+        const radarChart = new Chart(radarCanvas, {
+            type: 'radar',
+            data: radarChartData,
+            options: {
+                scale: {
+                    ticks: {
+                        beginAtZero: true,
+                        font: {
+                            size: 14,
+                            weight: 'bold'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                        labels: {
+                            font: {
+                                size: 14,
+                                weight: 'bold'
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+</script>
+
+{% endblock %}

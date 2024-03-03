@@ -21,6 +21,69 @@ class DestinationRepository extends ServiceEntityRepository
         parent::__construct($registry, Destination::class);
     }
 
+    public function paginatonQuery()
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.id','ASC')
+            ->getQuery()
+            ;
+    }
+
+    public function findDistinctCountries(): array
+    {
+        return $this->createQueryBuilder('d')
+            ->select('DISTINCT d.pays')
+            ->orderBy('d.pays', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+    public function findAllSortedByCriteria($criteria)
+    {
+        $entityManager = $this->getEntityManager();
+        $queryBuilder = $entityManager->createQueryBuilder();
+
+        switch ($criteria) {
+            case 'ID':
+                $orderBy = 'd.id';
+                break;
+            case 'PAYS':
+                $orderBy = 'd.pays';
+                break;
+            case 'VILLE':
+                $orderBy = 'd.ville';
+                break;
+            case 'ATTRACTIONS':
+                $orderBy = 'd.attractions';
+                break;
+            case 'DEVISE':
+                $orderBy = 'd.devise';
+                break;
+            default:
+                $orderBy = 'd.id';
+        }
+
+        return $queryBuilder
+            ->select('d')
+            ->from(Destination::class, 'd')
+            ->orderBy($orderBy, 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function searchByKeyword($keyword)
+    {
+        return $this->createQueryBuilder('d')
+            ->andWhere('d.pays LIKE :keyword 
+                      OR d.ville LIKE :keyword 
+                      OR d.description LIKE :keyword 
+                      OR d.attractions LIKE :keyword 
+                      OR d.devise LIKE :keyword')
+            ->setParameter('keyword', '%'.$keyword.'%')
+            ->getQuery()
+            ->getResult();
+    }
+
+
 //    /**
 //     * @return Destination[] Returns an array of Destination objects
 //     */

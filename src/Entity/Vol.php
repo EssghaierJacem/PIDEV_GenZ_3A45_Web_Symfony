@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\VolRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: VolRepository::class)]
 class Vol
@@ -14,32 +16,61 @@ class Vol
     #[ORM\Column]
     private ?int $id = null;
 
+
+    #[Assert\NotBlank(message:"Ce champ ne peut pas etre vide")]
+    #[Assert\Length(min:4, minMessage: 'Minmum 4 caractère')]
     #[ORM\Column(length: 255)]
     private ?string $compagnieA = null;
 
+    #[Assert\Positive(message:'Veuillez choisir un entier positif!')]
+    #[Assert\NotBlank(message:"Ce champ ne peut pas etre vide")]
     #[ORM\Column]
     private ?int $num_vol = null;
 
+    #[Assert\NotBlank(message:"Ce champ ne peut pas etre vide")]
+    #[Assert\Length(min:5, minMessage: 'Minmum 5 caractère')]
     #[ORM\Column(length: 255)]
     private ?string $aeroportDepart = null;
 
+    #[Assert\NotBlank(message:"Ce champ ne peut pas etre vide")]
+    #[Assert\Length(min:5, minMessage: 'Minmum 5 caractère')]
     #[ORM\Column(length: 255)]
     private ?string $aeroportArrivee = null;
 
+    #[Assert\GreaterThan('today',
+    message:"La date de départ doit être ultérieure à aujourd'hui!")]
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $dateDepart = null;
 
+    #[Assert\GreaterThan('today',
+        message:"La date d'arrivée' doit être ultérieure à aujourd'hui!")]
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $dateArrivee = null;
 
+    #[Assert\NotBlank(message:"Ce champ ne peut pas etre vide")]
+    #[Assert\Positive(message:'Durée de vol doit etre positive!')]
     #[ORM\Column]
     private ?int $duree_vol = null;
-
+    #[Assert\NotBlank(message:"Ce champ ne peut pas etre vide")]
+    #[Assert\Range(
+        min: 50,
+        max: 5000,
+        notInRangeMessage: 'le tarif acceptable est entre {{ min }} dt et {{ max }} dt ',
+    )]
     #[ORM\Column]
     private ?float $tarif = null;
 
     #[ORM\ManyToOne(inversedBy: 'vol')]
     private ?Destination $destination = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $escale = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $classe = null;
 
     public function getId(): ?int
     {
@@ -150,6 +181,42 @@ class Vol
     public function setDestination(?Destination $destination): static
     {
         $this->destination = $destination;
+
+        return $this;
+    }
+
+    public function getEscale(): ?string
+    {
+        return $this->escale;
+    }
+
+    public function setEscale(?string $escale): static
+    {
+        $this->escale = $escale;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): static
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getClasse(): ?string
+    {
+        return $this->classe;
+    }
+
+    public function setClasse(?string $classe): static
+    {
+        $this->classe = $classe;
 
         return $this;
     }
