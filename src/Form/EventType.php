@@ -65,6 +65,7 @@ class EventType extends AbstractType
                 'constraints' => [
                     new NotBlank(['message' => 'Ce champ ne peut pas être vide']),
                     new Length(['min' => 4, 'minMessage' => 'Minimum 4 caractères']),
+                    
                 ],
             ]);
     }

@@ -1,0 +1,52 @@
+{% extends 'backbase.html.twig' %}
+{% block body %}
+    <main>
+        <div id='calendar' style="margin: 10%"></div>
+    </main>
+{% endblock %}
+
+{% block javascripts %}
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
+    <script>
+        const eventsData = [];
+
+        {% for event in events %}
+            eventsData.push({
+                title: '{{ event.nom }}',
+                start: '{{ event.dateDebut|date('Y-m-d') }}',
+                end: '{{ event.dateFin|date('Y-m-d') }}',
+                description: '{{ event.description }}',
+                organizer: '{{ event.organisateur }}',
+                location: '{{ event.lieu }}',
+                id: '{{ event.id }}',
+                
+            });
+        {% endfor %}
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const calendarEl = document.getElementById('calendar');
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'timeGridWeek',
+                headerToolbar: {
+                    left: 'prev,next',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                businessHours: {
+                    daysOfWeek: [1, 2, 3, 4], // Monday - Thursday
+                    startTime: '09:00',
+                    endTime: '18:00',
+                },
+                events: eventsData,
+                eventClick: function(info) {
+                    alert('Event: ' + info.event.title);
+                    alert('Description: ' + info.event.extendedProps.description);
+                    alert('Organizer: ' + info.event.extendedProps.organizer);
+                    alert('Location: ' + info.event.extendedProps.location);
+                    // Optionally, you can redirect to the event details page using info.event.extendedProps.id
+                }
+            });
+            calendar.render();
+        });
+    </script>
+{% endblock %}
