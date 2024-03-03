@@ -20,6 +20,43 @@ class TourneeRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Tournee::class);
     }
+    public function paginatonQuery()
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.id','ASC')
+            ->getQuery()
+            ;
+    }
+    public function findByCriteria($criteria)
+{
+    $queryBuilder = $this->createQueryBuilder('t');
+
+    // Construisez la requête en fonction des critères fournis
+    if ($criteria['nom']) {
+        $queryBuilder->andWhere('t.nom LIKE :nom')
+                     ->setParameter('nom', '%'.$criteria['nom'].'%');
+    }
+
+    if ($criteria['dateDebut']) {
+        $queryBuilder->andWhere('t.dateDebut = :dateDebut')
+                     ->setParameter('dateDebut', $criteria['dateDebut']);
+    }
+
+    if ($criteria['duree']) {
+        $queryBuilder->andWhere('t.duree = :duree')
+                     ->setParameter('duree', $criteria['duree']);
+    }
+    if ($criteria['tarif']) {
+        $queryBuilder->andWhere('t.tarif = :tarif')
+                     ->setParameter('tarif', $criteria['tarif']);
+    }
+
+    // Exécutez la requête
+    $query = $queryBuilder->getQuery();
+
+    // Retournez les résultats filtrés
+    return $query->getResult();
+}
 
 //    /**
 //     * @return Tournee[] Returns an array of Tournee objects

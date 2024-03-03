@@ -39,7 +39,7 @@
                 <td>{{ guide.nationalite }}</td>
             </tr>
             <tr>
-                <th>LanguesParlees</th>
+                <th>Langues Parlees</th>
                 <td>{{ guide.languesParlees }}</td>
             </tr>
             <tr>
@@ -47,11 +47,11 @@
                 <td>{{ guide.experiences }}</td>
             </tr>
             <tr>
-                <th>TarifHoraire</th>
+                <th>Tarif Horaire</th>
                 <td>{{ guide.tarifHoraire }}</td>
             </tr>
             <tr>
-                <th>Num_tel</th>
+                <th>Telephone</th>
                 <td>{{ guide.numTel }}</td>
             </tr>
         </tbody>
@@ -65,7 +65,7 @@
 
    
     <a href="{{ path('app_guide_edit', {'id': guide.id}) }}" class="btn btn-sm btn-warning">edit</a>
-    <a {{ include('guide/_delete_form.html.twig') }}
+    {{ include('guide/_delete_form.html.twig') }}
     </div>
   
     
