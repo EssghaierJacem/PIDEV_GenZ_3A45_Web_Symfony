@@ -1,0 +1,50 @@
+{% extends 'frontbase.html.twig' %}
+
+{% block body %}
+    <title>Tournee index</title>
+
+    <section class="breadcrumbs" style="background-color: #f8f9fa; padding: 30px 0;">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h2 style="color: #343a40; font-size: 24px;">Tournees</h2>
+                </div>
+                <div class="col-auto">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb" style="background-color: transparent;">
+                            <li class="breadcrumb-item"><a href="#" style="color: #6c757d; font-size: 16px;">Home</a></li>
+                            <li class="breadcrumb-item"><a href="#" style="color: #6c757d; font-size: 16px;">Your Entity</a></li>
+                            <li class="breadcrumb-item active" aria-current="page" style="color: #343a40; font-size: 16px;">Addition mta3 Entity mtaaek</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="portfolio-details" style="padding: 60px 0;">
+        <div class="container">
+            <div class="row">
+                {% for tournee in tournees %}
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card h-100 shadow-sm" style="border: 1px solid #dee2e6; border-radius: 10px;">
+                            <div class="card-body">
+                                <h5 class="card-title" style="color: #343a40; font-size: 20px; margin-bottom: 10px;">{{ tournee.nom }}</h5>
+                                <p class="card-text" style="color: #6c757d; font-size: 16px; margin-bottom: 10px;">{{ tournee.description }}</p>
+                                <p class="card-text" style="position: absolute; top: 10px; right: 10px; color: #6c757d; font-size: 16px;">Durée: {{ tournee.duree }}</p>
+                                <div style="color: #6c757d; font-size: 16px;">
+                                    <p class="card-text" >Tarif: {{ tournee.tarif }}</p>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-white border-top-0" style="display: flex; justify-content: flex-start;">
+                                <a href="{{ path('front_tournee_show', {'id': tournee.id}) }}" class="btn btn-outline-primary" style="font-size: 14px;">Show Details</a>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <p class="text-center">No records found</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

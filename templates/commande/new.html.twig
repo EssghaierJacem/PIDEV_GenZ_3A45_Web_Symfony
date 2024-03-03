@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+
+<title>New Commande</title>
+
+{% block body %}
+
+    {{ include('commande/_form.html.twig') }}
+
+    <a href="{{ path('app_commande_index') }}">back to list</a>
+{% endblock %}
