@@ -37,7 +37,7 @@
                 <td>{{ reservation.numTel }}</td>
                 <td>{{ reservation.quantite }}</td>
                 <td>{{ reservation.dateReservation ? reservation.dateReservation|date('Y-m-d') : '' }}</td>
-                
+                <td><a href="{{ path('reservation_show', {'id': reservation.id}) }}" class="btn btn-sm btn-info">show</a></td>
                 <td><a href="{{ path('back_edit', {'id': reservation.id}) }}" class="btn btn-sm btn-warning">Edit</a>
                 {{ include('reservation/backdelete.html.twig') }}
                 </tr>
