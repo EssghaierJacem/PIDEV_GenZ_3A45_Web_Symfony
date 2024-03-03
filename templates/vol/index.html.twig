@@ -3,57 +3,65 @@
 {% block title %}Liste des Vols{% endblock %}
 
 {% block body %}
-    <div class="midde_cont">
-                      <div class="container-fluid">
-                         <div class="row column_title">
-                            <div class="col-md-12">
-                               <div class="page_title">
-                                  <h2>Liste des vols</h2>
-                               </div>
-                            </div>
+    <div class="middle_cont">
+        <div class="container-fluid">
+            <div class="row column_title">
+                <div class="col-md-12">
+                    <div class="page_title">
+                        <h2>Liste des vols</h2>
                     </div>
-
-    <div class="table_row">
-    <div class="table-responsive">
-    <table class="table table-striped">
-        <thead>
-               <tr>
-                    <th scope="col" {% if criteria == 'ID' %}class="active"{% endif %}><a href="{{ path('backapp_vol', {'criteria': 'ID'}) }}">ID {% if criteria == 'ID' %}<i class="fa fa-caret-down"></i>{% endif %}</a></th>
-                    <th scope="col" {% if criteria == 'COMPAGNIE' %}class="active"{% endif %}><a href="{{ path('backapp_vol', {'criteria': 'COMPAGNIE'}) }}">Compagnie {% if criteria == 'COMPAGNIE' %}<i class="fa fa-caret-down"></i>{% endif %}</a></th>
-                    <th scope="col" {% if criteria == 'NUM_VOL' %}class="active"{% endif %}><a href="{{ path('backapp_vol', {'criteria': 'NUM_VOL'}) }}">Num_vol {% if criteria == 'NUM_VOL' %}<i class="fa fa-caret-down"></i>{% endif %}</a></th>
-                    <th scope="col" {% if criteria == 'DEPART' %}class="active"{% endif %}><a href="{{ path('backapp_vol', {'criteria': 'DEPART'}) }}">Départ {% if criteria == 'DEPART' %}<i class="fa fa-caret-down"></i>{% endif %}</a></th>
-                    <th scope="col" {% if criteria == 'ARRIVEE' %}class="active"{% endif %}><a href="{{ path('backapp_vol', {'criteria': 'ARRIVEE'}) }}">Arrivée {% if criteria == 'ARRIVEE' %}<i class="fa fa-caret-down"></i>{% endif %}</a></th>
-                    <th scope="col">Actions</th>
-               </tr>
-        </thead>
-
-        <tbody>
-            {% for vol in pagination %}
-                <tr>
-                    <th scope="row">{{ vol.id }}</th>
-                    <td>{{ vol.compagnieA }}</td>
-                    <td>{{ vol.getNumVol() }}</td>
-                    <td>{{ vol.aeroportDepart }}</td>
-                    <td>{{ vol.aeroportArrivee }}</td>
-                    <td>
-                        <a href="{{ path('app_vol_show', {'id': vol.id}) }}" class="btn cur-p btn-info"><i>Info</i></a>
-                        <a href="{{ path('app_vol_edit', {'id': vol.id}) }}" class="btn cur-p btn-warning"><i>Mod</i></a>
-                        <form action="{{ path('app_vol_delete', {'id': vol.id}) }}" method="post" style="display: inline-block;">
-                            <input type="hidden" name="_method" value="DELETE">
-                            <button type="submit" class="btn cur-p btn-danger" onclick="return confirm('Are you sure you want to delete this vol?')"><i>Supp</i></button>
-                        </form>
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="6">No vols found.</td>
-                </tr>
-            {% endfor %}
+                </div>
             </div>
+
+            <div class="table_row">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col" {% if criteria == 'ID' %}class="active"{% endif %}><a href="{{ path('backapp_vol', {'criteria': 'ID'}) }}">ID {% if criteria == 'ID' %}<i class="fa fa-caret-down"></i>{% endif %}</a></th>
+                                <th scope="col" {% if criteria == 'COMPAGNIE' %}class="active"{% endif %}><a href="{{ path('backapp_vol', {'criteria': 'COMPAGNIE'}) }}">Compagnie {% if criteria == 'COMPAGNIE' %}<i class="fa fa-caret-down"></i>{% endif %}</a></th>
+                                <th scope="col" {% if criteria == 'NUM_VOL' %}class="active"{% endif %}><a href="{{ path('backapp_vol', {'criteria': 'NUM_VOL'}) }}">Num_vol {% if criteria == 'NUM_VOL' %}<i class="fa fa-caret-down"></i>{% endif %}</a></th>
+                                <th scope="col" {% if criteria == 'DEPART' %}class="active"{% endif %}><a href="{{ path('backapp_vol', {'criteria': 'DEPART'}) }}">Départ {% if criteria == 'DEPART' %}<i class="fa fa-caret-down"></i>{% endif %}</a></th>
+                                <th scope="col" {% if criteria == 'ARRIVEE' %}class="active"{% endif %}><a href="{{ path('backapp_vol', {'criteria': 'ARRIVEE'}) }}">Arrivée {% if criteria == 'ARRIVEE' %}<i class="fa fa-caret-down"></i>{% endif %}</a></th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for vol in pagination %}
+                                <tr>
+                                    <th scope="row">{{ vol.id }}</th>
+                                    <td>{{ vol.compagnieA }}</td>
+                                    <td>{{ vol.getNumVol() }}</td>
+                                    <td>{{ vol.aeroportDepart }}</td>
+                                    <td>{{ vol.aeroportArrivee }}</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a href="{{ path('app_vol_show', {'id': vol.id}) }}" class="btn cur-p btn-info"><i>Info</i></a>
+                                            <a href="{{ path('app_vol_edit', {'id': vol.id}) }}" class="btn cur-p btn-warning"><i>Mod</i></a>
+                                            <form action="{{ path('app_vol_delete', {'id': vol.id}) }}" method="post" style="display: inline-block;">
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                <button type="submit" class="btn cur-p btn-danger" onclick="return confirm('Are you sure you want to delete this vol?')"><i>Supp</i></button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="6">No vols found.</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {{ knp_pagination_render(pagination) }}
+                </div>
             </div>
-        </tbody>
-    </table>
-    {{ knp_pagination_render ( pagination ) }}
+        </div>
     </div>
-    </div>
+
+    <style>
+        .btn-group .btn {
+            margin-right: 5px;
+        }
+    </style>
 {% endblock %}

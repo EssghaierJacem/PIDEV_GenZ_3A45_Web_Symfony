@@ -8,12 +8,15 @@ use App\Repository\VolRepository;
 use App\Repository\DestinationRepository;
 use App\Repository\UserRepository;
 use App\Repository\AvisRepository;
+use App\Service\JPdfService;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpClient\HttpClient;
 
 class VolController extends AbstractController
 {
@@ -34,14 +37,25 @@ class VolController extends AbstractController
     }
 
     #[Route('/dest_vol', name: 'dashboard_vol')]
-    public function dashboardVol(VolRepository $volRepository, userRepository $userRepository,avisRepository $avisRepository,destinationRepository $destinationRepository): Response
+    public function dashboardVol(VolRepository $volRepository, UserRepository $userRepository, AvisRepository $avisRepository, DestinationRepository $destinationRepository, Request $request): Response
     {
         $vols = $volRepository->findAll();
         $userCount = $userRepository->count([]);
         $volCount = $volRepository->count([]);
         $avisCount = $avisRepository->count([]);
         $destinations = $destinationRepository->findAll();
+        $topCompanies = $volRepository->findTopCompanies(5);
 
+        if ($request->isXmlHttpRequest()) {
+            $data = [];
+            foreach ($destinations as $destination) {
+                $data[] = [
+                    'pays' => $destination->getPays(),
+                    'users' => $destination->getUsers()->count(),
+                ];
+            }
+            return new JsonResponse($data);
+        }
 
         return $this->render('vol/volDashboard.html.twig', [
             'vols' => $vols,
@@ -49,8 +63,10 @@ class VolController extends AbstractController
             'volCount' => $volCount,
             'avisCount' => $avisCount,
             'destinations' => $destinations,
+            'topCompanies' => $topCompanies,
         ]);
     }
+
 
     #[Route('/show_vol', name: 'app_vol')]
     public function indexVol(VolRepository $volRepository, Request $request, PaginatorInterface $paginator): Response
@@ -58,7 +74,6 @@ class VolController extends AbstractController
 
         $dateDepart = $request->query->get('date_depart');
         $dateArrivee = $request->query->get('date_arrivee');
-
 
         if ($dateDepart && $dateArrivee) {
             $vols = $volRepository->findByDateInterval($dateDepart, $dateArrivee);
@@ -138,20 +153,60 @@ class VolController extends AbstractController
             'destination' => $destinations,
         ]);
     }
+    #[Route('/vol/pdf/{id}', name: 'vol.pdf')]
+    public function generatePdfVol($id, JPdfService $pdf) {
+        $vol = $this->getDoctrine()->getRepository(Vol::class)->find($id);
+        $html = $this->render('vol/volPDF.html.twig', ['vol' => $vol]);
+        $pdf->showPdfFile($html);
+    }
+    #[Route('/volMap' , name:'vol.map')]
+    public function getAirportCoordinates($airportName, $apiKey)
+    {
+        $client = HttpClient::create();
+
+        $response = $client->request('GET', 'https://us1.locationiq.com/v1/search.php', [
+            'query' => [
+                'key' => $apiKey,
+                'q' => $airportName,
+                'format' => 'json'
+            ]
+        ]);
+
+        $data = $response->toArray();
+
+        if ($data && !empty($data)) {
+            $latitude = $data[0]['lat'];
+            $longitude = $data[0]['lon'];
+            return [$latitude, $longitude];
+        } else {
+            return null;
+        }
+    }
 
     #[Route('/vol/details/{id}', name: 'app_vol_details_show')]
-    public function voldetails($id, VolRepository $volRepository, destinationRepository $destinationRepository): Response
+    public function voldetails($id, VolRepository $volRepository, DestinationRepository $destinationRepository): Response
     {
         $vol = $volRepository->find($id);
         $destination = $destinationRepository->find($id);
+        $layoverAirportName = $vol->getEscale();
 
         if (!$vol) {
             throw $this->createNotFoundException('Vol not found');
         }
 
+        $departureAirportName = $vol->getAeroportDepart();
+        $arrivalAirportName = $vol->getAeroportArrivee();
+
+        $departureCoordinates = $this->getAirportCoordinates($departureAirportName, 'pk.f77b5edcf311ded36d066f24fdb9f87c');
+        $arrivalCoordinates = $this->getAirportCoordinates($arrivalAirportName, 'pk.f77b5edcf311ded36d066f24fdb9f87c');
+        $layoverCoordinates = $layoverAirportName ? $this->getAirportCoordinates($layoverAirportName, 'pk.f77b5edcf311ded36d066f24fdb9f87c') : null;
+
         return $this->render('vol/VolDetails.html.twig', [
             'vol' => $vol,
-            'destination' =>$destination,
+            'destination' => $destination,
+            'departureCoordinates' => $departureCoordinates,
+            'arrivalCoordinates' => $arrivalCoordinates,
+            'layoverCoordinates' => $layoverCoordinates,
         ]);
     }
 

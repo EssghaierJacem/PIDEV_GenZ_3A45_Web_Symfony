@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Destination;
 use App\Form\DestinationType;
+use App\Service\JPdfService;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -111,6 +112,12 @@ class DestinationController extends AbstractController
         return $this->render('destination/show.html.twig', [
             'destination' => $destination,
         ]);
+    }
+    #[Route('/destination/pdf/{id}', name: 'destination.pdf')]
+    public function generatePdfDestination($id, JPdfService $pdf) {
+        $destination = $this->getDoctrine()->getRepository(Destination::class)->find($id);
+        $html = $this->render('destination/destinationPDF.html.twig', ['destination' => $destination]);
+        $pdf->showPdfFile($html);
     }
 
     #[Route('/destination/details/{id}', name: 'app_destination_details_show')]

@@ -1,0 +1,70 @@
+{% block body %}
+    {% if vol is not null %}
+    <div class="pdf-content">
+        <div class="project-name">
+            <h1 style="color: #800000; font-family: 'Arial Black', sans-serif; font-size: 24px; margin-bottom: 10px;">Beyond Borders Travel</h1>
+        </div>
+        <div class="title">
+            <h2 style="color: #008080; text-align: center; font-size: 20px; margin-bottom: 20px;">Vol Details :</h2><h2> #{{ vol.id }}</h2>
+        </div>
+        <div class="vol-details">
+            <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+                <tr style="background-color: #f2f2f2;">
+                    <th style="padding: 12px; text-align: left; font-weight: bold; border-bottom: 1px solid #ddd;">Attribut</th>
+                    <th style="padding: 12px; text-align: left; font-weight: bold; border-bottom: 1px solid #ddd;">Valeur</th>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; text-align: left; border-right: 1px solid #ddd;">Compagnie</td>
+                    <td style="padding: 12px; border-right: 1px solid #ddd;">{{ vol.compagnieA }}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; text-align: left; border-right: 1px solid #ddd;">Aeroport du Départ</td>
+                    <td style="padding: 12px; border-right: 1px solid #ddd;">{{ vol.aeroportDepart }}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; text-align: left; border-right: 1px solid #ddd;">Aeroport d'Arrivée</td>
+                    <td style="padding: 12px; border-right: 1px solid #ddd;">{{ vol.aeroportArrivee }}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; text-align: left; border-right: 1px solid #ddd;">Escale</td>
+                    <td style="padding: 12px; border-right: 1px solid #ddd;">{{ vol.escale ?: " Pas d'éscale" }}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; text-align: left; border-right: 1px solid #ddd;">Image</td>
+                    <td style="padding: 12px; border-right: 1px solid #ddd;">{{ vol.image }}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; text-align: left; border-right: 1px solid #ddd;">Classe</td>
+                    <td style="padding: 12px; border-right: 1px solid #ddd;">{{ vol.classe }}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; text-align: left; border-right: 1px solid #ddd;">Date du départ</td>
+                    <td style="padding: 12px; border-right: 1px solid #ddd;">{{ vol.dateDepart|date('Y-m-d') }}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; text-align: left; border-right: 1px solid #ddd;">Date d'arrivée</td>
+                    <td style="padding: 12px; border-right: 1px solid #ddd;">{{ vol.dateArrivee|date('Y-m-d') }}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; text-align: left; border-right: 1px solid #ddd;">Durée vol</td>
+                    <td style="padding: 12px; border-right: 1px solid #ddd;">{{ vol.dureeVol }} mins</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; text-align: left; border-right: 1px solid #ddd;">Pays</td>
+                    <td style="padding: 12px; border-right: 1px solid #ddd;">{{ vol.destination.pays }}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; text-align: left; border-right: 1px solid #ddd;">Ville</td>
+                    <td style="padding: 12px; border-right: 1px solid #ddd;">{{ vol.destination.ville }}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; text-align: left; border-right: 1px solid #ddd;">Tarif </td>
+                    <td style="padding: 12px; border-right: 1px solid #ddd;">{{ vol.tarif }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    {% else %}
+    <p>No Vols found.</p>
+    {% endif %}
+{% endblock %}

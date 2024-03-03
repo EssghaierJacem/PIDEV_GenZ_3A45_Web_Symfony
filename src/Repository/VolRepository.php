@@ -70,6 +70,21 @@ class VolRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+    /**
+     *
+     * @param int $limit
+     * @return array
+     */
+    public function findTopCompanies(int $limit): array
+    {
+        return $this->createQueryBuilder('v')
+            ->select('v.compagnieA as compagnieA, SUM(v.tarif) as totalRevenue')
+            ->groupBy('v.compagnieA')
+            ->orderBy('totalRevenue', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
 
 //    /**
 //     * @return Vol[] Returns an array of Vol objects

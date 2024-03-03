@@ -32,7 +32,9 @@
                                 <p><strong>Compagnie Aerienne :</strong><br>
                                  {{ vol.compagnieA }}<br>
                                <strong>Aeroport du Départ :</strong><a href="#"><br>{{ vol.aeroportDepart }}</a><br>
-                               <strong>Aeroport d'Arrivée :</strong><a href="#"><br>{{ vol.aeroportArrivee }}</a>
+                               <strong>Aeroport d'Arrivée :</strong><a href="#"><br>{{ vol.aeroportArrivee }}</a><br>
+                               <strong>Escale :</strong><a href="#"><br>{{ vol.escale ?: " Pas d'éscale" }}</a>
+
                            </p>
                         </div>
                     </div>
@@ -43,7 +45,8 @@
                                                 <br>{{ vol.dateDepart|date('Y-m-d') }}<br>
                                                 <strong>Date d'arrivée :</strong>
                                                 <br><a href="#">{{ vol.dateArrivee|date('Y-m-d') }}</a><br>
-                                                <strong>Durée vol : </strong><br><a href="#">{{ vol.dureeVol }} mins</a>
+                                                <strong>Durée vol : </strong><br><a href="#">{{ vol.dureeVol }} mins</a><br>
+                                                <strong>Classe: </strong><br><a href="#">{{ vol.classe }} </a>
 
                                              </p>
                                           </div>
@@ -65,12 +68,17 @@
                                     <div class="col-sm-4 col-md-3 margin_bottom_30">
                                        <div class="column">
                                        </div>
-
-                                       </div>
+                                    <a data-fancybox="gallery" href="{{ vol.image }}"><img class="img-responsive" src="{{vol.image }}" alt="Pas d'image trouvé" /></a>
+                                <div class="heading_section">
+                                    <h4>Image du {{ vol.compagnieA }} </h4>
+                                </div>
                                     </div>
 
                         </div>
                         <div style="text-align: center;">
+                        <button type="button" class="btn cur-p btn-secondary">
+                            <a href={{ path('vol.pdf', {'id': vol.id}) }} class="btn-get-started scrollto" style="color: white; text-decoration: none;">Imprimer</a>
+                        </button>
                                 <button type="button" class="btn cur-p btn-warning">
                                    <a href={{ path('app_vol_edit', {'id': vol.id}) }}" class="btn-get-started scrollto" style="color: white; text-decoration: none;">Modifier</a>
                                 </button>
@@ -78,9 +86,6 @@
                                     <a href={{ path('app_vol_delete', {'id': vol.id}) }} class="btn-get-started scrollto" style="color: white; text-decoration: none;">Supprimer</a>
                                 </button>
                         </div>
-
-
-
 
 
 {% endblock %}

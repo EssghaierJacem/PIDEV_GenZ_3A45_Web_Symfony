@@ -71,6 +71,9 @@
                         </div>
                     </div>
                     <div style="text-align: center;">
+                        <button type="button" class="btn cur-p btn-secondary">
+                            <a href={{ path('destination.pdf', {'id': destination.id}) }} class="btn-get-started scrollto" style="color: white; text-decoration: none;">Imprimer</a>
+                        </button>
                         <button type="button" class="btn cur-p btn-warning">
                             <a href={{ path('app_destination_edit', {'id': destination.id}) }}" class="btn-get-started scrollto" style="color: white; text-decoration: none;">Modifier</a>
                         </button>

@@ -63,6 +63,15 @@ class Vol
     #[ORM\ManyToOne(inversedBy: 'vol')]
     private ?Destination $destination = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $escale = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $classe = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -172,6 +181,42 @@ class Vol
     public function setDestination(?Destination $destination): static
     {
         $this->destination = $destination;
+
+        return $this;
+    }
+
+    public function getEscale(): ?string
+    {
+        return $this->escale;
+    }
+
+    public function setEscale(?string $escale): static
+    {
+        $this->escale = $escale;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): static
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getClasse(): ?string
+    {
+        return $this->classe;
+    }
+
+    public function setClasse(?string $classe): static
+    {
+        $this->classe = $classe;
 
         return $this;
     }
