@@ -1,0 +1,89 @@
+{% extends 'frontbase.html.twig' %}
+
+{% block body %}
+<div class="midde_cont">
+    <div class="container-fluid">
+        <div class="row column_title">
+            <div class="col-md-12">
+                <div class="page_title">
+                    <h2>Event Details</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="slider-container">
+            <div class="slider">
+                {% for event in events %}
+                <div class="event-box">
+                    <div class="event-header">
+                        <h3>{{ event.nom }}</h3>
+                        <p>{{ event.lieu }}</p>
+                        <button class="show-more-btn">Show More</button>
+                    </div>
+                    <div class="event-details">
+                        <p><strong>Date Début:</strong> {{ event.dateDebut ? event.dateDebut|date('Y-m-d') : '' }}</p>
+                        <p><strong>Date Fin:</strong> {{ event.dateFin ? event.dateFin|date('Y-m-d') : '' }}</p>
+                        <p><strong>Organisateur:</strong> {{ event.organisateur }}</p>
+                        <p><strong>Description:</strong> {{ event.description }}</p>
+                        <div class="actions">
+
+                            <a href="{{ path('add_participation_new') }}" class="btn btn-primary btn-sm">Participate</a>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <p>No records found</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .slider-container {
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .slider {
+        display: inline-block;
+    }
+
+    .event-box {
+        width: 400px; /* Adjust width as needed */
+        height: 200px; /* Adjust height as needed */
+        border: 1px solid #ccc;
+        margin-right: 20px;
+        margin-bottom: 20px;
+        display: inline-block;
+    }
+
+    .event-header {
+        padding: 10px;
+        background-color: #f2f2f2;
+    }
+
+    .event-details {
+        display: none;
+        padding: 10px;
+    }
+
+    .actions {
+        margin-top: 10px;
+    }
+</style>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var buttons = document.querySelectorAll('.show-more-btn');
+        buttons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                var details = this.parentElement.nextElementSibling;
+                details.style.display = details.style.display === 'none' ? 'block' : 'none';
+            });
+        });
+    });
+</script>
+
+{% endblock %}

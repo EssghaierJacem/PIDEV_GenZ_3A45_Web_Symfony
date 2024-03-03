@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ParticipationRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ParticipationRepository::class)]
 class Participation
@@ -14,15 +15,24 @@ class Participation
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Ce champ ne peut pas être vide")]
+    #[Assert\Length(min: 3, minMessage: "Minimum 3 caractères")]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Ce champ ne peut pas être vide")]
+    #[Assert\Length(min: 3, minMessage: "Minimum 3 caractères")]
     private ?string $prenom = null;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[Assert\NotBlank(message: "Ce champ ne peut pas être vide")]
+    #[Assert\Positive(message: "Doit être un nombre positif")]
+    #[Assert\Regex(pattern: '/^\d{1,8}$/', message: "Doit contenir entre 1 et 8 chiffres")]
     private ?int $tel = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank(message: "Ce champ ne peut pas être vide")]
+    #[Assert\Email(message: "Doit être une adresse email valide")]
     private ?string $email = null;
 
     #[ORM\ManyToOne(inversedBy: 'participation')]
@@ -83,7 +93,7 @@ class Participation
 
         return $this;
     }
-
+    
     public function getUser(): ?User
     {
         return $this->user;

@@ -1,0 +1,141 @@
+{% extends 'backbase.html.twig' %}
+
+{% block body %}
+
+<div class="midde_cont">
+                      <div class="container-fluid">
+                         <div class="row column_title">
+                            <div class="col-md-12">
+                             <div class="page_title">
+                                <h2><a href="{{ path('app_tournee_index') }}"  ">
+                                 <i class="fa fa-arrow-left">   &nbsp; </i>
+                                </a> Tournee </h2>
+                            </div>
+                      </div>
+                    </div>
+
+<section id="portfolio-details" class="portfolio-details">
+    <div class="container">
+    
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form-details'}}) }}
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    {{ form_label(form.nom, 'Nom', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+                    {% if form_errors(form.nom) is not empty %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ form_errors(form.nom) }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.dateDebut, 'Date de début', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.dateDebut, {'attr': {'class': 'form-control'}}) }}
+                    {% if form_errors(form.dateDebut) is not empty %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ form_errors(form.dateDebut) }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.duree, 'Durée', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.duree, {'attr': {'class': 'form-control'}}) }}
+                    {% if form_errors(form.duree) is not empty %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ form_errors(form.duree) }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    {{ form_label(form.description, 'Description', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                    {% if form_errors(form.description) is not empty %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ form_errors(form.description) }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.tarif, 'Tarif', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.tarif, {'attr': {'class': 'form-control'}}) }}
+                    {% if form_errors(form.tarif) is not empty %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ form_errors(form.tarif) }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.monuments, 'Monuments', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.monuments, {'attr': {'class': 'form-control'}}) }}
+                    {% if form_errors(form.monuments) is not empty %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ form_errors(form.monuments) }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    {{ form_label(form.trancheAge, 'Tranche d\'âge', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.trancheAge, {'attr': {'class': 'form-control'}}) }}
+                    {% if form_errors(form.trancheAge) is not empty %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ form_errors(form.trancheAge) }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    {{ form_label(form.moyenTransport, 'Moyen de transport', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.moyenTransport, {'attr': {'class': 'form-control'}}) }}
+                    {% if form_errors(form.moyenTransport) is not empty %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ form_errors(form.moyenTransport) }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    
+        <div class="form-group">
+            {{ form_label(form.destination, 'Destination', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.destination, {'attr': {'class': 'form-control'}}) }}
+            {% if form_errors(form.destination) is not empty %}
+                <div class="alert text-danger" role="alert">
+                    {{ form_errors(form.destination) }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.guide, 'Guide', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.guide, {'attr': {'class': 'form-control'}}) }}
+            {% if form_errors(form.guide) is not empty %}
+                <div class="alert text-danger" role="alert">
+                    {{ form_errors(form.guide) }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-primary btn-lg">{{ button_label|default('Enregistrer') }}</button>
+        </div>
+
+        {{ form_end(form) }}
+
+    </div>
+</section>
+
+{% endblock %}

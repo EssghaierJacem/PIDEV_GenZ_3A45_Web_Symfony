@@ -1,0 +1,51 @@
+{% extends 'backbase.html.twig' %}
+
+
+{% block body %}
+    <h1>Participation index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Tel</th>
+                <th>Email</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for participation in participations %}
+            <tr>
+                <td>{{ participation.id }}</td>
+                <td>{{ participation.nom }}</td>
+                <td>{{ participation.prenom }}</td>
+                <td>{{ participation.tel }}</td>
+                <td>{{ participation.email }}</td>
+                <td>
+                    <div class="mb-2">
+    <a href="{{ path('app_participation_show', {'id': participation.id}) }}" class="btn btn-info btn-sm">Show</a>
+</div>
+<div class="mb-2">
+    <a href="{{ path('app_participation_edit', {'id': participation.id}) }}" class="btn btn-primary btn-sm">Edit</a>
+</div>
+<div class="mb-2">
+    <form action="{{ path('app_participation_delete', {'id': participation.id}) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this event?');">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ participation.id) }}">
+        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+    </form>
+</div>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+{% endblock %}
