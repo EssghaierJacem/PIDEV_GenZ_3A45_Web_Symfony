@@ -1,0 +1,81 @@
+{% extends "frontbase.html.twig" %}
+
+{% block title %}
+	Accommodation Details
+{% endblock %}
+
+{% block body %}
+	<section class="breadcrumbs">
+		<div class="container">
+			<div class="d-flex justify-content-between align-items-center">
+				<h2>Portfolio Details</h2>
+				<ol>
+					<li>
+						<a href="index.html">Home</a>
+					</li>
+					<li>
+						<a href="portfolio.html">Your Entity</a>
+					</li>
+					<li>Addition mta3 Entity mtaaek</li>
+				</ol>
+			</div>
+		</div>
+	</section>
+
+	<section id="portfolio-details" class="portfolio-details">
+		<div class="container">
+			<div class="row">
+				<div
+					class="col-md-6">
+					<!-- Image à gauche dans un cadre élégant -->
+					<div class="card">
+						<div class="card-body">
+							<div class="text-center">
+								<img src="{{ hebergement.adresse }}" width="600" height="500" class="img-fluid rounded border border-primary">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div
+					class="col-md-6">
+					<!-- Informations à droite dans une card -->
+					<div class="card">
+						<div class="card-body">
+							<div
+								class="row">
+								<!-- Première moitié des informations -->
+								<div class="col-md-6">
+									<h5 class="card-title">Accommodation</h5>
+									<p class="card-text">{{ hebergement.nomH }}</p>
+									<h5 class="card-title">Stars</h5>
+									<p class="card-text">
+										{% set stars = '★' %}
+										{% for i in range(1, hebergement.nbrEtoile) %}
+											{% set stars = stars ~ '★' %}
+										{% endfor %}
+										{{ stars }}
+									</p>
+								</div>
+								<!-- Deuxième moitié des informations -->
+								<div class="col-md-6">
+									<h5 class="card-title">Capacity</h5>
+									<p class="card-text">{{ hebergement.capacite }}</p>
+									<h5 class="card-title">Tariff Per night ($)</h5>
+									<p class="card-text">{{ hebergement.tarifParNuit }}</p>
+									<h5 class="card-title">Description :</h5>
+									<p class="card-text">{{ categorie.description }}</p>
+								</div>
+							</div>
+						</div>
+						<div class="card-footer">
+							<div class="text-center">
+								<button type="button" class="btn btn-primary btn-lg">Réserver</button>
+								<button type="button" class="btn btn-success btn-lg">Contacter Nous</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}

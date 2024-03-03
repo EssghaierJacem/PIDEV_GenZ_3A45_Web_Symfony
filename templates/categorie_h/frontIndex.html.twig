@@ -1,0 +1,48 @@
+{% extends "frontbase.html.twig" %}
+
+{% block title %}
+	Category List
+{% endblock %}
+
+{% block body %}
+	<section class="breadcrumbs">
+		<div class="container">
+			<div class="d-flex justify-content-between align-items-center">
+				<h2>Portfolio Details</h2>
+				<ol>
+					<li>
+						<a href="index.html">Home</a>
+					</li>
+					<li>
+						<a href="portfolio.html">Your Entity</a>
+					</li>
+					<li>Addition mta3 Entity mtaaek</li>
+				</ol>
+			</div>
+		</div>
+	</section>
+
+	<section id="portfolio-details" class="portfolio-details">
+		<div
+			class="container">
+			<!-- ======= Starts Here ======= -->
+			<div class="row">
+				{% for categorie_h in categorie_hs %}
+					<div class="col-lg-4 col-md-6 portfolio-item">
+						<div class="portfolio-wrap">
+							<div class="portfolio-info">
+								<h4>{{ categorie_h.Type }}</h4>
+								<p>{{ categorie_h.description }}</p>
+								<a href="#" class="btn btn-primary">Show more</a>
+							</div>
+						</div>
+					</div>
+				{% else %}
+					<div class="col">
+						Aucune catégorie d'hébergement trouvée.
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</section>
+{% endblock %}

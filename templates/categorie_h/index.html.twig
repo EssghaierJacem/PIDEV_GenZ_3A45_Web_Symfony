@@ -1,0 +1,58 @@
+{% extends "backbase.html.twig" %}
+
+{% block title %}
+	Liste des Catégories
+{% endblock %}
+
+{% block body %}
+	<div class="midde_cont">
+		<div class="container-fluid">
+			<div class="row column_title">
+				<div class="col-md-12">
+					<div class="page_title">
+						<h2>Liste des Catégories</h2>
+					</div>
+				</div>
+			</div>
+
+			<!-- Tableau des catégories -->
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Type</th>
+						<th>Description</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for categorie_h in categorie_hs %}
+						<tr>
+							<td>{{ categorie_h.id }}</td>
+							<td>{{ categorie_h.Type }}</td>
+							<td>{{ categorie_h.description }}</td>
+							<td>
+								<div class="btn-group" role="group" aria-label="Actions">
+									<a href="{{ path('app_categorie_h_show', {'id': categorie_h.id}) }}" class="btn btn-primary">Show</a>
+									<a href="{{ path('app_categorie_h_edit', {'id': categorie_h.id}) }}" class="btn btn-warning">Edit</a>
+									<form method="post" action="{{ path('app_categorie_h_delete', {'id': categorie_h.id}) }}" onsubmit="return confirm('Are you sure you want to delete this category?');">
+										<input type="hidden" name="_method" value="DELETE">
+										<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ categorie_h.id) }}">
+										<button type="submit" class="btn btn-danger">Delete</button>
+									</form>
+								</div>
+							</td>
+						</tr>
+					{% else %}
+						<tr>
+							<td colspan="4">No records found</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+
+			<!-- Lien pour créer une nouvelle catégorie -->
+			<a href="{{ path('app_categorie_h_new') }}" class="btn btn-success">Create new</a>
+		</div>
+	</div>
+{% endblock %}

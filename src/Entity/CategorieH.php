@@ -6,6 +6,7 @@ use App\Repository\CategorieHRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CategorieHRepository::class)]
 class CategorieH
@@ -16,9 +17,22 @@ class CategorieH
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Type cannot be blank')]
+    #[Assert\Length(
+        min: 2,
+        max: 255,
+        minMessage: 'Type must be at least {{ limit }} characters long',
+        maxMessage: 'Type cannot be longer than {{ limit }} characters',
+    )]
     private ?string $Type = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length(
+        min: 2,
+        max: 50,
+        minMessage: 'Description must be at least {{ limit }} characters long',
+        maxMessage: 'Description cannot be longer than {{ limit }} characters',
+    )]
     private ?string $description = null;
 
     #[ORM\OneToMany(mappedBy: 'categorieH', targetEntity: Hebergement::class)]
