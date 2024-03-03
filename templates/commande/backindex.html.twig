@@ -40,7 +40,7 @@
                 <td>{{ commande.dateCommande ? commande.dateCommande|date('Y-m-d') : '' }}</td>
                 
                 
-               
+                <td><a href="{{ path('commande_show', {'id': commande.id}) }}" class="btn btn-sm btn-info">Show</a></td>
                 <td>{{ include('commande/backdelete.html.twig') }}</td>
                 </tr>
         {% else %}

@@ -29,6 +29,29 @@ class ReservationController extends AbstractController
             'reservations' => $reservationRepository->findAll(),
         ]);
     }
+    #[Route('/statistics', name: 'reservation_statistics', methods: ['GET'])]
+    public function statistics(ReservationRepository $reservationRepository): Response
+    {
+        // Fetch reservation data for statistics
+        $reservations = $reservationRepository->findAll();
+        $reservationCounts = [];
+          // Initialize an array to store reservation counts for each month
+          $reservationCounts = array_fill(0, 12, 0);
+
+        // Count reservations for each month
+        foreach ($reservations as $reservation) {
+            $monthIndex = intval($reservation->getDateReservation()->format('n')) - 1;
+            $reservationCounts[$monthIndex]++;
+        }
+
+        // Define month names for the chart labels
+        $months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+        return $this->render('reservation/statistics.html.twig', [
+            'chartData' => $months,
+            'reservationCounts' => $reservationCounts,
+        ]);
+    }
 
     #[Route('/new', name: 'app_reservation_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -57,6 +80,13 @@ class ReservationController extends AbstractController
     public function show(Reservation $reservation): Response
     {
         return $this->render('reservation/show.html.twig', [
+            'reservation' => $reservation,
+        ]);
+    }
+    #[Route('/back/{id}', name: 'reservation_show', methods: ['GET'])]
+    public function backshow(Reservation $reservation): Response
+    {
+        return $this->render('reservation/backshow.html.twig', [
             'reservation' => $reservation,
         ]);
     }

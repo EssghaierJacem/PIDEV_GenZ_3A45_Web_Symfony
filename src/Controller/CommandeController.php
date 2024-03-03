@@ -11,6 +11,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use Dompdf\Dompdf;
+use Dompdf\Options;
+
 #[Route('/commande')]
 class CommandeController extends AbstractController
 {
@@ -21,6 +24,7 @@ class CommandeController extends AbstractController
             'commandes' => $commandeRepository->findAll(),
         ]);
     }
+    
     #[Route('/BackIndex', name: 'commande_index', methods: ['GET'])]
     public function Backindex(CommandeRepository $commandeRepository): Response
     {
@@ -43,8 +47,6 @@ class CommandeController extends AbstractController
             $this->addFlash('success', 'commande created successfully.');
 
             return $this->redirectToRoute('app_commande_index');
-
-           
         }
 
         return $this->renderForm('commande/new.html.twig', [
@@ -61,6 +63,14 @@ class CommandeController extends AbstractController
         ]);
     }
 
+    #[Route('/back/{id}', name: 'commande_show', methods: ['GET'])]
+    public function backshow(Commande $commande): Response
+    {
+        return $this->render('commande/backshow.html.twig', [
+            'commande' => $commande,
+        ]);
+    }
+
     #[Route('/{id}/edit', name: 'app_commande_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Commande $commande, EntityManagerInterface $entityManager): Response
     {
@@ -73,8 +83,6 @@ class CommandeController extends AbstractController
             $this->addFlash('success', 'Commande updated successfully.');
 
             return $this->redirectToRoute('app_commande_index');
-
-        
         }
 
         return $this->renderForm('commande/edit.html.twig', [
@@ -93,23 +101,7 @@ class CommandeController extends AbstractController
 
         return $this->redirectToRoute('app_commande_index', [], Response::HTTP_SEE_OTHER);
     }
-    #[Route('/{id}/back_edit', name: 'back_edit', methods: ['GET', 'POST'])]
-    public function back_edit(Request $request, Commande  $commande, EntityManagerInterface $entityManager): Response
-    {
-        $form = $this->createForm(CommandeType::class, $commande);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_commande_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('commande/backedit.html.twig', [
-            'commande' => $commande,
-            'form' => $form,
-        ]);
-    }
+    
     #[Route('/{id}/delete', name: 'commande_delete', methods: ['POST'])]
     public function deleteBack(Request $request, Commande $commande, EntityManagerInterface $entityManager): Response
     {
@@ -121,4 +113,29 @@ class CommandeController extends AbstractController
         return $this->redirectToRoute('commande_index', [], Response::HTTP_SEE_OTHER);
     }
 
+    #[Route('/{id}/generate-pdf', name: 'generate_pdf', methods: ['GET'])]
+    public function generatePdf(Commande $commande): Response
+    {
+        // Logic to generate PDF based on the $commande entity
+        $html = $this->renderView('commande/pdf_template.html.twig', [
+            'commande' => $commande,
+        ]);
+
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+
+        $dompdf = new Dompdf($pdfOptions);
+        $dompdf->loadHtml($html);
+
+        // (Optional) Setup paper size and orientation
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser
+        return new Response($dompdf->stream("commande_{$commande->getId()}.pdf", [
+            "Attachment" => true
+        ]));
+    }
 }
