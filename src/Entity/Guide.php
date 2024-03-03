@@ -46,6 +46,7 @@ class Guide
 
     #[ORM\Column(nullable: true)]
     #[Assert\Length( min: 2, minMessage: 'Le tarif horaire doit contenir au moins 2 chiffres',),]
+    #[Assert\Positive(message:'Veuillez choisir un tarif horaire positif !')]
     #[Assert\NotBlank(message: "Il faut saisir le tarif horaire !!!")]
     private ?float $tarifHoraire = null;
 

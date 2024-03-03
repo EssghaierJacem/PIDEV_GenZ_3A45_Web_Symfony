@@ -10,15 +10,21 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
 
 #[Route('/guide')]
 class GuideController extends AbstractController
 {
     #[Route('/', name: 'app_guide_index', methods: ['GET'])]
-    public function index(GuideRepository $guideRepository): Response
+    public function index(GuideRepository $guideRepository, Request $request,  PaginatorInterface $paginator): Response
     {
+        $paginations = $paginator->paginate(
+            $guideRepository->findAll(),
+            $request->query->get('page', 1),
+            3
+        );
         return $this->render('guide/index.html.twig', [
-            'guides' => $guideRepository->findAll(),
+            'paginations' => $paginations,
         ]);
     }
 

@@ -1,0 +1,33 @@
+{% extends 'frontbase.html.twig' %}
+
+{% block body %}
+    <title>Résultats de recherche</title>
+
+    <section class="breadcrumbs">
+        <div class="container">
+            <h1>Résultats de recherche</h1>
+
+            {# Affichage des résultats de recherche #}
+            <div class="row">
+                {% if results %}
+                    {% for tournee in results %}
+                        <div class="col-md-4 mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ tournee.nom }}</h5>
+                                    <p class="card-text">Date de début: {{ tournee.dateDebut|date('d-m-Y') }}</p>
+                                    <p class="card-text">Durée: {{ tournee.duree }}</p>
+                                    <p class="card-text">Tarif: {{ tournee.tarif }}</p>
+                                    {# Ajoutez d'autres champs de recherche si nécessaire #}
+                                    <a href="{{ path('app_tournee_show', {'id': tournee.id}) }}" class="btn btn-primary">Voir les détails</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>Aucun résultat trouvé.</p>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+{% endblock %}
