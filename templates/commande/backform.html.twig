@@ -1,0 +1,85 @@
+{% extends 'backbase.html.twig' %}
+
+{% block body %}
+<section class="breadcrumbs">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2>Portfolio Details</h2>
+            <ol>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="portfolio.html">Your Entity</a></li>
+                <li>Addition mta3 Entity mtaaek</li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+<section id="portfolio-details" class="portfolio-details">
+    <div class="container">
+        
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+            
+            <!-- Add other form fields here if needed -->
+            <div class="form-group">
+                {{ form_label(form.date_commande, 'date_commande', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.date_commande, {'attr': {'class': 'form-control'}}) }}
+                {% if form_errors(form.date_commande) is not empty %}
+                    <div class="alert text-danger">
+                        {{ form_errors(form.date_commande) }}
+                    </div>
+                {% endif %}
+            </div>
+           
+            <div class="form-group">
+                {{ form_label(form.code_promo, 'code_promo', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.code_promo, {'attr': {'class': 'form-control'}}) }}
+                {% if form_errors(form.code_promo) is not empty %}
+                    <div class="alert text-danger">
+                        {{ form_errors(form.code_promo) }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.reservation, 'reservation', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.reservation, {'attr': {'class': 'form-control'}}) }}
+                {% if form_errors(form.reservation) is not empty %}
+                    <div class="alert text-danger">
+                        {{ form_errors(form.reservation) }}
+                    </div>
+                {% endif %}
+                <div class="form-group">
+                {{ form_label(form.num_commande, 'num_commande', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.num_commande, {'attr': {'class': 'form-control'}}) }}
+                {% if form_errors(form.num_commande) is not empty %}
+                    <div class="alert text-danger">
+                        {{ form_errors(form.num_commande) }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.type_paiement, 'type_paiement', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.type_paiement, {'attr': {'class': 'form-control'}}) }}
+                {% if form_errors(form.type_paiement) is not empty %}
+                    <div class="alert text-danger">
+                        {{ form_errors(form.type_paiement) }}
+                    </div>
+                {% endif %}
+               <div class="form-group">
+                {{ form_label(form.email, 'email', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                {% if form_errors(form.email) is not empty %}
+                    <div class="alert text-danger">
+                        {{ form_errors(form.email) }}
+                    </div>
+                {% endif %}
+            </div>
+            
+        
+        
+        <div class="text-end mt-4">
+            <button type="submit" class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+        </div>
+        {{ form_end(form) }}
+    </div>
+</section>
+{% endblock %}

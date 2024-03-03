@@ -1,0 +1,12 @@
+{% extends "backbase.html.twig" %}
+{% block title %}
+	New Category
+{% endblock %}
+
+{% block body %}
+	<h1>Create new CategorieH</h1>
+
+	{{ include('categorie_h/_form.html.twig') }}
+
+	<a href="{{ path('app_categorie_h_index') }}">back to list</a>
+{% endblock %}
