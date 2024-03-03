@@ -1,0 +1,55 @@
+{% extends 'backbase.html.twig' %}
+{% block body %}
+                   <section class="breadcrumbs">
+            <div class="container">
+                <div class="d-flex justify-content-between align-items-center">
+                    
+                    <ol>
+                      <!-- <li><a href="index.html">Home</a></li>
+                        <li><a href="portfolio.html">Your Entity</a></li>
+                        <li>Addition mta3 Entity mtaaek</li> -->
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+    <section class="breadcrumbs">
+         <div class="container">
+       <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom_client</th>
+                <th>Prenom_client</th>
+                <th>Num_tel</th>
+                <th>Quantite</th>
+                <th>Date_reservation</th>
+                
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reservation in reservations %}
+            <tr>
+                <td>{{ reservation.id }}</td>
+                <td>{{ reservation.nomClient }}</td>
+                <td>{{ reservation.prenomClient }}</td>
+                <td>{{ reservation.numTel }}</td>
+                <td>{{ reservation.quantite }}</td>
+                <td>{{ reservation.dateReservation ? reservation.dateReservation|date('Y-m-d') : '' }}</td>
+                
+                <td><a href="{{ path('back_edit', {'id': reservation.id}) }}" class="btn btn-sm btn-warning">Edit</a>
+                {{ include('reservation/backdelete.html.twig') }}
+                </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+</div>
+    </section>
+{% endblock %}

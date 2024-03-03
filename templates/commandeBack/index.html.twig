@@ -1,0 +1,56 @@
+{% extends 'backbase.html.twig' %}
+
+
+
+{% block body %}
+                   <div class="midde_cont">
+                  <div class="container-fluid">
+                     <div class="row column_title">
+                        <div class="col-md-12">
+                           <div class="page_title">
+                              <h2>Details</h2>
+                           </div>
+                        </div>
+                </div>
+
+    <div class="table_section padding_infor_info">
+     <div class="table-responsive-sm">
+       <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Num Commande</th>
+                <th>Prix</th>
+                <th>Code Promo</th>
+                <th>Type Paiement</th>
+                <th>Email</th>
+                <th>Date Commande</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for commande in commandes %}
+            <tr>
+                <td>{{ commande.id }}</td>
+                <td>{{ commande.numCommande }}</td>
+                <td>{{ commande.prix }}</td>
+                <td>{{ commande.codePromo }}</td>
+                <td>{{ commande.typePaiement }}</td>
+                <td>{{ commande.email }}</td>
+                <td>{{ commande.dateCommande ? commande.dateCommande|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_commande_show', {'id': commande.id}) }}">Show</a>
+                    <a href="{{ path('app_commande_edit', {'id': commande.id}) }}">Edit</a>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="8">No records found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    </div>
+    <a href="{{ path('app_commande_new') }}" class="create-new">Create New</a>
+{% endblock %}
