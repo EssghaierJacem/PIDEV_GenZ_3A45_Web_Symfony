@@ -1,0 +1,48 @@
+{% extends 'frontbase.html.twig' %}
+
+{% block body %}
+    <title>Guide index</title>
+
+    <section class="breadcrumbs" style="background-color: #f8f9fa; padding: 30px 0;">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h2 style="color: #343a40; font-size: 24px;">Portfolio Details</h2>
+                </div>
+                <div class="col-auto">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb" style="background-color: transparent;">
+                            <li class="breadcrumb-item"><a href="#" style="color: #6c757d; font-size: 16px;">Home</a></li>
+                            <li class="breadcrumb-item"><a href="#" style="color: #6c757d; font-size: 16px;"> Guide </a></li>
+                            <li class="breadcrumb-item active" aria-current="page" style="color: #343a40; font-size: 16px;">Guides liste</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="portfolio-details" style="padding: 60px 0;">
+        <div class="container">
+            <div class="row">
+                {% for guide in guides %}
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card h-100 shadow-sm" style="border: 1px solid #dee2e6; border-radius: 10px;">
+                            <div class="card-body">
+                                <h5 class="card-title" style="color: #343a40; font-size: 20px; margin-bottom: 10px;">{{ guide.prenom }} {{ guide.nom }} </h5>
+                                <p class="card-text" style="color: #6c757d; font-size: 16px; margin-bottom: 10px;">Tarif horaire: {{ guide.tarifHoraire }} £ </p>
+                                <p class="card-text" style="color: #6c757d; font-size: 16px; margin-bottom: 10px;">Numéro de téléphone: {{ guide.numTel }}</p>
+                            </div>
+                            <div class="card-footer bg-white border-top-0" style="display: flex; justify-content: space-between;">
+                                <div></div>
+                                <a href="{{ path('front_guide_show', {'id': guide.id}) }}" class="btn btn-outline-primary" style="font-size: 14px;">Show Details</a>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <p class="text-center">No records found</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}
