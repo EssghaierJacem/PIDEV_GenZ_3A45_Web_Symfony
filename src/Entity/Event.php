@@ -16,6 +16,8 @@ class Event
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank(message:"Ce champ ne peut pas être vide")]
+    #[Assert\Length(min:3, minMessage: 'Minimum 3 caractères')]
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
@@ -25,12 +27,17 @@ class Event
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $dateFin = null;
 
+    #[Assert\NotBlank(message:"Ce champ ne peut pas être vide")]
+    #[Assert\Length(min:4, minMessage: 'Minimum 4 caractères')]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $lieu = null;
-
+     
+    #[Assert\NotBlank(message:"Ce champ ne peut pas être vide")]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $description = null;
 
+    #[Assert\NotBlank(message:"Ce champ ne peut pas être vide")]
+    #[Assert\Length(min:4, minMessage: 'Minimum 4 caractères')]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $organisateur = null;
 
