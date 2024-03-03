@@ -1,0 +1,170 @@
+{% extends 'backbase.html.twig' %}
+
+{% block title %}User index  {% endblock %}
+{% block name %} {{ app.session.get('user').nom ~ " " ~ app.session.get('user').prenom }} {% endblock %}
+{% block name2 %} {{ app.session.get('user').nom ~ " " ~ app.session.get('user').prenom }}  {% endblock %}
+{% block body %}
+      <!-- dashboard inner -->
+  <div class="midde_cont">
+    <div class="container-fluid">
+      <div class="row column_title">
+        <div class="col-md-12">
+          <div class="page_title">
+            <h2>User</h2>
+          </div>
+        </div>
+      </div>
+      <!-- row -->
+      <div class="row column1">
+        <div class="col-md-12">
+          <div class="white_shd full margin_bottom_30">
+            <div class="full graph_head">
+              <div class="heading1 margin_0">
+                <h2>Gestion des utilisateurs</h2>
+                                           <a href="{{path('app_user_new')}}" class="btn cur-p btn-info">Ajouter un nouveau utilisateur </a>
+
+              </div>
+            </div>
+            <div class="full price_table padding_infor_info">
+              <div class="row">
+               {% for user in users %}
+                <!-- column contact -->
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 profile_details margin_bottom_30">
+                  <div class="contact_blog">
+                    <h4 class="brief">{{user.role}}</h4>
+                    <div class="contact_inner">
+                      <div class="left">
+                        <h3>{{ user.nom ~ " " ~ user.prenom}}</h3>
+                        <p>
+                          <strong>About: </strong>{{user.role}}
+                        </p>
+                        <ul class="list-unstyled">
+                          <li>
+                            <i class="fa fa-envelope-o"></i> : {{user.email}}
+                          </li>
+                          <li>
+                            <i class="fa fa-phone"></i> : 987 654 3210
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="right">
+                        <div class="profile_contacts">
+                          <img class="img-responsive" src="{{ asset(user.photo) }}" alt="User Photo" />
+                        </div>
+                      </div>
+                      <div class="bottom_list">
+                        <div class="left_rating">
+                          <p class="ratings">
+                            <a href="#">
+                              <span class="fa fa-star"></span>
+                            </a>
+                            <a href="#">
+                              <span class="fa fa-star"></span>
+                            </a>
+                            <a href="#">
+                              <span class="fa fa-star"></span>
+                            </a>
+                            <a href="#">
+                              <span class="fa fa-star"></span>
+                            </a>
+                            <a href="#">
+                              <span class="fa fa-star-o"></span>
+                            </a>
+                          </p>
+                        </div>
+                        <div class="right_button">
+                          <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal-sup-{{ user.id }}">
+                               <i class="fa fa-user-times"></i><i class="fa fa-trash-o"></i>
+                         Delete Profile
+                          </button>
+                          <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-{{ user.id }}">
+                            <i class="fa fa-user"></i> <i class="fa fa-pencil"></i> Edit Profile </button>
+                           <a href="{{ path('app_user_show', {'id': user.id}) }}" class="btn cur-p btn-info">
+                            <i>Info</i>
+                        </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- end column contact blog -->
+             
+                 {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end row -->
+      </div>
+      <!-- footer -->
+      <div class="container-fluid">
+        <div class="footer">
+          <p>Copyright © 2018 Designed by html.design. All rights reserved. <br>
+            <br> Distributed By: <a href="https://themewagon.com/">ThemeWagon</a>
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- end dashboard inner -->
+       {% for user in users %}
+       {# -------------------------------------------------------------------- #}
+       {# ------------------------ MODAL FORMULAIRE --------------------------- #}
+
+       <div class="modal fade" id="modal-sup-{{ user.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="post" action="{{ path('app_user_delete', {'id': user.id}) }}">
+                <div class="card2">
+                    <div class="card2-content  text-center">
+    <p class="card2-heading">Êtes-vous sûr de vouloir supprimer ce user?</p>
+    <p class="card2-description">
+        <strong>Nom et adresse de lagence :</strong> {{ user.prenom ~ '-' ~ user.nom }}<br>
+       
+        <!-- Ajoutez d'autres informations du client selon vos besoins -->
+    </p>
+</div>
+
+                    <div class="card2-button-wrapper">
+                        <button class="card2-button secondary" data-dismiss="modal">Annuler</button>
+                        <button class="card2-button primary">Confirmer la Suppression</button>
+                    </div>
+                </div>
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+            </form>
+        </div>
+    </div>
+</div>
+       {# -------------------------------------------------------------------- #}
+    {% set form = forms[user.id] %}
+
+    <div class="modal fade" id="modal-{{ user.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+      <div class="box-header">
+                    <h3 class="box-title">Formulaire De Modification / Affichage</h3>
+                </div>                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true"><i style="color:red; font-size: 20px;" class="fa fa-close"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{ include('user/_formedit.html.twig', {'button_label': 'Update'}) }}
+
+                  
+
+                    <!-- Formulaire pour la modification du client -->
+                    
+                </div>
+                
+            </div>
+        </div>
+    </div>
+{% endfor %}
+
+
+
+{% endblock %}
