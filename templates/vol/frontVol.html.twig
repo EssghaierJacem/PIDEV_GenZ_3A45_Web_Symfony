@@ -108,6 +108,9 @@
                                     <!-- Flight Class -->
                                     <p class="card-text text-muted bold-text">Classe: </p></i><i class="italic-text">{{ vol.classe }}</i></p>
                                     <!-- More Details Button -->
+                                    <div style="text-align: left;">
+                <a class="btn" style="background-color: #30458B; border-color: #daeee5; color: #daeee5;" href="{{ path('add', {'id': vol.id}) }}">Commander</a>
+</div>
                                     <a href="{{ path('app_vol_details_show', {'id': vol.id}) }}" class="btn btn-primary animate__animated animate__fadeIn more-details-btn">Plus détails</a>
                                 </div>
                             </div>
