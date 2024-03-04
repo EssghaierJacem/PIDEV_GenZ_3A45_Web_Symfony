@@ -60,16 +60,69 @@ class VolRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-    public function findByDateInterval($dateDepart, $dateArrivee)
+    public function findByCriteria($criteria)
     {
-        return $this->createQueryBuilder('v')
-            ->andWhere('v.dateDepart >= :dateDepart')
-            ->andWhere('v.dateArrivee <= :dateArrivee')
-            ->setParameter('dateDepart', $dateDepart)
-            ->setParameter('dateArrivee', $dateArrivee)
-            ->getQuery()
-            ->getResult();
+        $queryBuilder = $this->createQueryBuilder('v');
+
+        if ($criteria['compagnieA']) {
+            $queryBuilder->andWhere('v.compagnieA LIKE :compagnieA')
+                ->setParameter('compagnieA', '%' . $criteria['compagnieA'] . '%');
+        }
+
+        if ($criteria['num_vol']) {
+            $queryBuilder->andWhere('v.num_vol = :num_vol')
+                ->setParameter('num_vol', $criteria['num_vol']);
+        }
+
+        if ($criteria['aeroportDepart']) {
+            $queryBuilder->andWhere('v.aeroportDepart LIKE :aeroportDepart')
+                ->setParameter('aeroportDepart', '%' . $criteria['aeroportDepart'] . '%');
+        }
+
+        if ($criteria['aeroportArrivee']) {
+            $queryBuilder->andWhere('v.aeroportArrivee LIKE :aeroportArrivee')
+                ->setParameter('aeroportArrivee', '%' . $criteria['aeroportArrivee'] . '%');
+        }
+
+        if ($criteria['tarif']) {
+            $queryBuilder->andWhere('v.tarif = :tarif')
+                ->setParameter('tarif', $criteria['tarif']);
+        }
+
+        if (isset($criteria['escale'])) {
+            if ($criteria['escale'] === 'avec') {
+                $queryBuilder->andWhere('v.escale IS NOT NULL');
+            } elseif ($criteria['escale'] === 'sans') {
+                $queryBuilder->andWhere('v.escale IS NULL');
+            }
+        }
+
+        if ($criteria['classe']) {
+            $queryBuilder->andWhere('v.classe = :classe')
+                ->setParameter('classe', $criteria['classe']);
+        }
+
+        if ($criteria['destination']) {
+            $queryBuilder->andWhere('v.destination = :destination')
+                ->setParameter('destination', $criteria['destination']);
+        }
+
+        // Handle date interval search
+        if ($criteria['dateDepart'] && $criteria['dateArrivee']) {
+            $queryBuilder->andWhere('v.dateDepart >= :dateDepart')
+                ->andWhere('v.dateArrivee <= :dateArrivee')
+                ->setParameter('dateDepart', $criteria['dateDepart'])
+                ->setParameter('dateArrivee', $criteria['dateArrivee']);
+        }
+
+        // Execute the query
+        $query = $queryBuilder->getQuery();
+
+        // Return the filtered results
+        return $query->getResult();
     }
+
+
     /**
      *
      * @param int $limit

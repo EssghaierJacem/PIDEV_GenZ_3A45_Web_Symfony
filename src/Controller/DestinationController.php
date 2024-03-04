@@ -35,15 +35,29 @@ class DestinationController extends AbstractController
     public function destinations(DestinationRepository $destinationRepository, Request $request, PaginatorInterface $paginator): Response
     {
         $keyword = $request->query->get('keyword');
+        $accessibility = $request->query->get('accessibilite');
 
-        $d_destinations = $destinationRepository->findDistinctCountries();
 
-        if ($keyword) {
-            $destinations = $destinationRepository->searchByKeyword($keyword);
+        $criteria = [
+            'keyword' => $keyword,
+            'accessibilite' => $accessibility,
+            'devise' => $request->query->get('devise'),
+            // Add more criteria if needed
+        ];
+
+        // Additional criteria from repository
+        $criteria['pays'] = $request->query->get('pays');
+        $criteria['ville'] = $request->query->get('ville');
+
+        $d_destinations = $destinationRepository->findAll();
+
+        if (!empty(array_filter($criteria))) {
+            $destinations = $destinationRepository->findByCriteria($criteria);
         } else {
             $destinations = $destinationRepository->paginatonQuery();
         }
 
+        // Paginate results
         $pagination = $paginator->paginate(
             $destinations,
             $request->query->get('page', 1),
@@ -55,6 +69,7 @@ class DestinationController extends AbstractController
             'd_destinations' => $d_destinations,
         ]);
     }
+
 
     #[Route('/destination/new', name: 'app_destination_new')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response

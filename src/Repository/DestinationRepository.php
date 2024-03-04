@@ -70,18 +70,36 @@ class DestinationRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function searchByKeyword($keyword)
+    public function findByCriteria($criteria)
     {
-        return $this->createQueryBuilder('d')
-            ->andWhere('d.pays LIKE :keyword 
-                      OR d.ville LIKE :keyword 
-                      OR d.description LIKE :keyword 
-                      OR d.attractions LIKE :keyword 
-                      OR d.devise LIKE :keyword')
-            ->setParameter('keyword', '%'.$keyword.'%')
-            ->getQuery()
-            ->getResult();
+        $queryBuilder = $this->createQueryBuilder('d');
+
+        if (isset($criteria['accessibilite'])) {
+            $queryBuilder->andWhere('d.accessibilite = :accessibilite')
+                ->setParameter('accessibilite', $criteria['accessibilite']);
+        }
+
+        if ($criteria['devise']) {
+            $queryBuilder->andWhere('d.devise LIKE :devise')
+                ->setParameter('devise', '%' . $criteria['devise'] . '%');
+        }
+
+        if ($criteria['keyword']) {
+            $queryBuilder->andWhere('d.pays LIKE :keyword 
+                  OR d.ville LIKE :keyword 
+                  OR d.description LIKE :keyword 
+                  OR d.attractions LIKE :keyword 
+                  OR d.devise LIKE :keyword')
+                ->setParameter('keyword', '%' . $criteria['keyword'] . '%');
+        }
+
+        // Execute the query
+        $query = $queryBuilder->getQuery();
+
+        // Return the filtered results
+        return $query->getResult();
     }
+
 
 
 //    /**

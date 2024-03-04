@@ -55,29 +55,68 @@
         }
     </style>
 
-    <section id="filters-and-details" class="py-5">
-        <div class="container">
-            <div class="row">
-                <!-- Filters and Date Selection -->
-                <div class="col-lg-4 mb-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title text-primary">Filter and Date Selection</h5>
-                            <form id="searchForm" method="get" action="{{ path('app_vol') }}">
-                                <div class="form-group">
-                                    <label for="dateDepart" class="text-muted bold-text">Date de départ :</label>
-                                    <input type="date" class="form-control" id="dateDepart" name="date_depart">
+<section id="filters-and-details" class="py-5">
+    <div class="container">
+        <div class="row">
+            <!-- Filters and Date Selection -->
+            <div class="col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body" style="padding: 20px;">
+                        <h5 class="card-title text-primary">Trouver votre billet!</h5>
+                        <!-- Vol Search Form -->
+                        <form id="volSearchForm" method="get" action="{{ path('app_vol') }}">
+                            <div class="form-group">
+                                <label for="compagnieA" class="text-muted bold-text">Compagnie :</label>
+                                <input type="text" class="form-control" id="compagnieA" name="compagnieA">
+                            </div>
+                            <div class="form-group">
+                                <label for="dateDepart" class="text-muted bold-text">Date de départ :</label>
+                                <input type="date" class="form-control" id="dateDepart" name="dateDepart">
+                            </div>
+                            <div class="form-group">
+                                <label for="dateArrivee" class="text-muted bold-text">Date d'arrivée :</label>
+                                <input type="date" class="form-control" id="dateArrivee" name="dateArrivee">
+                            </div>
+                            <div class="form-group" style="padding-bottom: 20px;">
+                                <label class="text-muted bold-text" style="margin-bottom: 10px;">Escale :</label>
+                                <div class="form-check" style="margin-bottom: 10px;">
+                                    <input class="form-check-input" type="radio" name="escale" id="avecEscale" value="avec">
+                                    <label class="form-check-label" for="avecEscale">
+                                        Avec escale
+                                    </label>
                                 </div>
-                                <div class="form-group">
-                                    <label for="dateArrivee" class="text-muted bold-text">Date d'arrivée :</label>
-                                    <input type="date" class="form-control" id="dateArrivee" name="date_arrivee">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="escale" id="sansEscale" value="sans">
+                                    <label class="form-check-label" for="sansEscale">
+                                        Sans escale
+                                    </label>
                                 </div>
-                                <!-- Add more filters or inputs as needed -->
-                                <button type="submit" class="btn btn-primary btn-block" style="margin-bottom: 5px; margin-top: 15px;">Apply Filters</button>
-                            </form>
-                        </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="classe" class="text-muted bold-text">Classe :</label>
+                                <select class="form-control" id="classe" name="classe">
+                                    <option value="">Choisir une classe</option>
+                                    <option value="Business Class">Business Class</option>
+                                    <option value="Economic Class">Economic Class</option>
+                                    <option value="First Class">First Class</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="destination" class="text-muted bold-text">Destination :</label>
+                                <select class="form-control" id="destination" name="destination">
+                                    <option value="">Choisir une destination</option>
+                                    {% for dest in destination %}
+                                        <option value="{{ dest.id }}">{{ dest.pays }} - {{ dest.ville }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block" style="margin-top: 20px; padding: 7px;">Rechercher</button>
+                        </form>
                     </div>
                 </div>
+            </div>
+
+
 
                 <!-- Flight Details -->
                 <div class="col-lg-8">
@@ -104,14 +143,12 @@
                                 <div class="col-sm-4">
                                     <!-- Price -->
                                     <p class="card-text text-muted bold-text" style="margin-top: 38px;">Prix: </p>
-                                     <i class="italic-text">{{ vol.tarif }}</i><br>
+                                    <i class="italic-text">{{ vol.tarif }}</i><br>
                                     <!-- Flight Class -->
                                     <p class="card-text text-muted bold-text">Classe: </p></i><i class="italic-text">{{ vol.classe }}</i></p>
                                     <!-- More Details Button -->
-                                    <div style="text-align: left;">
-                <a class="btn" style="background-color: #30458B; border-color: #daeee5; color: #daeee5;" href="{{ path('add', {'id': vol.id}) }}">Commander</a>
-</div>
-                                    <a href="{{ path('app_vol_details_show', {'id': vol.id}) }}" class="btn btn-primary animate__animated animate__fadeIn more-details-btn">Plus détails</a>
+                                    <a class="btn btn-primary animate__animated animate__fadeIn" href="{{ path('add', {'id': vol.id}) }}" style="margin-top: 10px;">Commander</a>
+                                    <a href="{{ path('app_vol_details_show', {'id': vol.id}) }}" class="btn btn-primary animate__animated animate__fadeIn more-details-btn" style="margin-left: 5px;">Plus détails</a>
                                 </div>
                             </div>
                         </div>
@@ -120,7 +157,7 @@
                             No vols found.
                         </div>
                     {% endfor %}
-                        {{ knp_pagination_render ( pagination ) }}
+                    {{ knp_pagination_render ( pagination ) }}
                 </div>
             </div>
         </div>
