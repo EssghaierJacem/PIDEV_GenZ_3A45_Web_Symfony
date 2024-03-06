@@ -2,7 +2,6 @@
 #    path: /
 #    controller: App\Controller\DefaultController::index
 
-
 generate_pdf:
     path: '/commande/{id}/generate-pdf'
     controller: App\Controller\CommandeController::generatePdf
@@ -10,3 +9,10 @@ generate_pdf:
 app_reservation_statistics:
     path: '/reservation/statistics'
     controller: App\Controller\ReservationController::statistics
+
+# config/routes.yaml
+
+app_guide_statistics:
+    path: /guide/statistics
+    controller: App\Controller\GuideController::guideStatistics
+

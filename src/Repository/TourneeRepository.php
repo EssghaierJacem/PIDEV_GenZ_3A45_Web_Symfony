@@ -58,6 +58,14 @@ class TourneeRepository extends ServiceEntityRepository
     return $query->getResult();
 }
 
+public function findAllSorted($sortField, $sortOrder): array
+    {
+        return $this->createQueryBuilder('t')
+            ->orderBy('t.' . $sortField, $sortOrder)
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Tournee[] Returns an array of Tournee objects
 //     */

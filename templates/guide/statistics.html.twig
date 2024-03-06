@@ -1,0 +1,61 @@
+{% extends 'backbase.html.twig' %}
+
+{% block title %}Statistiques des Guides{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-4">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="card-title">Top 5 des Guides avec le plus de tournées</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="list-group">
+                            {% for guide in topFiveGuides %}
+                                <div class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span>{{ guide.nom }} {{ guide.prenom }}</span>
+                                    <span class="badge badge-primary badge-pill">{{ guide.numTours }}</span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="card-title">Total des Guides</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Nombre total de guides : {{ totalStatistics.totalGuides }}</p>
+                        <p class="card-text">Tarif horaire moyen total : {{ totalStatistics.averageTarif }} €</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="card-title">Statistiques par Pays</h5>
+                    </div>
+                    <div class="card-body">
+                        {% for stat in countryStatistics %}
+                            <div class="card mb-3">
+                                <div class="card-header">
+                                    <h6 class="card-title">{{ stat.nationality }}</h6>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text">Nombre de guides : {{ stat.totalGuides }}</p>
+                                    <p class="card-text">Tarif horaire moyen : {{ stat.averageTarif }} €</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -20,6 +20,44 @@ class GuideRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Guide::class);
     }
+    public function findGuideStatistics(): array
+    {
+        return $this->createQueryBuilder('g')
+            ->select(
+                'COUNT(g.id) as totalGuides',
+                'AVG(g.tarifHoraire) as averageTarif'
+            )
+            ->getQuery()
+            ->getSingleResult();
+    }
+
+    public function findGuideStatisticsByCountry(): array
+    {
+        return $this->createQueryBuilder('g')
+            ->select(
+                'COUNT(g.id) as totalGuides',
+                'AVG(g.tarifHoraire) as averageTarif',
+                'g.nationalite as nationality'
+            )
+            ->groupBy('g.nationalite')
+            ->getQuery()
+            ->getResult();
+    }
+    public function findTopFiveGuidesByTours(): array
+{
+    return $this->createQueryBuilder('g')
+        ->select('g.nom', 'g.prenom', 'COUNT(t.id) as numTours')
+        ->leftJoin('g.tournees', 't')
+        ->groupBy('g.id')
+        ->orderBy('numTours', 'DESC')
+        ->setMaxResults(5)
+        ->getQuery()
+        ->getResult();
+}
+
+
+    
+
 
 //    /**
 //     * @return Guide[] Returns an array of Guide objects
