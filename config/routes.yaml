@@ -1,3 +1,12 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+
+generate_pdf:
+    path: '/commande/{id}/generate-pdf'
+    controller: App\Controller\CommandeController::generatePdf
+
+app_reservation_statistics:
+    path: '/reservation/statistics'
+    controller: App\Controller\ReservationController::statistics

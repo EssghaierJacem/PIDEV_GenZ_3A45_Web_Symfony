@@ -24,10 +24,12 @@ class Reservation
     private ?string $prenom_client = null;
 
     #[ORM\Column(nullable: true)]
-    #[Assert\Length( min : 8,minMessage :"Entrer num au min de 8 caracteres")]    private ?int $num_tel = null;
+    #[Assert\Length( min : 8,minMessage :"Entrer num au min de 8 caracteres")]   
+     private ?int $num_tel = null;
 
     #[ORM\Column(nullable: true)]
-    #[Assert\NotBlank(message: "vous devez saisir le quantité !!!")]
+    #[Assert\Positive(message: "le code doit etre possitif")]
+    #[Assert\NotBlank(message: "Saisir Votre quantite!!")]
     private ?int $quantite = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]

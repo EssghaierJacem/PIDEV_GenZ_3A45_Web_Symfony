@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facture PDF</title>
+    <style>
+        /* Define your CSS styles for the PDF here */
+        body {
+            font-family: 'Lato', sans-serif;
+            font-size: 12px;
+            background-color: #f7f7f7; /* Light gray background color */
+            color: #333; /* Dark text color */
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%; /* Adjust width as needed */
+            margin: 20px auto;
+            background-color: #fff; /* White background for container */
+            padding: 20px; /* Add padding for content */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Add shadow */
+            overflow: hidden; /* Clear float */
+        }
+        .logo {
+            float: left; /* Float the logo to the left */
+            margin-right: 20px; /* Add space between logo and content */
+        }
+        .logo img {
+            max-width: 150px; /* Adjust size of the logo */
+            border-radius: 10px; /* Rounded corners */
+        }
+        h1 {
+            text-align: center;
+            color: #3282b8; /* Light blue color */
+            margin-bottom: 20px;
+            font-size: 32px; /* Larger font size */
+            font-weight: bold;
+            text-transform: uppercase; /* Transform to uppercase */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px; /* Add space between title and table */
+            background-color: #f5f9fd; /* Cheerful blue-white mix background color */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow */
+        }
+        th, td {
+            border: 1px solid #ddd; /* Light gray border */
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #d2e8fc; /* Light blue header background color */
+            font-weight: bold;
+        }
+        /* Hover effect for table rows */
+        tr:hover {
+            background-color: #ebf5fe; /* Lighter blue background color */
+        }
+        .thanks {
+            text-align: center;
+            margin-top: 20px;
+            font-style: italic;
+        }
+        .email {
+            color: #3282b8; /* Light blue color */
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="public/img/Logo.png">
+        </div>
+        <h1>Facture</h1>
+        <table>
+            <tr>
+                <th>Id</th>
+                <td>{{ commande.id }}</td>
+            </tr>
+            <tr>
+                <th>Numéro de commande</th>
+                <td>{{ commande.numCommande }}</td>
+            </tr>
+            <tr>
+                <th>Prix</th>
+                <td>{{ commande.prix }}</td>
+            </tr>
+            <tr>
+                <th>Code promo</th>
+                <td>{{ commande.codePromo }}</td>
+            </tr>
+            <tr>
+                <th>Type de paiement</th>
+                <td>{{ commande.typePaiement }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ commande.email }}</td>
+            </tr>
+            <tr>
+                <th>Date de commande</th>
+                <td>{{ commande.dateCommande ? commande.dateCommande|date('Y-m-d') : '' }}</td>
+            </tr>
+        </table>
+        <div class="thanks">Merci pour votre confiance. Pour plus d'informations, contactez ce mail : <span class="email">sarra.benhamoua@esprit.tn</span></div>
+    </div>
+</body>
+</html>

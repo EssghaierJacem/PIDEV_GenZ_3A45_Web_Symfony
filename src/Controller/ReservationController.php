@@ -3,12 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Reservation;
+use App\Entity\Vol;
 use App\Form\ReservationType;
 use App\Repository\ReservationRepository;
+use App\Repository\VolRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/reservation')]
@@ -21,12 +24,116 @@ class ReservationController extends AbstractController
             'reservations' => $reservationRepository->findAll(),
         ]);
     }
+    
+    #[Route('/panierAffichage/', name: 'affichage_panier_front')]
+    public function indexFront(SessionInterface $session, VolRepository $volRepository)
+    {
+        $panier = $session->get("panier", []);
+
+        if (!is_array($panier)) {
+            $dataPanier = [];
+            $total = 0;
+        } else {
+            // On "fabrique" les données
+            $dataPanier = [];
+            $total = 0;
+
+            foreach ($panier as $id => $quantite) {
+                $vol = $volRepository->find($id);
+                $dataPanier[] = [
+                    "vol" => $vol,
+                    "quantite" => $quantite
+                ];
+                $total += $vol->getTarif() * $quantite;
+            }
+        }
+
+        return $this->render('reservation/Panier.html.twig', compact("dataPanier", "total"));
+    }
+
+    #[Route('/deletePanier/',name:'deletepanier')]
+    public function deletePanier ( SessionInterface $session)
+    {
+        // On récupère le panier actuel
+        $panier = $session->set("panier",[]);
+        return $this->redirectToRoute("affichage_panier_front");
+    }
+
+
+
+    /**
+     * @Route ("/add/{id}",name="add")
+     * @return void
+     */
+    public function add(Vol $vol,SessionInterface $session)
+    {
+        //on récupere le panier actuel
+        $panier = $session->get("panier", []);
+        
+        $id=$vol->getId();
+        if(!empty ($panier[$id])) {
+            $panier[$id]++;
+        }else {
+            $panier[$id] = 1;
+        }
+
+        dump($panier);
+        dump($session->get('panier'));
+
+        // on sauvgarde dans la session
+        $session->set("panier",$panier);
+        return $this->redirectToRoute("affichage_panier_front");
+    }
+    /**
+     * @Route("/remove/{id}", name="remove")
+     */
+    public function remove(Vol $vol, SessionInterface $session)
+    {
+        // On récupère le panier actuel
+        $panier = $session->get("panier", []);
+        $id = $vol->getId();
+
+        if(!empty($panier[$id])) {
+            if ($panier[$id] > 1) {
+                $panier[$id]--;
+            } else {
+                unset($panier[$id]);
+            }
+        }
+        // On sauvegarde dans la session
+        $session->set("panier", $panier);
+
+        return $this->redirectToRoute("affichage_panier_front");
+    }
 
     #[Route('/backIndex', name: 'reservation_index', methods: ['GET'])]
     public function Backindex(ReservationRepository $reservationRepository): Response
     {
         return $this->render('reservation/backindex.html.twig', [
             'reservations' => $reservationRepository->findAll(),
+        ]);
+    }
+    #[Route('/statistics', name: 'reservation_statistics', methods: ['GET'])]
+    public function statistics(ReservationRepository $reservationRepository): Response
+    {
+        // Fetch reservation data for statistics
+        $reservations = $reservationRepository->findAll();
+        $reservationCounts = [];
+          // Initialize an array to store reservation counts for each month
+          $reservationCounts = array_fill(0, 12, 0);
+
+        // Count reservations for each month
+        foreach ($reservations as $reservation) {
+            $monthIndex = intval($reservation->getDateReservation()->format('n')) - 1;
+            $reservationCounts[$monthIndex]++;
+        }
+
+        // Define month names for the chart labels
+        $months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+        return $this->render('reservation/statistics.html.twig', [
+            'chartData' => $months,
+            'reservationCounts' => $reservationCounts,
         ]);
     }
 
@@ -57,6 +164,13 @@ class ReservationController extends AbstractController
     public function show(Reservation $reservation): Response
     {
         return $this->render('reservation/show.html.twig', [
+            'reservation' => $reservation,
+        ]);
+    }
+    #[Route('/back/{id}', name: 'reservation_show', methods: ['GET'])]
+    public function backshow(Reservation $reservation): Response
+    {
+        return $this->render('reservation/backshow.html.twig', [
             'reservation' => $reservation,
         ]);
     }

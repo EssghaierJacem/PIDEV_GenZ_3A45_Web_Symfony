@@ -1,0 +1,62 @@
+{% block body %}
+    {% if destination is not null %}
+    <div class="pdf-content">
+        <div class="project-name">
+            <h1 style="color: #800000; font-family: 'Arial Black', sans-serif; font-size: 24px; margin-bottom: 10px;">Beyond Borders Travel</h1>
+        </div>
+        <div class="title">
+            <h2 style="color: #008080; text-align: center; font-size: 20px; margin-bottom: 20px;">Destination Details :</h2><h2> #{{ destination.id }}</h2>
+        </div>
+        <div class="destination-details">
+            <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+                <tr style="background-color: #f2f2f2;">
+                    <th style="padding: 12px; text-align: left; font-weight: bold; border-bottom: 1px solid #ddd;">Attribut</th>
+                    <th style="padding: 12px; text-align: left; font-weight: bold; border-bottom: 1px solid #ddd;">Valeur</th>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; text-align: left; border-right: 1px solid #ddd;">Pays</td>
+                    <td style="padding: 12px; border-right: 1px solid #ddd;">{{ destination.pays }}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; text-align: left; border-right: 1px solid #ddd;">Abbréviation</td>
+                    <td style="padding: 12px; border-right: 1px solid #ddd;">{{ destination.abbrev }}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; text-align: left; border-right: 1px solid #ddd;">Ville</td>
+                    <td style="padding: 12px; border-right: 1px solid #ddd;">{{ destination.ville }}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; text-align: left; border-right: 1px solid #ddd;">Description</td>
+                    <td style="padding: 12px; border-right: 1px solid #ddd;">{{ destination.description }}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; text-align: left; border-right: 1px solid #ddd;">Attractions</td>
+                    <td style="padding: 12px; border-right: 1px solid #ddd;">{{ destination.attractions }}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; text-align: left; border-right: 1px solid #ddd;">Accommodations</td>
+                    <td style="padding: 12px; border-right: 1px solid #ddd;">{{ destination.accomodation }}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; text-align: left; border-right: 1px solid #ddd;">Devise</td>
+                    <td style="padding: 12px; border-right: 1px solid #ddd;">{{ destination.devise }}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; text-align: left; border-right: 1px solid #ddd;">Multimedia</td>
+                    <td style="padding: 12px; border-right: 1px solid #ddd;">{{ destination.multimedia }}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; text-align: left; border-right: 1px solid #ddd;">Accessibilité</td>
+                    <td style="padding: 12px; border-right: 1px solid #ddd;">{{ destination.accessibilite ? 'Accessible' : 'Inaccessible' }}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; text-align: left; border-right: 1px solid #ddd;">Cuisine Locale</td>
+                    <td style="padding: 12px; border-right: 1px solid #ddd;">{{ destination.cuisineLocale }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    {% else %}
+    <p>No destination found.</p>
+    {% endif %}
+{% endblock %}

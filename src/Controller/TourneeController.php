@@ -10,17 +10,29 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Mailer\MailerInterface;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\Mime\Email;
+use App\Form\TourSearchType;
+
+
 
 #[Route('/tournee')]
 class TourneeController extends AbstractController
 {
     #[Route('/', name: 'app_tournee_index', methods: ['GET'])]
-    public function index(TourneeRepository $tourneeRepository): Response
-    {
-        return $this->render('tournee/index.html.twig', [
-            'tournees' => $tourneeRepository->findAll(),
-        ]);
-    }
+    public function index(TourneeRepository $tourneeRepository, Request $request,  PaginatorInterface $paginator): Response
+{
+    $pagination = $paginator->paginate(
+        $tourneeRepository->findAll(),
+        $request->query->get('page', 1),
+        3
+    );
+
+    return $this->render('tournee/index.html.twig', [
+        'pagination' => $pagination,
+    ]);
+}
 
     #[Route('/front', name: 'front_tournee_index', methods: ['GET'])]
     public function Frontindex(TourneeRepository $tourneeRepository): Response
@@ -29,9 +41,55 @@ class TourneeController extends AbstractController
             'tournees' => $tourneeRepository->findAll(),
         ]);
     }
+    #[Route('/searchB', name: 'app_tourneeB_search', methods: ['GET', 'POST'])]
+    public function searchB(TourneeRepository $tourneeRepository, Request $request): Response
+    {
+        $form = $this->createForm(TourSearchType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $criteria = $form->getData();
+
+            // Utilisez $criteria pour filtrer les résultats de la recherche dans le repository
+            $results = $tourneeRepository->findByCriteria($criteria);
+
+            // Renvoyez les résultats de recherche à la vue
+            return $this->render('tournee/search_resultsB.html.twig', [
+                'results' => $results,
+            ]);
+        }
+
+        // Affichez le formulaire de recherche
+        return $this->render('tournee/searchB.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+    #[Route('/search', name: 'app_tournee_search', methods: ['GET', 'POST'])]
+    public function search(TourneeRepository $tourneeRepository, Request $request): Response
+    {
+        $form = $this->createForm(TourSearchType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $criteria = $form->getData();
+
+            // Utilisez $criteria pour filtrer les résultats de la recherche dans le repository
+            $results = $tourneeRepository->findByCriteria($criteria);
+
+            // Renvoyez les résultats de recherche à la vue
+            return $this->render('tournee/search_results.html.twig', [
+                'results' => $results,
+            ]);
+        }
+
+        // Affichez le formulaire de recherche
+        return $this->render('tournee/search.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
 
     #[Route('/new', name: 'app_tournee_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager,MailerInterface $mailer): Response
     {
         $tournee = new Tournee();
         $form = $this->createForm(TourneeType::class, $tournee);
@@ -40,6 +98,19 @@ class TourneeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($tournee);
             $entityManager->flush();
+            //email 
+            $email = (new Email())
+            ->from('hamdanidhia4@gmail.com')
+            ->to('hamdanidhia4@gmail.com')
+            //->cc('cc@example.com')
+            //->bcc('bcc@example.com')
+            //->replyTo('fabien@example.com')
+            //->priority(Email::PRIORITY_HIGH)
+            ->subject('Time for Symfony Mailer!')
+            ->text('Sending emails is fun again!')
+            ->html('<p>See Twig integration for better HTML integration!</p>');
+
+        $mailer->send($email);
 
             $this->addFlash('success', 'Tournee created successfully.');
 

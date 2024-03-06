@@ -26,11 +26,11 @@ class Commande
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Assert\Positive(message: "le code doit etre possitif")]
-    #[Assert\NotBlank(message: "Saisir Votre Prix de !!!")]
+    #[Assert\NotBlank(message: "Saisir Votre CODE PROMO!!!")]
     private ?string $code_promo = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Assert\Length( min: 3, minMessage: 'type de véhicule doit avoir au minimum 3 caractaire',),]
+    #[Assert\Length( min: 3, minMessage: 'type de PAIEMENT doit avoir au minimum 3 caractaire',),]
     #[Assert\NotBlank(message: "vous devez sasir le type de paiement  !!!")]
     private ?string $type_paiement = null;
 

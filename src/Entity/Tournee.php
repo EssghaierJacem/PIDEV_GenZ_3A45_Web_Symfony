@@ -27,6 +27,7 @@ class Tournee
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Assert\NotBlank(message: "Il faut saisir la durée !!!")]
+    #[Assert\Positive(message:'Veuillez choisir une duree positive !')]
     #[Assert\Length( min: 2, minMessage: 'La durée doit contenir au moins 2 lettres',),]
     private ?string $duree = null;
 
@@ -37,6 +38,7 @@ class Tournee
 
     #[ORM\Column(nullable: true)]
     #[Assert\Length( min: 2, minMessage: 'Le tarif doit contenir au moins 2 chiffres',),]
+    #[Assert\Positive(message:'Veuillez choisir un tarif positif !')]
     #[Assert\NotBlank(message: "Il faut saisir le tarif !!!")]
     private ?float $tarif = null;
 
@@ -47,6 +49,7 @@ class Tournee
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Assert\NotBlank(message: "Il faut saisir la tranche d'àge!!!")]
+    #[Assert\Positive(message:'Veuillez choisir un tranche d age positif !')]
     #[Assert\Length( min: 3, minMessage: 'La description doit contenir au moins 3 caractères',),]
     private ?string $trancheAge = null;
 
