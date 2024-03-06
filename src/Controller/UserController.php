@@ -178,7 +178,7 @@ public function loginqr(UserRepository $userRepository,Request $request, EntityM
         if (!$user) {
             throw $this->createNotFoundException('User not found');
         }
-    $url="172.16.2.160".":8000"."/user/qr/".$id;
+    $url="172.20.10.7".":8000"."/user/qr/".$id;
         $qrCode = QrCode::create($url)
             ->setEncoding(new Encoding('UTF-8'))
             ->setSize(120)
