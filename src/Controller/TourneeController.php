@@ -111,10 +111,6 @@ class TourneeController extends AbstractController
             $email = (new Email())
             ->from('hamdanidhia4@gmail.com')
             ->to('hamdanidhia4@gmail.com')
-            //->cc('cc@example.com')
-            //->bcc('bcc@example.com')
-            //->replyTo('fabien@example.com')
-            //->priority(Email::PRIORITY_HIGH)
             ->subject('Time for Symfony Mailer!')
             ->text('Sending emails is fun again!')
             ->html('<p>Vous etes affecté à une nouvelle tournée!</p>');

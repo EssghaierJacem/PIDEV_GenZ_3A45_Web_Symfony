@@ -6,9 +6,12 @@ use App\Entity\Commande;
 use App\Form\CommandeType;
 use App\Repository\CommandeRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 
 use Dompdf\Dompdf;
@@ -18,10 +21,15 @@ use Dompdf\Options;
 class CommandeController extends AbstractController
 {
     #[Route('/', name: 'app_commande_index', methods: ['GET'])]
-    public function index(CommandeRepository $commandeRepository): Response
+    public function index(CommandeRepository $commandeRepository,Request $request, PaginatorInterface $paginator): Response
     {
+        $pagination = $paginator->paginate(
+            $commandeRepository->findAll(),
+            $request->query->get('page', 1),
+            4
+        );
         return $this->render('commande/index.html.twig', [
-            'commandes' => $commandeRepository->findAll(),
+            'pagination' => $pagination,
         ]);
     }
     
@@ -34,7 +42,7 @@ class CommandeController extends AbstractController
     }
 
     #[Route('/new', name: 'app_commande_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager,MailerInterface $mailer): Response
     {
         $commande = new Commande();
         $form = $this->createForm(CommandeType::class, $commande);
@@ -43,6 +51,14 @@ class CommandeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($commande);
             $entityManager->flush();
+            $email = (new Email())
+                ->from('hamdanidhia4@gmail.com')
+                ->to('hamdanidhia4@gmail.com')
+                ->subject('Time for Symfony Mailer!')
+                ->text('Sending emails is fun again!')
+                ->html('<p>Vous etes affecté à une nouvelle tournée!</p>');
+
+            $mailer->send($email);
 
             $this->addFlash('success', 'commande created successfully.');
 

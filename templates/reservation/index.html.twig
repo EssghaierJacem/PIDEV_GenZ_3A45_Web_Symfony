@@ -23,7 +23,7 @@
             </tr>
         </thead>
         <tbody>
-        {% for reservation in reservations %}
+        {% for reservation in pagination %}
             <tr>
                 <td>{{ reservation.id }}</td>
                 <td>{{ reservation.nomClient }}</td>
@@ -43,7 +43,7 @@
         {% endfor %}
         </tbody>
     </table>
-
+                    {{ knp_pagination_render(pagination) }}
     <a href="{{ path('app_reservation_new') }}" class="badge bg-success">Create new</a>
 </div>
     </section>
