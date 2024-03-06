@@ -1,67 +1,115 @@
 {% extends "frontbase.html.twig" %}
 
 {% block title %}
-	Accommodations List
+    Accommodations List
 {% endblock %}
 
 {% block body %}
-	<section class="breadcrumbs">
-		<div class="container">
-			<div class="d-flex justify-content-between align-items-center">
-				<h2>Portfolio Details</h2>
-				<ol>
-					<li>
-						<a href="index.html">Home</a>
-					</li>
-					<li>
-						<a href="portfolio.html">Your Entity</a>
-					</li>
-					<li>Addition mta3 Entity mtaaek</li>
-				</ol>
-			</div>
-		</div>
-	</section>
+    <style>
+        /* Adjust the styling of the search input */
+        .smaller-input {
+            width: 250px; /* Adjust the width as needed */
+            margin-right: 20px; /* Adjust the right margin */
+            margin-top: 10px; /* Adjust the top margin */
+            border-radius: 5px; /* Add border radius for rounded corners */
+            border: 1px solid #ccc; /* Add a border */
+            padding: 8px; /* Add padding */
+        }
 
-	<section id="portfolio-details" class="portfolio-details">
-		<div class="container">
-			<div class="row">
-				{% for hebergement in hebergements %}
-					<div class="col-lg-4 col-md-6 portfolio-item p-3">
-						<div class="card">
-							<img src="{{ hebergement.adresse }}" class="card-img-top equal-height-image" alt="...">
-							<div class="card-body">
-								<h5 class="card-title">{{ hebergement.nomH }}</h5>
-								<p class="card-text">Stars:
-									{% set stars = '★' %}
-									{% for i in range(2, hebergement.nbrEtoile) %}
-										{% set stars = stars ~ '★' %}
-									{% endfor %}
-									{{ stars }}
-								</p>
-								<p class="card-text">Capacity:
-									{{ hebergement.capacite }}
-								</p>
-								<p class="card-text">Tariff per night ($):
-									{{ hebergement.tarifParNuit }}
-								</p>
-								<a href="{{ path('front_hebergement_show', {'id': hebergement.id }) }}" class="btn btn-primary">Show more</a>
-							</div>
-						</div>
-					</div>
-				{% else %}
-					<div class="col-md-12">
-						<p>No records found</p>
-					</div>
-				{% endfor %}
-			</div>
-		</div>
-	</section>
+        /* Position the search input */
+        .search-container {
+            display: flex;
+            justify-content: flex-end; /* Align the input to the right */
+            margin-bottom: 20px; /* Add some margin at the bottom */
+        }
 
-	<style>
-		/* Définir une hauteur pour toutes les images des cartes */
-		.equal-height-image {
-			height: 200px; /* ajustez la hauteur selon vos préférences */
-			object-fit: cover; /* Assurez-vous que l'image couvre la totalité du conteneur */
-		}
-	</style>
+        /* Adjust the styling of the search button */
+        .search-button {
+            background-color: #4CAF50; /* Green background color */
+            color: white; /* White text color */
+            border: none; /* Remove border */
+            padding: 8px 16px; /* Add padding */
+            margin-top: 10px; /* Adjust the top margin */
+            border-radius: 5px; /* Add border radius for rounded corners */
+            cursor: pointer; /* Add cursor pointer */
+        }
+    </style>
+
+    <section class="breadcrumbs">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>Portfolio Details</h2>
+                <ol>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="portfolio.html">Your Entity</a></li>
+                    <li>Addition mta3 Entity mtaaek</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search container with input and button -->
+    <div class="search-container">
+        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search ..." class="form-control smaller-input">
+        <button class="search-button" onclick="myFunction()">Search</button>
+    </div>
+
+    <!-- Portfolio details section -->
+    <section id="portfolio-details" class="portfolio-details">
+        <div class="container">
+            <div class="row">
+                {% for hebergement in hebergements %}
+                    <div class="col-lg-4 col-md-6 portfolio-item p-3">
+                        <div class="card">
+                            <img src="{{ hebergement.adresse }}" class="card-img-top equal-height-image" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ hebergement.nomH }}</h5>
+                                <p class="card-text">Stars: {% set stars = '★' %} {% for i in range(2, hebergement.nbrEtoile) %} {% set stars = stars ~ '★' %} {% endfor %} {{ stars }}</p>
+                                <p class="card-text">Capacity: {{ hebergement.capacite }}</p>
+                                <p class="card-text">Tariff per night ($): {{ hebergement.tarifParNuit }}</p>
+                                <a href="{{ path('front_hebergement_show', {'id': hebergement.id }) }}" class="btn btn-primary">Show more</a>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="col-md-12">
+                        <p>No records found</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Additional styling for equal height images -->
+    <style>
+        /* Define a height for all card images */
+        .equal-height-image {
+            height: 200px; /* Adjust the height as needed */
+            object-fit: cover; /* Ensure the image covers the entire container */
+        }
+    </style>
+
+    <script>
+        // JavaScript function for search functionality
+        function myFunction() {
+            // Declare variables
+            var input, filter, cards, cardTitle, i, txtValue;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            cards = document.getElementsByClassName("card");
+
+            // Loop through all cards, and hide those that don't match the search query
+            for (i = 0; i < cards.length; i++) {
+                cardTitle = cards[i].querySelector(".card-title");
+                if (cardTitle) {
+                    txtValue = cardTitle.textContent || cardTitle.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        cards[i].style.display = "";
+                    } else {
+                        cards[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
 {% endblock %}

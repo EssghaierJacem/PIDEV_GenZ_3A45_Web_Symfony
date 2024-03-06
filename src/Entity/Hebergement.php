@@ -46,6 +46,12 @@ class Hebergement
     #[ORM\ManyToOne(inversedBy: 'hebergements')]
     private ?CategorieH $categorieH = null;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $qrCode;
+
+
 
     public function getId(): ?int
     {
@@ -132,6 +138,17 @@ class Hebergement
     public function setCategorieH(?CategorieH $categorieH): static
     {
         $this->categorieH = $categorieH;
+
+        return $this;
+    }
+    public function getQrCode(): ?string
+    {
+        return $this->qrCode;
+    }
+
+    public function setQrCode(?string $qrCode): self
+    {
+        $this->qrCode = $qrCode;
 
         return $this;
     }
