@@ -11,15 +11,51 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Endroid\QrCode\Writer\PngWriter;
+use Endroid\QrCode\Builder\BuilderInterface; 
+use Endroid\QrCode\Writer\Result\PngResult;
 
 #[Route('/hebergement')]
 class HebergementController extends AbstractController
 {
+
+    private $qrCodeBuilder;
+
+    public function __construct(BuilderInterface $qrCodeBuilder)
+    {
+        $this->qrCodeBuilder = $qrCodeBuilder;
+    }
+    
+    private function convertQrCodeResultToString(PngResult $qrCodeResult): string
+    {
+        // Convert the result to a string (e.g., base64 encode the image)
+        // Adjust this logic based on how you want to represent the QR code data
+        return 'data:image/png;base64,' . base64_encode($qrCodeResult->getString());
+    }
+
     #[Route('/', name: 'app_hebergement_index', methods: ['GET'])]
     public function index(HebergementRepository $hebergementRepository): Response
     {
+        $hebergement = $hebergementRepository->findAll();
+
+        foreach ($hebergement as $hebergemen) {
+            // Check if $this->qrCodeBuilder is not null
+            if ($this->qrCodeBuilder !== null) {
+                // Customize the QR code data
+                $qrCodeResult = $this->qrCodeBuilder
+                    ->data($hebergemen->getNomH())
+                    ->build();
+
+                // Convert the QR code result to a string representation
+                $qrCodeString = $this->convertQrCodeResultToString($qrCodeResult);
+
+                // Add the QR code string to the article entity
+                $hebergemen->setQrCode($qrCodeString);
+            }
+        }
+
         return $this->render('hebergement/index.html.twig', [
-            'hebergements' => $hebergementRepository->findAll(),
+            'hebergement' => $hebergement
         ]);
     }
 
@@ -56,6 +92,7 @@ class HebergementController extends AbstractController
     {
         return $this->render('hebergement/show.html.twig', [
             'hebergement' => $hebergement,
+            
         ]);
     }
     #[Route('/front/{id}', name: 'front_hebergement_show', methods: ['GET'])]
