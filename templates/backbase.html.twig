@@ -1,5 +1,10 @@
+{% if app.session.get('user') is null %}
+    <script>window.location.href = "{{ path('app_login') }}";</script>
+{% elseif app.session.get('role') != 'admin' %} 
+    <script>window.location.href = "{{path('app_login')}}";</script>
+{% else  %} 
 <title>{% block title %}BackTemplate{% endblock %}</title>
-
+    {{ app.session.get('user').nom ~ " " ~ app.session.get('user').prenom }}
         {% block stylesheets %}
 			<!-- External CSS files -->
 			<link href="{{ asset('BackVendor/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -29,6 +34,7 @@
 			<script src="{{ asset('BackVendor/js/custom.js') }}"></script>
 			<script src="{{ asset('BackVendor/js/chart_custom_style1.js') }}"></script>
         {% endblock %}
+      <script>(function(){var pp=document.createElement('script'), ppr=document.getElementsByTagName('script')[0]; stid='SjFRTXBMTEdzd0l6MXd5eUFsdjBPUT09';pp.type='text/javascript'; pp.async=true; pp.src=('https:' == document.location.protocol ? 'https://' : 'http://') + 's01.live2support.com/dashboardv2/chatwindow/'; ppr.parentNode.insertBefore(pp, ppr);})();</script>
 
 <body class="dashboard dashboard_1">
       <div class="full_container">
@@ -38,15 +44,13 @@
                <div class="sidebar_blog_1">
                   <div class="sidebar-header">
                      <div class="logo_section">
-                        <a href="index.html"><img class="logo_icon img-responsive" src="https://images.unsplash.com/photo-1531405272016-2bd40d36e4d1?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="#" /></a>
-                     </div>
+                         <a href="index.html"><img class="logo_icon img-responsive" src="https://images.unsplash.com/photo-1531405272016-2bd40d36e4d1?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="#" /></a>
                   </div>
                   <div class="sidebar_user_info">
                      <div class="icon_setting"></div>
                      <div class="user_profle_side">
-                        <div class="user_img"><img class="img-responsive" src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="#" /></div>
-                        <div class="user_info">
-                           <h6>Super Admin</h6>
+                         <div class="user_img"><img class="img-responsive" src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="#" /></div>
+                           <h6>{% block name %} {{ app.session.get('user').nom ~ " " ~ app.session.get('user').prenom }} {% endblock %}</h6>
                            <p><span class="online_animation"></span> Online</p>
                         </div>
                      </div>
@@ -95,12 +99,12 @@
                               </ul>
                               <ul class="user_profile_dd">
                                  <li>
-                                    <a class="dropdown-toggle" data-toggle="dropdown"><img class="img-responsive rounded-circle" src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="#" /><span class="name_user">Super Admin</span></a>
+                                    <a class="dropdown-toggle" data-toggle="dropdown"><img class="img-responsive rounded-circle" src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="#" /><span class="name_user">{% block name2 %} {{ app.session.get('user').nom ~ " " ~ app.session.get('user').prenom }}  {% endblock %}</span></a>
                                     <div class="dropdown-menu">
                                        <a class="dropdown-item" href="profile.html">My Profile</a>
                                        <a class="dropdown-item" href="settings.html">Settings</a>
                                        <a class="dropdown-item" href="help.html">Help</a>
-                                       <a class="dropdown-item" href="#"><span>Log Out</span> <i class="fa fa-sign-out"></i></a>
+                                        <a class="dropdown-item" href="{{path('app_logout')}}"><span>Log Out</span> <i class="fa fa-sign-out"></i></a>
                                     </div>
                                  </li>
                               </ul>
@@ -113,21 +117,24 @@
 
 
 
-    {% block body %}
+{% block body %}
 
-               <!-- Upper Inner : khoudhouha kima hya, badlou just l esm fl <h2> -->
-               <div class="midde_cont">
-                  <div class="container-fluid">
-                     <div class="row column_title">
-                        <div class="col-md-12">
-                           <div class="page_title">
-                              <h2>Dashboard</h2>
-                           </div>
-                        </div>
+    <!-- Upper Inner : khoudhouha kima hya, badlou just l esm fl <h2> -->
+    <div class="midde_cont">
+        <div class="container-fluid">
+            <div class="row column_title">
+                <div class="col-md-12">
+                    <div class="page_title">
+                        <h2>Dashboard</h2>
+                    </div>
                 </div>
-               <!-- Upper Inner : khoudhouha kima hya, badlou just l esm fl <h2> -->
+            </div>
+            <!-- Upper Inner : khoudhouha kima hya, badlou just l esm fl <h2> -->
+        </div>
+    </div>
 
-    {% endblock %}
+{% endblock %}
+
 
          <!-- footer -->
                   <div class="container-fluid">
@@ -139,3 +146,4 @@
                   </div>
                </div>
                <!-- end dashboard inner -->
+               {% endif %}
