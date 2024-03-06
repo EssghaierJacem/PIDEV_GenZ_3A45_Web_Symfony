@@ -11,6 +11,7 @@
                 </div>
             </div>
 
+
             <div class="table_section padding_infor_info">
                 <div class="table-responsive-sm">
                     <table class="table table-striped">
@@ -22,7 +23,9 @@
                                 <th>DateFin</th>
                                 <th>Lieu</th>
                                 <th>Description</th>
+                                <th>Organisateur</th>
                                 <th>Prix</th>
+                                <th>Image</th>
                                 <th>actions</th>
                             </tr>
                         </thead>
@@ -36,6 +39,8 @@
                                     <td>{{ event.lieu }}</td>
                                     <td>{{ event.description }}</td>
                                     <td>{{ event.organisateur }}</td>
+                                    <td>{{ event.image }}</td>
+                                    <td>{{ event.prix }}</td>
                                     <td>
                                         <div class="mb-2">
                                             <a href="{{ path('app_event_show', {'id': event.id}) }}" class="btn btn-info btn-sm">Show</a>

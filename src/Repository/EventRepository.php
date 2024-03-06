@@ -20,6 +20,60 @@ class EventRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Event::class);
     }
+    
+    public function paginatonQuery()
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.id','ASC')
+            ->getQuery()
+            ;
+    }
+
+    public function findDistinctEvents(): array
+    {
+        return $this->createQueryBuilder('e')
+            ->select('DISTINCT e.nom')
+            ->orderBy('e.nom', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+    public function findAllSortedByCriteria($criteria)
+    {
+        $entityManager = $this->getEntityManager();
+        $queryBuilder = $entityManager->createQueryBuilder();
+
+        switch ($criteria) {
+            case 'ID':
+                $orderBy = 'e.id';
+                break;
+            case 'NOM':
+                $orderBy = 'e.nom';
+                break;
+            case 'LIEU':
+                $orderBy = 'e.lieu';
+                break;
+            default:
+                $orderBy = 'e.id';
+        }
+
+        return $queryBuilder
+            ->select('e')
+            ->from(Event::class, 'e')
+            ->orderBy($orderBy, 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function searchByKeyword($keyword)
+    {
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.nom LIKE :keyword 
+                      OR e.lieu LIKE :keyword 
+                      OR e.description LIKE :keyword ')
+            ->setParameter('keyword', '%'.$keyword.'%')
+            ->getQuery()
+            ->getResult();
+    }
 
 //    /**
 //     * @return Event[] Returns an array of Event objects
