@@ -2,6 +2,10 @@
 #    path: /
 #    controller: App\Controller\DefaultController::index
 
+PDFGenerate:
+    path: '/event/{id}/generate-pdf'
+    controller: App\Controller\EventController::PDFGenerate
+    
 generate_pdf:
     path: '/commande/{id}/generate-pdf'
     controller: App\Controller\CommandeController::generatePdf
