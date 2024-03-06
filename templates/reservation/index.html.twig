@@ -1,0 +1,50 @@
+{% extends 'frontbase.html.twig' %}
+{% block body %}
+                   <section class="breadcrumbs">
+            <div class="container">
+                <div class="d-flex justify-content-between align-items-center">
+
+                </div>
+            </div>
+        </section>
+
+    <section class="breadcrumbs">
+         <div class="container">
+       <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom_client</th>
+                <th>Prenom_client</th>
+                <th>Num_tel</th>
+                <th>Quantite</th>
+                <th>Date_reservation</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reservation in reservations %}
+            <tr>
+                <td>{{ reservation.id }}</td>
+                <td>{{ reservation.nomClient }}</td>
+                <td>{{ reservation.prenomClient }}</td>
+                <td>{{ reservation.numTel }}</td>
+                <td>{{ reservation.quantite }}</td>
+                <td>{{ reservation.dateReservation ? reservation.dateReservation|date('Y-m-d') : '' }}</td>
+                
+                <td><a href="{{ path('app_reservation_show', {'id': reservation.id}) }}" class="btn btn-sm btn-info">show</a></td>
+                <td><a href="{{ path('app_reservation_edit', {'id': reservation.id}) }}" class="btn btn-sm btn-warning">edit</a></td>
+                <td><a href="{{ path('app_reservation_delete', {'id': reservation.id}) }}" class="badge bg-danger">delete</a></td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_reservation_new') }}" class="badge bg-success">Create new</a>
+</div>
+    </section>
+{% endblock %}

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\HebergementRepository;
+use Symfony\Component\Validator\Constraints as Assert;
+
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: HebergementRepository::class)]
@@ -14,18 +16,28 @@ class Hebergement
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'The name is required')]
     private ?string $nomH = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $adresse = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\Range(
+        min: 1,
+        max: 5,
+        notInRangeMessage: 'You must enter a number of stars between {{ min }} and {{ max }}',
+    )]
     private ?int $nbrEtoile = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: 'Capacity is required')]
+    #[Assert\PositiveOrZero(message: 'Capacity must be a positive number or zero')]
     private ?int $capacite = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: 'Tariff per night is required')]
+    #[Assert\Positive(message: 'Tariff per night must be a positive number')]
     private ?float $tarifParNuit = null;
 
     #[ORM\ManyToOne(inversedBy: 'hebergement')]
@@ -33,6 +45,13 @@ class Hebergement
 
     #[ORM\ManyToOne(inversedBy: 'hebergements')]
     private ?CategorieH $categorieH = null;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $qrCode;
+
+
 
     public function getId(): ?int
     {
@@ -119,6 +138,17 @@ class Hebergement
     public function setCategorieH(?CategorieH $categorieH): static
     {
         $this->categorieH = $categorieH;
+
+        return $this;
+    }
+    public function getQrCode(): ?string
+    {
+        return $this->qrCode;
+    }
+
+    public function setQrCode(?string $qrCode): self
+    {
+        $this->qrCode = $qrCode;
 
         return $this;
     }

@@ -1,0 +1,31 @@
+{% extends 'backbase.html.twig'%}
+
+{% block title %}
+	Détails Catégorie
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<h1>Catégorie Details</h1>
+		<table class="table">
+			<tbody>
+				<tr>
+					<th>Id</th>
+					<td>{{ categorie_h.id }}</td>
+				</tr>
+				<tr>
+					<th>Type</th>
+					<td>{{ categorie_h.Type }}</td>
+				</tr>
+				<tr>
+					<th>Description</th>
+					<td>{{ categorie_h.description }}</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<a href="{{ path('app_categorie_h_index') }}" class="btn btn-primary">Back to List</a>
+		<a href="{{ path('app_categorie_h_edit', {'id': categorie_h.id}) }}" class="btn btn-warning">Edit</a>
+		{{ include('categorie_h/_delete_form.html.twig') }}
+	</div>
+{% endblock %}

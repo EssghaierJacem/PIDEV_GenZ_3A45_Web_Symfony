@@ -1,0 +1,70 @@
+{% extends 'frontbase.html.twig' %}
+
+
+{% block body %}
+
+ <section class="breadcrumbs">
+            <div class="container">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2>Tournee Details</h2>
+                    <ol>
+                        <li><a href="http://127.0.0.1:8000">Home</a></li>
+                        <li><a href={{ path('front_tournee_index') }}>Tournées</a></li>
+                        <li>Détailles de la Tournée</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+         <section class="breadcrumbs">
+         <div class="container">
+<title>Tournee</title>
+
+
+    
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ tournee.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ tournee.nom }}</td>
+            </tr>
+            <tr>
+                <th>Date de Debut</th>
+                <td>{{ tournee.dateDebut ? tournee.dateDebut|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Duree</th>
+                <td>{{ tournee.duree }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ tournee.description }}</td>
+            </tr>
+            <tr>
+                <th>Tarif</th>
+                <td>{{ tournee.tarif }}</td>
+            </tr>
+            <tr>
+                <th>Monuments</th>
+                <td>{{ tournee.monuments }}</td>
+            </tr>
+            <tr>
+                <th>Tranche d'age</th>
+                <td>{{ tournee.trancheAge }}</td>
+            </tr>
+            <tr>
+                <th>Moyen de transport</th>
+                <td>{{ tournee.moyenTransport }}</td>
+            </tr>
+        </tbody>
+    </table>
+  <div class="text-end mt-4">
+    <a href="{{ path('app_tournee_index') }}" class="btn btn-sm btn-info">back to list</a>
+   
+    </section>
+
+{% endblock %}

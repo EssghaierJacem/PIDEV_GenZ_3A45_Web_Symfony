@@ -1,0 +1,66 @@
+{% extends 'frontbase.html.twig' %}
+
+
+
+{% block title %}Add New Participation{% endblock %}
+
+{% block body %}
+    <h1>Add New Participation</h1>
+
+    <div class="container">
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+        <form>
+
+            <div class="form-group">
+                {{ form_label(form.nom, 'Nom', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+                {% if form_errors(form.nom) is not empty %}
+                    <div class="alert text-danger">
+                        {{ form_errors(form.nom) }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.prenom, 'Prénom', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.prenom, {'attr': {'class': 'form-control'}}) }}
+                {% if form_errors(form.prenom) is not empty %}
+                    <div class="alert text-danger">
+                        {{ form_errors(form.prenom) }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.tel, 'Tel', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.tel, {'attr': {'class': 'form-control'}}) }}
+                {% if form_errors(form.tel) is not empty %}
+                    <div class="alert text-danger">
+                        {{ form_errors(form.tel) }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.email, 'Email', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                {% if form_errors(form.email) is not empty %}
+                    <div class="alert text-danger">
+                        {{ form_errors(form.email) }}
+                    </div>
+                {% endif %}
+            </div>
+
+            {{ form_rest(form) }}
+
+
+
+            <a href="{{ path('front_event_index') }}">back to list</a>
+            <div class="text-end mt-4">
+                <button type="submit" class="btn btn-primary">Enregistrer</button>
+            </div>
+            
+        </form>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

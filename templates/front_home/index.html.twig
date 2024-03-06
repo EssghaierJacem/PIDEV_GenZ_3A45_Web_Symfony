@@ -7,8 +7,8 @@
 			<link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
 			<link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
 			<link href="{{ asset('vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
-      <link href="{{ asset('vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
-      <link href="{{ asset('vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+            <link href="{{ asset('vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+            <link href="{{ asset('vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
 
 			<!-- Custom CSS files -->
 			<link href="{{ asset('css/style.css') }}" rel="stylesheet">
@@ -52,29 +52,34 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-          <li><a class="nav-link scrollto" href="#about">About</a></li>
-          <li><a class="nav-link scrollto" href="#services">Services</a></li>
-          <li><a class="nav-link scrollto " href="#portfolio">Portfolio</a></li>
-          <li><a class="nav-link scrollto" href="#team">Team</a></li>
-          <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
-            <ul>
-              <li><a href="#">Drop Down 1</a></li>
-              <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
-                <ul>
-                  <li><a href="#">Deep Drop Down 1</a></li>
-                  <li><a href="#">Deep Drop Down 2</a></li>
-                  <li><a href="#">Deep Drop Down 3</a></li>
-                  <li><a href="#">Deep Drop Down 4</a></li>
-                  <li><a href="#">Deep Drop Down 5</a></li>
-                </ul>
-              </li>
-              <li><a href="#">Drop Down 2</a></li>
-              <li><a href="#">Drop Down 3</a></li>
-              <li><a href="#">Drop Down 4</a></li>
-            </ul>
+          <li><a class="nav-link scrollto active" href="{{path ('app_front') }}">Home</a></li>
+          <li class="dropdown"><a href="#"><span>Explorer</span> <i class="bi bi-chevron-down"></i></a>
+                    <ul>
+                        <li><a href="{{ path('app_destinations')}}">Destinations</a></li>
+                        <li><a href="{{ path('map')}}">Map</a></li>
+                        <li><a href="{{ path('app_vol')}}">Vol</a></li>
+                    </ul>
+          <li class="dropdown"><a href="{{ path('front_hebergement')}}"><span>Hébergements</span> <i class="bi bi-chevron-down"></i></a>
+                    <ul>
+                        <li><a href="{{ path('front_categorie_index')}}">Catégories</a></li>
+                    </ul>
+          <li class="dropdown"><a href="{{ path('app_reservation_index')}}"><span>Réservations</span> <i class="bi bi-chevron-down"></i></a>
+                    <ul>
+                        <li><a href="{{ path('app_commande_index')}}">Commandes</a></li>
+                    </ul>
+          <li class="dropdown"><a href="{{ path('front_event_index')}}"><span>Evenements</span> <i class="bi bi-chevron-down"></i></a>
+                    <ul>
+                        <li><a href="{{ path('app_participation_new')}}">Participations</a></li>
+                    </ul>
+          <li class="dropdown"><a href="{{ path('front_tournee_index')}}"><span>Tournées</span> <i class="bi bi-chevron-down"></i></a>
+                    <ul>
+                        <li><a href="{{ path('front_guide_index')}}">Guides</a></li>
+                    </ul>
+          <li class="dropdown"><a href="#"><span>S'inscrire</span> <i class="bi bi-chevron-down"></i></a>
+                    <ul>
+                        <li><a href="#">S'authentifier</a></li>
+                    </ul>
           </li>
-          <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -83,7 +88,7 @@
 <!-- ======= Body ======= -->
 
     {% block body %}
-
+   
         <section id="hero" class="d-flex align-items-center">
             <div class="container" data-aos="zoom-out" data-aos-delay="100">
               <h1>Welcome to <span>Beyond Borders Travel</span></h1>
@@ -101,32 +106,32 @@
                   <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
                     <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
                       <div class="icon"><i class="bx bxl-dribbble"></i></div>
-                      <h4 class="title"><a href="">Lorem Ipsum</a></h4>
-                      <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
+                      <h4 class="title"><a href="">Facile a utiliser</a></h4>
+                      <p class="description">Des interfaces assez simple pour utiliser et profiter le maximum dans votre prochaine voyage</p>
                     </div>
                   </div>
 
                   <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
                     <div class="icon-box" data-aos="fade-up" data-aos-delay="200">
                       <div class="icon"><i class="bx bx-file"></i></div>
-                      <h4 class="title"><a href="">Sed ut perspiciatis</a></h4>
-                      <p class="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
+                      <h4 class="title"><a href="">Flexibilité au marché</a></h4>
+                      <p class="description">Une proximité des clients : 34 points de vente sur tout le territoire tunisien</p>
                     </div>
                   </div>
 
                   <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
                     <div class="icon-box" data-aos="fade-up" data-aos-delay="300">
                       <div class="icon"><i class="bx bx-tachometer"></i></div>
-                      <h4 class="title"><a href="">Magni Dolores</a></h4>
-                      <p class="description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia</p>
+                      <h4 class="title"><a href="">Haute disponibilité</a></h4>
+                      <p class="description">Une exhaustivité de l'offre Plus de 884.000 hôtels dans le monde</p>
                     </div>
                   </div>
 
                   <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
                     <div class="icon-box" data-aos="fade-up" data-aos-delay="400">
                       <div class="icon"><i class="bx bx-world"></i></div>
-                      <h4 class="title"><a href="">Nemo Enim</a></h4>
-                      <p class="description">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
+                      <h4 class="title"><a href="">Exploration Interantionale</a></h4>
+                      <p class="description">Une garantie d'avoir une éxperience inoubliable au coté international</p>
                     </div>
                   </div>
 
@@ -148,39 +153,50 @@
                         <img src="{{ asset('img/about.jpg') }}" class="img-fluid" alt="">
                       </div>
                       <div class="col-lg-6 pt-4 pt-lg-0 content d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="100">
-                        <h3>Voluptatem dignissimos provident quasi corporis voluptates sit assumenda.</h3>
-                        <p class="fst-italic">
-                          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                          magna aliqua.
-                        </p>
-                        <ul>
-                          <li>
-                            <i class="bx bx-store-alt"></i>
-                            <div>
-                              <h5>Ullamco laboris nisi ut aliquip consequat</h5>
-                              <p>Magni facilis facilis repellendus cum excepturi quaerat praesentium libre trade</p>
-                            </div>
-                          </li>
-                          <li>
-                            <i class="bx bx-images"></i>
-                            <div>
-                              <h5>Magnam soluta odio exercitationem reprehenderi</h5>
-                              <p>Quo totam dolorum at pariatur aut distinctio dolorum laudantium illo direna pasata redi</p>
-                            </div>
-                          </li>
-                        </ul>
-                        <p>
-                          Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                          velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                          culpa qui officia deserunt mollit anim id est laborum
-                        </p>
+                    <p style="text-align:justify;"> <center>Istanbul <br>Départ en groupe à l'hôtel<br>Grand Ant 3* Laleli<br>Du 21/01/2024 au 25/01/2024 <br>04 Jours
+
+  
+
+
+
+<br>
+<b>A Propos de la ville :</b>
+
+Découvrez Istanbul, une ville vibrante à la croisée de l'Orient et de l'Occident. Marchez dans les ruelles étroites de Sultanahmet et émerveillez vous devant les joyaux architecturaux du fameux Mimar Sinan tels que la majestueuse Mosquée Süleymaniye. Flânez le long des rives du Boaz plus connu sous le nom du Bosphore et admirez les palais ottomans dont les silhouettes se reflètent sur les eaux scintillantes. Glissez dans l'atmosphère bouillonnante du Grand Bazar, où vous pouvez vous perdre dans un dédale de boutiques colorées et sentir les arômes envoûtants des épices. 
+<br><b>Programme :</b>
+
+<br>Jour 1 : Tunis / Istanbul :
+
+<br>Arrivée à l'aéroport d'Istanbul. Accueil et transfert à l'hôtel.
+
+<br>Jour 2 : City Tour (en extra) :
+
+<br>Petit déjeuner à l'hôtel, départ en excursion :
+
+
+<br>Jour 3 : Les îles des Princesses (en extra) :
+
+
+<br>Jour 4 : city tour rive asiatique (en extra) :
+<br><b>Par personne dans une chambre double : 1689 DT</b>
+
+<br><b>Par personne dans une chambre triple : 1665 DT</b>
+<br><b>Chambre Single : 2288DT</b>
+<br><b>Tarif des excursions en extra : 275 DT</b>
+<br>
+<br>
+<a href="/reservation" class="arrivals_btn">Reserver</a>
+
+</center></p>
                       </div>
                     </div>
 
                   </div>
                 </section><!-- End About Section -->
+                 <div class="featured_boks">
 
-
+    
+    
     {% endblock %}
 
 <!-- ======= Footer ======= -->
@@ -190,10 +206,10 @@
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-lg-6">
-            <h4>Join Our Newsletter</h4>
-            <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
+            <h4>Abonnez-Vous</h4>
+            <p>Vous aurez des informations exclusive  à propos les offres des vacances !</p>
             <form action="" method="post">
-              <input type="email" name="email"><input type="submit" value="Subscribe">
+              <input type="email" name="email"><input type="submit" value="Abonnez">
             </form>
           </div>
         </div>
@@ -210,8 +226,8 @@
               A108 Adam Street <br>
               New York, NY 535022<br>
               United States <br><br>
-              <strong>Phone:</strong> +1 5589 55488 55<br>
-              <strong>Email:</strong> info@example.com<br>
+              <strong>Phone:</strong> +216 76 257 430<br>
+              <strong>Email:</strong> BeyondBordersTravel@GenZ.com<br>
             </p>
           </div>
 
@@ -219,7 +235,7 @@
             <h4>Useful Links</h4>
             <ul>
               <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">A propos</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
@@ -229,11 +245,11 @@
           <div class="col-lg-3 col-md-6 footer-links">
             <h4>Our Services</h4>
             <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Evenements</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Hébergements</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Vols</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Guides</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Reservation</a></li>
             </ul>
           </div>
 
@@ -255,7 +271,7 @@
 
     <div class="container py-4">
       <div class="copyright">
-        &copy; Copyright <strong><span>BizLand</span></strong>. All Rights Reserved
+        &copy; Copyright <strong><span>B&BTravel</span></strong>. All Rights Reserved
       </div>
       <div class="credits">
 

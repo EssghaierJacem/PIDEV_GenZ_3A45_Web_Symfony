@@ -1,0 +1,15 @@
+{% extends 'backbase.html.twig' %}
+
+{% block body %}
+    <h1>Edit Participation</h1>
+
+    {{ include('participation/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <div class="mt-3"> <!-- Add margin top -->
+        {{ include('participation/_delete_form.html.twig') }}
+    </div>
+
+    <div class="mt-3"> <!-- Add margin top -->
+        <a href="{{ path('app_participation_index') }}" class="btn btn-secondary">Back to list</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'frontbase.html.twig' %}
+{% block body %}
+                   <div class="midde_cont">
+                  <div class="container-fluid">
+                     <div class="row column_title">
+                        <div class="col-md-12">
+                           <div class="page_title">
+                              <h2>Details</h2>
+                           </div>
+                        </div>
+                </div>
+
+    <div class="table_section padding_infor_info">
+     <div class="table-responsive-sm">
+       <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom_client</th>
+                <th>Prenom_client</th>
+                <th>Num_tel</th>
+                <th>Quantite</th>
+                <th>Date_reservation</th>
+                
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reservation in reservations %}
+            <tr>
+                <td>{{ reservation.id }}</td>
+                <td>{{ reservation.nomClient }}</td>
+                <td>{{ reservation.prenomClient }}</td>
+                <td>{{ reservation.numTel }}</td>
+                <td>{{ reservation.quantite }}</td>
+                <td>{{ reservation.dateReservation ? reservation.dateReservation|date('Y-m-d') : '' }}</td>
+                
+                <td>
+                    <a href="{{ path('app_reservation_edit', {'id': reservation.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_reservation_new') }}">Create new</a>
+{% endblock %}

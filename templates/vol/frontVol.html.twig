@@ -1,0 +1,166 @@
+{% extends 'frontbase.html.twig' %}
+
+{% block title %}Vols{% endblock %}
+
+{% block body %}
+    <style>
+        .flight-details-box {
+            background-color: #F1F6FE;
+            padding: 15px;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            position: relative; /* Add relative positioning */
+        }
+
+        .flight-details-box .airline-logo {
+            width: 100px; /* Adjust width as needed */
+            height: 100px; /* Adjust height as needed */
+            margin-right: 10px;
+            float: left;
+            object-fit: cover; /* Maintain aspect ratio and cover container */
+        }
+
+        .flight-details-box .details {
+            overflow: hidden;
+            padding-top: 10px;
+        }
+
+        .flight-details-box .card-title {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .flight-details-box .card-text {
+            font-style: italic; /* Make the text italic */
+            margin-bottom: 5px;
+        }
+
+        .flight-details-box .more-details-btn {
+            position: absolute; /* Position the button absolutely */
+            bottom: 10px; /* Adjust bottom distance */
+            right: 10px; /* Adjust right distance */
+            padding: 5px 15px;
+        }
+
+        /* Make specific texts bold */
+        .bold-text {
+            font-weight: bold;
+        }
+
+        /* Make specific texts italic */
+        .italic-text {
+            font-style: italic;
+        }
+    </style>
+
+<section id="filters-and-details" class="py-5">
+    <div class="container">
+        <div class="row">
+            <!-- Filters and Date Selection -->
+            <div class="col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body" style="padding: 20px;">
+                        <h5 class="card-title text-primary">Trouver votre billet!</h5>
+                        <!-- Vol Search Form -->
+                        <form id="volSearchForm" method="get" action="{{ path('app_vol') }}">
+                            <div class="form-group">
+                                <label for="compagnieA" class="text-muted bold-text">Compagnie :</label>
+                                <input type="text" class="form-control" id="compagnieA" name="compagnieA">
+                            </div>
+                            <div class="form-group">
+                                <label for="dateDepart" class="text-muted bold-text">Date de départ :</label>
+                                <input type="date" class="form-control" id="dateDepart" name="dateDepart">
+                            </div>
+                            <div class="form-group">
+                                <label for="dateArrivee" class="text-muted bold-text">Date d'arrivée :</label>
+                                <input type="date" class="form-control" id="dateArrivee" name="dateArrivee">
+                            </div>
+                            <div class="form-group" style="padding-bottom: 20px;">
+                                <label class="text-muted bold-text" style="margin-bottom: 10px;">Escale :</label>
+                                <div class="form-check" style="margin-bottom: 10px;">
+                                    <input class="form-check-input" type="radio" name="escale" id="avecEscale" value="avec">
+                                    <label class="form-check-label" for="avecEscale">
+                                        Avec escale
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="escale" id="sansEscale" value="sans">
+                                    <label class="form-check-label" for="sansEscale">
+                                        Sans escale
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="classe" class="text-muted bold-text">Classe :</label>
+                                <select class="form-control" id="classe" name="classe">
+                                    <option value="">Choisir une classe</option>
+                                    <option value="Business Class">Business Class</option>
+                                    <option value="Economic Class">Economic Class</option>
+                                    <option value="First Class">First Class</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="destination" class="text-muted bold-text">Destination :</label>
+                                <select class="form-control" id="destination" name="destination">
+                                    <option value="">Choisir une destination</option>
+                                    {% for dest in destination %}
+                                        <option value="{{ dest.id }}">{{ dest.pays }} - {{ dest.ville }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block" style="margin-top: 20px; padding: 7px;">Rechercher</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+
+                <!-- Flight Details -->
+                <div class="col-lg-8">
+                    {% for vol in pagination %}
+                        <div class="flight-details-box">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <!-- Airline Logo -->
+                                    <img src="{{ vol.image }}" alt="Airline Logo" class="airline-logo">
+                                    <div class="details">
+                                        <!-- Airline Name -->
+                                        <h5 class="card-title text-primary">{{ vol.compagnieA }}</h5>
+
+                                        <!-- From and To -->
+                                        <p class="card-text text-muted bold-text">From</p> <i class="italic-text">{{ vol.aeroportDepart }}</i> <p class="card-text text-muted bold-text">To</p> <i class="italic-text">{{ vol.aeroportArrivee }}</i></p>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <!-- Departure and Arrival Dates -->
+                                    <p class="card-text text-muted bold-text" style="margin-top: 38px;">Date de départ:</p>
+                                    <i class="italic-text">{{ vol.dateDepart|date('l, d, Y') }}</i><br>
+                                    <p class="card-text text-muted bold-text">Date d'arrivée:</p> <i class="italic-text">{{ vol.dateArrivee|date('l, d, Y') }}</i>
+                                </div>
+                                <div class="col-sm-4">
+                                    <!-- Price -->
+                                    <p class="card-text text-muted bold-text" style="margin-top: 38px;">Prix: </p>
+                                    <i class="italic-text">{{ vol.tarif }}</i><br>
+                                    <!-- Flight Class -->
+                                    <p class="card-text text-muted bold-text">Classe: </p></i><i class="italic-text">{{ vol.classe }}</i></p>
+                                    <!-- More Details Button -->
+                                    <a class="btn btn-primary animate__animated animate__fadeIn" href="{{ path('add', {'id': vol.id}) }}" style="margin-top: 10px;">Commander</a>
+                                    <a href="{{ path('app_vol_details_show', {'id': vol.id}) }}" class="btn btn-primary animate__animated animate__fadeIn more-details-btn" style="margin-left: 5px;">Plus détails</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-warning" role="alert">
+                            No vols found.
+                        </div>
+                    {% endfor %}
+                    {{ knp_pagination_render ( pagination ) }}
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

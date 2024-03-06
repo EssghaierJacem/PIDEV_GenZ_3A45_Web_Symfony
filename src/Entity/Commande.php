@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\CommandeRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CommandeRepository::class)]
 class Commande
@@ -15,21 +16,32 @@ class Commande
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank(message: "Saisir Votre Numero de Commande")]
     private ?string $num_commande = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\Length( min: 3, minMessage: 'Saisir Votre Prix en 3 caractaire',),]
+    #[Assert\NotBlank(message: " Saisir Votre Prix de Commande!!!")]
     private ?float $prix = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Positive(message: "le code doit etre possitif")]
+    #[Assert\NotBlank(message: "Saisir Votre CODE PROMO!!!")]
     private ?string $code_promo = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length( min: 3, minMessage: 'type de PAIEMENT doit avoir au minimum 3 caractaire',),]
+    #[Assert\NotBlank(message: "vous devez sasir le type de paiement  !!!")]
     private ?string $type_paiement = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length( min : 10,minMessage :"Entrer une adresse au min de 10 caracteres")]
+    #[Assert\NotBlank(message: "vous devez sasiir le mail !!!")]
     private ?string $email = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[Assert\NotBlank(message: "La date de commande est requise.")]
+    #[Assert\GreaterThan("today", message: "La date de commande doit être dans le futur.")]
     private ?\DateTimeInterface $date_commande = null;
 
     #[ORM\OneToOne(mappedBy: 'commande', cascade: ['persist', 'remove'])]
@@ -57,7 +69,7 @@ class Commande
         return $this->prix;
     }
 
-    public function setPrix(?float $prix): static
+    public function setPrix(?float $prix): self
     {
         $this->prix = $prix;
 
@@ -133,4 +145,5 @@ class Commande
 
         return $this;
     }
+    
 }
