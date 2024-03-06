@@ -1,6 +1,7 @@
 {% extends 'backbase.html.twig' %}
 
 {% block title %}User index  {% endblock %}
+
 {% block name %} {{ app.session.get('user').nom ~ " " ~ app.session.get('user').prenom }} {% endblock %}
 {% block name2 %} {{ app.session.get('user').nom ~ " " ~ app.session.get('user').prenom }}  {% endblock %}
 {% block body %}
