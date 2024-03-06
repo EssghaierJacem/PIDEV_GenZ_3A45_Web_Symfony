@@ -21,16 +21,25 @@ use App\Form\TourSearchType;
 class TourneeController extends AbstractController
 {
     #[Route('/', name: 'app_tournee_index', methods: ['GET'])]
-    public function index(TourneeRepository $tourneeRepository, Request $request,  PaginatorInterface $paginator): Response
+    public function index(TourneeRepository $tourneeRepository, Request $request, PaginatorInterface $paginator): Response
 {
+    // Récupérer le champ de tri à partir de la requête
+    $sortField = $request->query->get('sortField', 'id');
+    $sortOrder = $request->query->get('sortOrder', 'ASC');
+
+    // Récupérer les tournées triées selon le champ et l'ordre spécifiés
+    $tournees = $tourneeRepository->findAllSorted($sortField, $sortOrder);
     $pagination = $paginator->paginate(
-        $tourneeRepository->findAll(),
-        $request->query->get('page', 1),
-        3
+        $tournees,
+        $request->query->getInt('page', 1),
+        5 // Nombre d'éléments par page
     );
 
+    // Passer les données au template Twig
     return $this->render('tournee/index.html.twig', [
         'pagination' => $pagination,
+        'sortField' => $sortField,
+        'sortOrder' => $sortOrder,
     ]);
 }
 
@@ -108,7 +117,7 @@ class TourneeController extends AbstractController
             //->priority(Email::PRIORITY_HIGH)
             ->subject('Time for Symfony Mailer!')
             ->text('Sending emails is fun again!')
-            ->html('<p>See Twig integration for better HTML integration!</p>');
+            ->html('<p>Vous etes affecté à une nouvelle tournée!</p>');
 
         $mailer->send($email);
 
@@ -131,7 +140,7 @@ class TourneeController extends AbstractController
             'tournee' => $tournee,
         ]);
     }
-
+  
     #[Route('/front/{id}', name: 'front_tournee_show', methods: ['GET'])]
     public function Frontshow(Tournee $tournee): Response
     {

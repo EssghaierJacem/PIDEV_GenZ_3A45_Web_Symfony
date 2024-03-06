@@ -36,7 +36,7 @@ class VolController extends AbstractController
         ]);
     }
 
-    #[Route('/dest_vol', name: 'dashboard_vol')]
+    #[Route('/back', name: 'dashboard_vol')]
     public function dashboardVol(VolRepository $volRepository, UserRepository $userRepository, AvisRepository $avisRepository, DestinationRepository $destinationRepository, Request $request): Response
     {
         $vols = $volRepository->findAll();
@@ -69,17 +69,31 @@ class VolController extends AbstractController
 
 
     #[Route('/show_vol', name: 'app_vol')]
-    public function indexVol(VolRepository $volRepository, Request $request, PaginatorInterface $paginator): Response
+    public function indexVol(VolRepository $volRepository, Request $request, PaginatorInterface $paginator, DestinationRepository $destinationRepository): Response
     {
+        $criteria = [
+            'compagnieA' => $request->query->get('compagnieA'),
+            'num_vol' => $request->query->get('num_vol'),
+            'aeroportDepart' => $request->query->get('aeroportDepart'),
+            'aeroportArrivee' => $request->query->get('aeroportArrivee'),
+            'dateDepart' => $request->query->get('dateDepart'),
+            'dateArrivee' => $request->query->get('dateArrivee'),
+            'tarif' => $request->query->get('tarif'),
+            'escale' => $request->query->get('escale') == 'avec' ? 'avec' : ($request->query->get('escale') == 'sans' ? 'sans' : null), // Adjusting escale value
+            'classe' => $request->query->get('classe'),
+            'destination' => $request->query->get('destination'),
+        ];
 
-        $dateDepart = $request->query->get('date_depart');
-        $dateArrivee = $request->query->get('date_arrivee');
-
-        if ($dateDepart && $dateArrivee) {
-            $vols = $volRepository->findByDateInterval($dateDepart, $dateArrivee);
-        } else {
-            $vols = $volRepository->findAll();
+        // Remove time from date criteria if set
+        if (!empty($criteria['dateDepart'])) {
+            $criteria['dateDepart'] = date('Y-m-d', strtotime($criteria['dateDepart']));
         }
+        if (!empty($criteria['dateArrivee'])) {
+            $criteria['dateArrivee'] = date('Y-m-d', strtotime($criteria['dateArrivee']));
+        }
+
+        $vols = $volRepository->findByCriteria($criteria);
+        $destination = $destinationRepository->findAll();
 
         $pagination = $paginator->paginate(
             $vols,
@@ -88,9 +102,11 @@ class VolController extends AbstractController
         );
 
         return $this->render('vol/frontVol.html.twig', [
-            'pagination' => $pagination
+            'pagination' => $pagination,
+            'destination' => $destination
         ]);
     }
+
 
     #[Route('/vol/new', name: 'app_vol_new')]
     public function new(Request $request, EntityManagerInterface $entityManager,VolRepository $volRepository): Response

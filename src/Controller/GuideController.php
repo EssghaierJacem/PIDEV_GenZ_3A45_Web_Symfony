@@ -12,9 +12,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
 
+
 #[Route('/guide')]
 class GuideController extends AbstractController
 {
+    
     #[Route('/', name: 'app_guide_index', methods: ['GET'])]
     public function index(GuideRepository $guideRepository, Request $request,  PaginatorInterface $paginator): Response
     {
@@ -27,6 +29,22 @@ class GuideController extends AbstractController
             'paginations' => $paginations,
         ]);
     }
+    #[Route('/statistics', name: 'guide_statistics', methods: ['GET'])]
+    public function guideStatistics(GuideRepository $guideRepository): Response
+    {
+        $totalStatistics = $guideRepository->findGuideStatistics();
+        $countryStatistics = $guideRepository->findGuideStatisticsByCountry();
+        $topFiveGuides = $guideRepository->findTopFiveGuidesByTours();
+
+        return $this->render('guide/statistics.html.twig', [
+            'totalStatistics' => $totalStatistics,
+            'countryStatistics' => $countryStatistics,
+            'topFiveGuides' => $topFiveGuides,
+        ]);
+    }
+
+
+    
 
     #[Route('/front', name: 'front_guide_index', methods: ['GET'])]
     public function Frontindex(GuideRepository $guideRepository): Response
@@ -55,6 +73,7 @@ class GuideController extends AbstractController
             'form' => $form->createView(), // Pass form view instead of form object
         ]);
     }
+    
 
     #[Route('/{id}', name: 'app_guide_show', methods: ['GET'])]
     public function show(Guide $guide): Response
@@ -63,6 +82,7 @@ class GuideController extends AbstractController
             'guide' => $guide,
         ]);
     }
+    
 
     #[Route('/front/{id}', name: 'front_guide_show', methods: ['GET'])]
     public function Frontshow(Guide $guide): Response
@@ -89,6 +109,7 @@ class GuideController extends AbstractController
             'form' => $form->createView(), // Pass form view instead of form object
         ]);
     }
+    
 
     #[Route('/{id}', name: 'app_guide_delete', methods: ['POST'])]
     public function delete(Request $request, Guide $guide, EntityManagerInterface $entityManager): Response
@@ -100,4 +121,5 @@ class GuideController extends AbstractController
 
         return $this->redirectToRoute('app_guide_index', [], Response::HTTP_SEE_OTHER);
     }
+    
 }
