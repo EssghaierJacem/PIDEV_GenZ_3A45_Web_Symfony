@@ -72,7 +72,7 @@
 
         <div class="form-group">
             <div class="col">
-                {{ form_label(form.organisateur, 'Prix', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_label(form.organisateur, 'organisateur', {'label_attr': {'class': 'form-label'}}) }}
                 {{ form_widget(form.organisateur, {'attr': {'class': 'form-control'}}) }}
                 {% if form_errors(form.organisateur) is not empty %}
                     <div class="alert text-danger">

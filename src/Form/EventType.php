@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Url;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 
@@ -24,6 +25,17 @@ class EventType extends AbstractType
                     new Length(['min' => 3, 'minMessage' => 'Minimum 3 caractères']),
                 ],
             ])
+            ->add('image', TextType::class, [
+                'label' => 'Image',
+                'required' => false,
+                'constraints' => [
+                    new Url([
+                        'message' => 'Veuillez entrer une URL valide.',
+
+                    ]),
+                ],
+            ])
+            ->add('prix')
             ->add('dateDebut', DateType::class, [
                 'label' => 'Date Début',
                 'widget' => 'single_text',
@@ -60,6 +72,7 @@ class EventType extends AbstractType
                     new Length(['min' => 4, 'minMessage' => 'Minimum 4 caractères']),
                 ],
             ])
+
             ->add('organisateur', TextType::class, [
                 'label' => 'Organisateur',
                 'constraints' => [

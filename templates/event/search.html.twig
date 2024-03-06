@@ -1,0 +1,21 @@
+{% extends 'frontbase.html.twig' %}
+
+{% block body %}
+    <title>Recherche de Event</title>
+
+    <section class="breadcrumbs">
+        <div class="container">
+            <h1>Recherche de Event</h1>
+
+            {# Affichage du formulaire de recherche #}
+            {{ form_start(form) }}
+            {{ form_row(form.nom, {'attr': {'class': 'form-control mb-3', 'placeholder': 'Nom'}}) }}
+            {{ form_row(form.dateDebut, {'attr': {'class': 'form-control mb-3', 'placeholder': 'Date de début'}}) }}
+            {{ form_row(form.lieu, {'attr': {'class': 'form-control mb-3', 'placeholder': 'lieu'}}) }}
+            {# Ajoutez d'autres champs de recherche si nécessaire #}
+
+            <button type="submit" class="btn btn-primary">Rechercher</button>
+            {{ form_end(form) }}
+        </div>
+    </section>
+{% endblock %}

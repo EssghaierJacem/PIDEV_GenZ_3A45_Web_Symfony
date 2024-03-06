@@ -44,6 +44,15 @@ class Event
     #[ORM\OneToMany(mappedBy: 'event', targetEntity: Participation::class)]
     private Collection $participations;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
+
+    #[ORM\Column]
+    #[Assert\Length( min: 2, minMessage: 'Le prix doit contenir au moins 2 chiffres',),]
+    #[Assert\Positive(message:'Veuillez choisir un prix positif !')]
+    #[Assert\NotBlank(message: "Il faut saisir le prix !!!")]
+    private ?float $prix = null;
+
     public function __construct()
     {
         $this->participations = new ArrayCollection();
@@ -152,6 +161,30 @@ class Event
                 $participation->setEvent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): static
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getPrix(): ?float
+    {
+        return $this->prix;
+    }
+
+    public function setPrix(float $prix): static
+    {
+        $this->prix = $prix;
 
         return $this;
     }

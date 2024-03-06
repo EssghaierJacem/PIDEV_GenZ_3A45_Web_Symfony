@@ -10,80 +10,47 @@
                 </div>
             </div>
         </div>
-
-        <div class="slider-container">
-            <div class="slider">
-                {% for event in events %}
-                <div class="event-box">
-                    <div class="event-header">
-                        <h3>{{ event.nom }}</h3>
-                        <p>{{ event.lieu }}</p>
-                        <button class="show-more-btn">Show More</button>
-                    </div>
-                    <div class="event-details">
-                        <p><strong>Date Début:</strong> {{ event.dateDebut ? event.dateDebut|date('Y-m-d') : '' }}</p>
-                        <p><strong>Date Fin:</strong> {{ event.dateFin ? event.dateFin|date('Y-m-d') : '' }}</p>
-                        <p><strong>Prix:</strong> {{ event.organisateur }}</p>
-                        <p><strong>Description:</strong> {{ event.description }}</p>
-                        <div class="actions">
-
-                            <a href="{{ path('add_participation_new') }}" class="btn btn-primary btn-sm">Participate</a>
-                        </div>
+        <div class="row">
+            <!-- Left section for search and checkboxes -->
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <!-- Search form -->
+                        <h5 class="card-title">Chercher par nom</h5>
+                        <form action="{{ path('app_event') }}" method="GET" id="event-filter-form">
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="keyword" placeholder="Saisir un nom...">
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Rechercher</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-                {% else %}
-                <p>No records found</p>
-                {% endfor %}
+            </div>
+            <div class="col-md-9">
+                <div class="row">
+                    {% for event in pagination %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            
+                            <div class="card-body">
+                            <img src="{{ event.image }}" class="card-img-top" alt="Event Image" style="height: 200px; width: 100%; object-fit: center; border-radius: 5px;">
+                                <h5 class="card-title">{{ event.nom }}</h5>
+                                <p class="card-text">{{ event.lieu }}</p>
+                                <a href="{{ path('front_event_show', {'id': event.id}) }}" class="btn btn-primary">Show More</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="col-md-12">
+                        <p>No records found</p>
+                    </div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </div>
 </div>
-
-<style>
-    .slider-container {
-        overflow-x: auto;
-        white-space: nowrap;
-    }
-
-    .slider {
-        display: inline-block;
-    }
-
-    .event-box {
-        width: 400px; /* Adjust width as needed */
-        height: 200px; /* Adjust height as needed */
-        border: 1px solid #ccc;
-        margin-right: 20px;
-        margin-bottom: 20px;
-        display: inline-block;
-    }
-
-    .event-header {
-        padding: 10px;
-        background-color: #f2f2f2;
-    }
-
-    .event-details {
-        display: none;
-        padding: 10px;
-    }
-
-    .actions {
-        margin-top: 10px;
-    }
-</style>
-
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var buttons = document.querySelectorAll('.show-more-btn');
-        buttons.forEach(function(button) {
-            button.addEventListener('click', function() {
-                var details = this.parentElement.nextElementSibling;
-                details.style.display = details.style.display === 'none' ? 'block' : 'none';
-            });
-        });
-    });
-</script>
 
 {% endblock %}
