@@ -13,13 +13,29 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use App\Service\TwilioService;
+
+//
+
+use Endroid\QrCode\Color\Color;
+use Endroid\QrCode\Encoding\Encoding;
+use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelLow;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Label\Label;
+use Endroid\QrCode\Logo\Logo;
+use Endroid\QrCode\Writer\PngWriter;
+use Endroid\QrCode\Label\Font\NotoSans;
+//
+
 
 #[Route('/user')]
 class UserController extends AbstractController
 {
     #[Route('/', name: 'app_user_index', methods: ['GET'])]
-public function index(UserRepository $userRepository, Request $request, EntityManagerInterface $entityManager): Response
-{
+public function index(UserRepository $userRepository, Request $request, EntityManagerInterface $entityManager,SessionInterface $session): Response
+{   
+    if($session->get('user') !== null)
     $users = $userRepository->findAll();
     $forms = [];
 $session = $request->getSession();
@@ -45,6 +61,10 @@ $session = $request->getSession();
         // Store the form view in the forms array using the user's ID as the key
         $forms[$user->getId()] = $form->createView();
     }
+
+    //
+
+    //
     
 
     return $this->render('user/index.html.twig', [
@@ -55,24 +75,51 @@ $session = $request->getSession();
 #[Route('/login', name: 'app_login')]
 public function login(): Response
 {
+   
     return $this->render('user/login.html.twig', [
         'controller_name' => 'UserController',
     ]);
 }
+
+#[Route('/qr/{id}', name: 'app_qr_check')]
+public function loginqr(UserRepository $userRepository,Request $request, EntityManagerInterface $entityManager,$id): Response
+{
+  
+   
+    $user = $userRepository->find($id);
+  
+    if ($user) {
+       
+            $session = $request->getSession();
+            $session->set('email',$user->getemail());
+            $session->set('user', $user);
+            $session->set('nom', $user->getNom());
+            $session->set('prenom', $user->getPrenom());
+            $session->set('id', $user->getId());
+            $session->set('role', $user->getRole());
+            return $this->redirectToRoute('app_user_show',['id'=>$id]);
+      
+    } else {
+        return $this->redirectToRoute('app_login');
+    }
+
+}
     #[Route('/logincheck', name: 'app_login_check')]
-    public function logincheck(UserRepository $userRepository,Request $request, EntityManagerInterface $entityManager): Response
+    public function logincheck(UserRepository $userRepository,Request $request, EntityManagerInterface $entityManager,TwilioService $twilioService): Response
     {
+        $twilioService->sendVoiceOTP("+21655686370");
         $email = $request->request->get('email');
         $password = $request->request->get('password');
         $user = $userRepository->findOneBy(['email' => $email]);
         if ($user) {
-            if ($user->getPassword() == $password) {
+            if (password_verify($password,$user->getPassword())) {
                 $session = $request->getSession();
                 $session->set('email', $email);
                 $session->set('user', $user);
                 $session->set('nom', $user->getNom());
                 $session->set('prenom', $user->getPrenom());
                 $session->set('id', $user->getId());
+                $session->set('role', $user->getRole());
                 return $this->redirectToRoute('app_user_index');
             } else {
                 return $this->redirectToRoute('app_login');
@@ -110,6 +157,8 @@ public function login(): Response
 
             //$this->compressImage($tempFilePath, $destinationPath, $compressionQuality);
                 $user->setPhoto($destinationPath);
+                $passwordhash=password_hash($user->getPassword(),PASSWORD_DEFAULT);
+                $user->setPassword($passwordhash);  
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -121,7 +170,6 @@ public function login(): Response
             'form' => $form,
         ]);
     }
-
     #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
     public function show(int $id, UserRepository $userRepository): Response
     {
@@ -130,9 +178,37 @@ public function login(): Response
         if (!$user) {
             throw $this->createNotFoundException('User not found');
         }
+    $url="172.16.2.160".":8000"."/user/qr/".$id;
+        $qrCode = QrCode::create($url)
+            ->setEncoding(new Encoding('UTF-8'))
+            ->setSize(120)
+            ->setMargin(0)
+            ->setForegroundColor(new Color(0, 0, 0))
+            ->setBackgroundColor(new Color(255, 255, 255));
+    
+        $label = Label::create('')->setFont(new NotoSans(8));
+    
+        $writer = new PngWriter(); // Instantiate the PngWriter class
+    
+        $qrCodes = [];
+    
+        $qrCode->setForegroundColor(new Color(0, 56, 131));
+        $qrCodes['changeColor'] = $writer->write(
+            $qrCode,
+            null,
+            $label->setText('')
+        )->getDataUri();
+    
+        $qrCode->setSize(200)->setForegroundColor(new Color(0, 0, 0))->setBackgroundColor(new Color(255, 255, 255));
+        $qrCodes['withImage'] = $writer->write(
+            $qrCode,
+            null, // Removed logo
+            $label->setText('With Image')->setFont(new NotoSans(20))
+        )->getDataUri();
     
         return $this->render('user/show.html.twig', [
             'user' => $user,
+            'qrCodes' => $qrCodes,
         ]);
     }
     

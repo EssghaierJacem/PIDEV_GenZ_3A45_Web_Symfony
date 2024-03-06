@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -15,24 +16,38 @@ class User
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank(message:"Ce champ ne peut pas etre vide")]
+    #[Assert\Length(min:4, minMessage: 'Minmum 4 caractère')]
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
+    #[Assert\NotBlank(message:"Ce champ ne peut pas etre vide")]
+    #[Assert\Length(min:4, minMessage: 'Minmum 4 caractère')]
     #[ORM\Column(length: 255)]
     private ?string $prenom = null;
 
+    #[Assert\NotBlank(message:"Ce champ ne peut pas etre vide")]
+    #[Assert\Email(
+        message: 'The email {{ value }} is not a valid email.',
+    )]
     #[ORM\Column(length: 255)]
     private ?string $email = null;
 
+    #[Assert\NotBlank(message:"Ce champ ne peut pas etre vide")]
+    #[Assert\Length(min:4, minMessage: 'Minmum 4 caractère')]
     #[ORM\Column(length: 255)]
     private ?string $password = null;
 
+    #[Assert\NotBlank(message:"Ce champ ne peut pas etre vide")]
+    #[Assert\Length(max:8, maxMessage: 'max 8 caractère')]
     #[ORM\Column]
     private ?int $cin = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
 
+    #[Assert\NotBlank(message:"Ce champ ne peut pas etre vide")]
+    #[Assert\Length(max:8, maxMessage: 'max 8 caractère')]
     #[ORM\Column(length: 255)]
     private ?string $username = null;
 
