@@ -1,50 +1,60 @@
 {% extends 'frontbase.html.twig' %}
+{% block title %}Reservation - Index{% endblock %}
 {% block body %}
-                   <section class="breadcrumbs">
-            <div class="container">
-                <div class="d-flex justify-content-between align-items-center">
-
-                </div>
-            </div>
-        </section>
-
     <section class="breadcrumbs">
-         <div class="container">
-       <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom_client</th>
-                <th>Prenom_client</th>
-                <th>Num_tel</th>
-                <th>Quantite</th>
-                <th>Date_reservation</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for reservation in pagination %}
-            <tr>
-                <td>{{ reservation.id }}</td>
-                <td>{{ reservation.nomClient }}</td>
-                <td>{{ reservation.prenomClient }}</td>
-                <td>{{ reservation.numTel }}</td>
-                <td>{{ reservation.quantite }}</td>
-                <td>{{ reservation.dateReservation ? reservation.dateReservation|date('Y-m-d') : '' }}</td>
-                
-                <td><a href="{{ path('app_reservation_show', {'id': reservation.id}) }}" class="btn btn-sm btn-info">show</a></td>
-                <td><a href="{{ path('app_reservation_edit', {'id': reservation.id}) }}" class="btn btn-sm btn-warning">edit</a></td>
-                <td><a href="{{ path('app_reservation_delete', {'id': reservation.id}) }}" class="badge bg-danger">delete</a></td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-                    {{ knp_pagination_render(pagination) }}
-    <a href="{{ path('app_reservation_new') }}" class="badge bg-success">Create new</a>
-</div>
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>Liste des réservations</h2>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{ path('app_front') }}">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Mes réservations</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </section>
+
+    <section class="reservation-list">
+        <div class="container">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Nom Client</th>
+                            <th scope="col">Prenom Client</th>
+                            <th scope="col">Numéro de téléphone</th>
+                            <th scope="col">Quantité</th>
+                            <th scope="col">Date de réservation</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for reservation in pagination %}
+                            <tr>
+                                <td>{{ reservation.id }}</td>
+                                <td>{{ reservation.nomClient }}</td>
+                                <td>{{ reservation.prenomClient }}</td>
+                                <td>{{ reservation.numTel }}</td>
+                                <td>{{ reservation.quantite }}</td>
+                                <td>{{ reservation.dateReservation ? reservation.dateReservation|date('Y-m-d') : '' }}</td>
+                                <td>
+                                    <a href="{{ path('app_reservation_show', {'id': reservation.id}) }}" class="btn btn-sm btn-info">Voir</a>
+                                    <a href="{{ path('app_reservation_edit', {'id': reservation.id}) }}" class="btn btn-sm btn-warning">Éditer</a>
+                                    <a href="{{ path('app_reservation_delete', {'id': reservation.id}) }}" class="btn btn-sm btn-danger">Supprimer</a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="7">Aucun enregistrement trouvé</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {{ knp_pagination_render(pagination) }}
+            <a href="{{ path('app_reservation_new') }}" class="btn btn-success">Créer une nouvelle réservation</a>
+        </div>
     </section>
 {% endblock %}

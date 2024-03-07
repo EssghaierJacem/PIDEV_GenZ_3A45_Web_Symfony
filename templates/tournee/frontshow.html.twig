@@ -1,70 +1,105 @@
 {% extends 'frontbase.html.twig' %}
 
+{% block title %}Détail Tournée{% endblock %}
 
 {% block body %}
-
- <section class="breadcrumbs">
-            <div class="container">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h2>Tournee Details</h2>
-                    <ol>
-                        <li><a href="http://127.0.0.1:8000">Home</a></li>
-                        <li><a href={{ path('front_tournee_index') }}>Tournées</a></li>
-                        <li>Détailles de la Tournée</li>
-                    </ol>
-                </div>
+    <section class="breadcrumbs" style="background-color: #f8f9fa; padding: 20px 0;">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 style="color: #333;">Tournée Details</h2>
+                <ol style="list-style: none; padding: 0; margin: 0;">
+                    <li><a href="{{ path('app_front') }}" style="color: #007bff; text-decoration: none;">Accueil</a></li>
+                    <li><a href="{{ path('front_tournee_index') }}" style="color: #007bff; text-decoration: none;">Tournées</a></li>
+                    <li style="color: #333;">Détails de la Tournée</li>
+                </ol>
             </div>
-        </section>
-         <section class="breadcrumbs">
-         <div class="container">
-<title>Tournee</title>
-
-
-    
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ tournee.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ tournee.nom }}</td>
-            </tr>
-            <tr>
-                <th>Date de Debut</th>
-                <td>{{ tournee.dateDebut ? tournee.dateDebut|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Duree</th>
-                <td>{{ tournee.duree }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ tournee.description }}</td>
-            </tr>
-            <tr>
-                <th>Tarif</th>
-                <td>{{ tournee.tarif }}</td>
-            </tr>
-            <tr>
-                <th>Monuments</th>
-                <td>{{ tournee.monuments }}</td>
-            </tr>
-            <tr>
-                <th>Tranche d'age</th>
-                <td>{{ tournee.trancheAge }}</td>
-            </tr>
-            <tr>
-                <th>Moyen de transport</th>
-                <td>{{ tournee.moyenTransport }}</td>
-            </tr>
-        </tbody>
-    </table>
-  <div class="text-end mt-4">
-    <a href="{{ path('app_tournee_index') }}" class="btn btn-sm btn-info">back to list</a>
-   
+        </div>
     </section>
 
+    <section class="portfolio-details" style="padding: 40px 0;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h3 style="color: #333;">Détails de la Tournée</h3>
+                    <div class="card" style="border: 1px solid #ccc;">
+                        <div class="card-body">
+                            <table class="table table-bordered" style="border-color: #ccc;">
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">Id</th>
+                                        <td>{{ tournee.id }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Nom</th>
+                                        <td>{{ tournee.nom }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Date de Début</th>
+                                        <td>{{ tournee.dateDebut ? tournee.dateDebut|date('Y-m-d') : '' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Durée</th>
+                                        <td>{{ tournee.duree }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Description</th>
+                                        <td>{{ tournee.description }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Tarif</th>
+                                        <td>{{ tournee.tarif }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Monuments</th>
+                                        <td>{{ tournee.monuments }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Tranche d'âge</th>
+                                        <td>{{ tournee.trancheAge }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Moyen de transport</th>
+                                        <td>{{ tournee.moyenTransport }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="card" style="border: 1px solid #ccc;">
+                        <div class="card-body">
+                            <h5 class="card-title" style="color: #333;">Weather for {{ destination.ville }}, {{ destination.pays }}</h5>
+                            {% if temperature is defined %}
+                                <p class="card-text"><strong>Temperature:</strong> {{ temperature }}°C</p>
+                            {% endif %}
+                            <p class="card-text"><strong>Description:</strong> {{ description }}</p>
+                            {% if wind_speed is defined %}
+                                <p class="card-text"><strong>Wind Speed:</strong> {{ wind_speed }} m/s</p>
+                            {% endif %}
+                            {% if cloud_coverage is defined %}
+                                <p class="card-text"><strong>Cloud Coverage:</strong> {{ cloud_coverage }}%</p>
+                            {% endif %}
+                            {% if humidity is defined %}
+                                <p class="card-text"><strong>Humidity:</strong> {{ humidity }}%</p>
+                            {% endif %}
+                            {% if visibility is defined %}
+                                <p class="card-text"><strong>Visibility:</strong> {{ visibility / 1000 }} km</p>
+                            {% endif %}
+                            {% if sunrise_timestamp is defined %}
+                                <p class="card-text"><strong>Sunrise:</strong> {{ sunrise_timestamp|date('H:i') }}</p>
+                            {% endif %}
+                            {% if sunset_timestamp is defined %}
+                                <p class="card-text"><strong>Sunset:</strong> {{ sunset_timestamp|date('H:i') }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-end mt-4">
+                <a href="{{ path('app_tournee_index') }}" class="btn btn-sm btn-info" style="background-color: #007bff; color: #fff;">Retour à la liste</a>
+            </div>
+        </div>
+    </section>
 {% endblock %}

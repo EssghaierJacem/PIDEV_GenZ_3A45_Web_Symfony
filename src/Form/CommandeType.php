@@ -18,7 +18,7 @@ class CommandeType extends AbstractType
     {
         $builder
             ->add('num_commande')
-           ->add('prix')
+
             ->add('code_promo')
             ->add('type_paiement')
             ->add('email')

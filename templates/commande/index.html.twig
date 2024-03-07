@@ -1,50 +1,62 @@
 {% extends 'frontbase.html.twig' %}
+{% block title %}Commandes - Index{% endblock %}
 {% block body %}
-                   <section class="breadcrumbs">
-            <div class="container">
-                <div class="d-flex justify-content-between align-items-center">
-                </div>
-            </div>
-        </section>
-
     <section class="breadcrumbs">
-         <div class="container">
-       <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Num Commande</th>
-               <th>Prix</th> 
-                <th>Code Promo</th>
-                <th>Type Paiement</th>
-                <th>Email</th>
-                <th>Date Commande</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for commande in pagination %}
-            <tr>
-                <td>{{ commande.id }}</td>
-                <td>{{ commande.numCommande }}</td>
-              <td>{{ commande.prix }}</td> 
-                <td>{{ commande.codePromo }}</td>
-                <td>{{ commande.typePaiement }}</td>
-                <td>{{ commande.email }}</td>
-                <td>{{ commande.dateCommande ? commande.dateCommande|date('Y-m-d') : '' }}</td>
-                <td><a href="{{ path('app_commande_show', {'id': commande.id}) }}" class="btn btn-sm btn-info">Show</a></td>
-                <td><a href="{{ path('app_commande_edit', {'id': commande.id}) }}" class="btn btn-sm btn-warning">Edit</a></td>
-                <td><a href="{{ path('app_commande_delete', {'id':commande.id}) }}" class="badge bg-danger">Delete</a></td>
-            </tr>
-            {% else %}
-            <tr>
-                <td colspan="8">PAS DE COMMANDES</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {{ knp_pagination_render(pagination) }}
-    <a href="{{ path('app_commande_new') }}" class="badge bg-success">Create New</a>
-    </div>
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>Liste des commandes</h2>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{ path('app_front') }}">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Mes commandes</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio-details" class="portfolio-details">
+        <div class="container">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Num Commande</th>
+                            <th scope="col">Prix</th>
+                            <th scope="col">Code Promo</th>
+                            <th scope="col">Type Paiement</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Date Commande</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for commande in pagination %}
+                            <tr>
+                                <td>{{ commande.id }}</td>
+                                <td>{{ commande.numCommande }}</td>
+                                <td>{{ commande.prix }}</td>
+                                <td>{{ commande.codePromo }}</td>
+                                <td>{{ commande.typePaiement }}</td>
+                                <td>{{ commande.email }}</td>
+                                <td>{{ commande.dateCommande ? commande.dateCommande|date('Y-m-d') : '' }}</td>
+                                <td>
+                                    <a href="{{ path('app_commande_show', {'id': commande.id}) }}" class="btn btn-sm btn-info">Show</a>
+                                    <a href="{{ path('app_commande_edit', {'id': commande.id}) }}" class="btn btn-sm btn-warning">Edit</a>
+                                    <a href="{{ path('app_commande_delete', {'id':commande.id}) }}" class="btn btn-sm btn-danger">Delete</a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="8">PAS DE COMMANDES</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {{ knp_pagination_render(pagination) }}
+            <a href="{{ path('app_commande_new') }}" class="btn btn-success">Create New</a>
+        </div>
     </section>
 {% endblock %}

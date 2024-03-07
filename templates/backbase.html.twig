@@ -2,7 +2,7 @@
     <script>window.location.href = "{{ path('app_login') }}";</script>
 {% elseif app.session.get('role') != 'admin' %} 
     <script>window.location.href = "{{path('app_login')}}";</script>
-{% else  %} 
+{% else  %}
 <title>{% block title %}BackTemplate{% endblock %}</title>
     {{ app.session.get('user').nom ~ " " ~ app.session.get('user').prenom }}
         {% block stylesheets %}
@@ -46,11 +46,12 @@
                      <div class="logo_section">
                          <a href="index.html"><img class="logo_icon img-responsive" src="https://images.unsplash.com/photo-1531405272016-2bd40d36e4d1?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="#" /></a>
                   </div>
+                  </div>
                   <div class="sidebar_user_info">
-                     <div class="icon_setting"></div>
+                     <div class="icon_setting">
                      <div class="user_profle_side">
                          <div class="user_img"><img class="img-responsive" src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="#" /></div>
-                           <h6>{% block name %} {{ app.session.get('user').nom ~ " " ~ app.session.get('user').prenom }} {% endblock %}</h6>
+                           {% block name %} {{ app.session.get('user').nom ~ " " ~ app.session.get('user').prenom }} {% endblock %}
                            <p><span class="online_animation"></span> Online</p>
                         </div>
                      </div>
@@ -104,7 +105,7 @@
                                        <a class="dropdown-item" href="profile.html">My Profile</a>
                                        <a class="dropdown-item" href="settings.html">Settings</a>
                                        <a class="dropdown-item" href="help.html">Help</a>
-                                        <a class="dropdown-item" href="{{path('app_logout')}}"><span>Log Out</span> <i class="fa fa-sign-out"></i></a>
+                                       <a class="dropdown-item" href="{{path('app_logout')}}"><span>Log Out</span> <i class="fa fa-sign-out"></i></a>
                                     </div>
                                  </li>
                               </ul>
@@ -137,6 +138,7 @@
 
 
          <!-- footer -->
+ <!-- footer -->
                   <div class="container-fluid">
                      <div class="footer">
                         <p>Copyright © 2018 Designed by html.design. All rights reserved.<br><br>
@@ -146,4 +148,8 @@
                   </div>
                </div>
                <!-- end dashboard inner -->
+            </div>
+         </div>
+      </div>
+      </body>
                {% endif %}

@@ -53,10 +53,10 @@ class CommandeController extends AbstractController
             $entityManager->flush();
             $email = (new Email())
                 ->from('hamdanidhia4@gmail.com')
-                ->to('hamdanidhia4@gmail.com')
-                ->subject('Time for Symfony Mailer!')
-                ->text('Sending emails is fun again!')
-                ->html('<p>Vous etes affecté à une nouvelle tournée!</p>');
+                ->to('sarrabenhamouda7@gmail.com')
+                ->subject('....')
+                ->text('...')
+                ->html('<p>Vous avez une nouvelle commande</p>');
 
             $mailer->send($email);
 

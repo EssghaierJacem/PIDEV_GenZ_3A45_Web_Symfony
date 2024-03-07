@@ -12,8 +12,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Mailer\MailerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\Mime\Email;
 use App\Form\TourSearchType;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
+use App\Service\WeatherService;
 
 
 
@@ -96,6 +99,76 @@ class TourneeController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+    #[Route('/{id}/weather', name: 'app_tournee_weather', methods: ['GET'])]
+    public function weather($id, HttpClientInterface $client): Response
+    {
+        $apiKey = '83f90283ab134e65dc776b2264abb365';
+        $tournee = $this->getDoctrine()->getRepository(Tournee::class)->find($id);
+
+        if (!$tournee) {
+            throw $this->createNotFoundException('Tournee not found');
+        }
+
+        $destination = $tournee->getDestination();
+        $city = $destination->getVille();
+        $country = $destination->getPays();
+
+        $response = $client->request('GET', 'http://api.openweathermap.org/data/2.5/weather', [
+            'query' => [
+                'q' => sprintf('%s,%s', $city, $country),
+                'appid' => $apiKey,
+                'units' => 'metric',
+            ],
+        ]);
+
+        $statusCode = $response->getStatusCode();
+        if ($statusCode !== 200) {
+            throw new \RuntimeException('Failed to fetch weather data: ' . $response->getContent(false));
+        }
+
+        $weatherData = $response->toArray();
+
+        $temperature = $weatherData['main']['temp'] ?? null;
+        $description = $weatherData['weather'][0]['description'] ?? 'Weather information not available';
+        $windSpeed = $weatherData['wind']['speed'] ?? null;
+        $cloudCoverage = $weatherData['clouds']['all'] ?? null;
+        $humidity = $weatherData['main']['humidity'] ?? null;
+        $visibility = $weatherData['visibility'] ?? null;
+        $sunriseTimestamp = $weatherData['sys']['sunrise'] ?? null;
+        $sunsetTimestamp = $weatherData['sys']['sunset'] ?? null;
+
+        return $this->render('tournee/weather.html.twig', [
+            'temperature' => $temperature,
+            'description' => $description,
+            'wind_speed' => $windSpeed,
+            'cloud_coverage' => $cloudCoverage,
+            'humidity' => $humidity,
+            'visibility' => $visibility,
+            'sunrise_timestamp' => $sunriseTimestamp,
+            'sunset_timestamp' => $sunsetTimestamp,
+            'destination' => $destination,
+        ]);
+    }
+    private function fetchWeather(string $city, string $country): array
+    {
+
+        $client = HttpClient::create();
+        $response = $client->request('GET', 'http://api.openweathermap.org/data/2.5/weather', [
+            'query' => [
+                'q' => sprintf('%s,%s', $city, $country),
+                'appid' => '83f90283ab134e65dc776b2264abb365',
+                'units' => 'metric',
+            ],
+        ]);
+
+        $data = $response->toArray();
+
+        $weatherData = [
+            'temperature' => $data['main']['temp'],
+            'description' => $data['weather'][0]['description'],
+        ];
+        return $weatherData;
+    }
 
     #[Route('/new', name: 'app_tournee_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager,MailerInterface $mailer): Response
@@ -136,12 +209,50 @@ class TourneeController extends AbstractController
             'tournee' => $tournee,
         ]);
     }
-  
     #[Route('/front/{id}', name: 'front_tournee_show', methods: ['GET'])]
-    public function Frontshow(Tournee $tournee): Response
+    public function Frontshow(Tournee $tournee, HttpClientInterface $client): Response
     {
+        $apiKey = '83f90283ab134e65dc776b2264abb365';
+
+        $destination = $tournee->getDestination();
+        $city = $destination->getVille();
+        $country = $destination->getPays();
+
+        $response = $client->request('GET', 'http://api.openweathermap.org/data/2.5/weather', [
+            'query' => [
+                'q' => sprintf('%s,%s', $city, $country),
+                'appid' => $apiKey,
+                'units' => 'metric',
+            ],
+        ]);
+
+        $statusCode = $response->getStatusCode();
+        if ($statusCode !== 200) {
+            throw new \RuntimeException('Failed to fetch weather data: ' . $response->getContent(false));
+        }
+
+        $weatherData = $response->toArray();
+
+        $temperature = $weatherData['main']['temp'] ?? null;
+        $description = $weatherData['weather'][0]['description'] ?? 'Weather information not available';
+        $windSpeed = $weatherData['wind']['speed'] ?? null;
+        $cloudCoverage = $weatherData['clouds']['all'] ?? null;
+        $humidity = $weatherData['main']['humidity'] ?? null;
+        $visibility = $weatherData['visibility'] ?? null;
+        $sunriseTimestamp = $weatherData['sys']['sunrise'] ?? null;
+        $sunsetTimestamp = $weatherData['sys']['sunset'] ?? null;
+
         return $this->render('tournee/frontshow.html.twig', [
             'tournee' => $tournee,
+            'temperature' => $temperature,
+            'description' => $description,
+            'wind_speed' => $windSpeed,
+            'cloud_coverage' => $cloudCoverage,
+            'humidity' => $humidity,
+            'visibility' => $visibility,
+            'destination' => $destination,
+            'sunrise_timestamp' => $sunriseTimestamp,
+            'sunset_timestamp' => $sunsetTimestamp,
         ]);
     }
 

@@ -8,15 +8,14 @@
 	<section class="breadcrumbs">
 		<div class="container">
 			<div class="d-flex justify-content-between align-items-center">
-				<h2>Portfolio Details</h2>
+				<h2>Liste des Catégories</h2>
 				<ol>
 					<li>
-						<a href="index.html">Home</a>
+						<a href="{{path ('app_front') }}">Home</a>
 					</li>
 					<li>
-						<a href="portfolio.html">Your Entity</a>
+						<a href="{{ path('front_categorie_index')}}">Catégories</a>
 					</li>
-					<li>Addition mta3 Entity mtaaek</li>
 				</ol>
 			</div>
 		</div>
@@ -33,7 +32,7 @@
 							<div class="portfolio-info">
 								<h4>{{ categorie_h.Type }}</h4>
 								<p>{{ categorie_h.description }}</p>
-								<a href="#" class="btn btn-primary">Show more</a>
+								<a href="{{ path('app_categorie_h_show22', {'id': categorie_h.id}) }}" class="btn btn-primary">Show more</a>
 							</div>
 						</div>
 					</div>

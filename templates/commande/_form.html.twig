@@ -23,15 +23,7 @@
                     </div>
                 {% endif %}
             </div>
-           <div class="form-group">
-                {{ form_label(form.prix, 'prix', {'label_attr': {'class': 'form-label'}}) }} 
-                {{ form_widget(form.prix, {'attr': {'class': 'form-control'}}) }}
-                {% if form_errors(form.prix) is not empty %}
-                    <div class="alert text-danger">
-                        {{ form_errors(form.prix) }}
-                    </div>
-                {% endif %}
-            </div>  
+
             <div class="form-group">
                 {{ form_label(form.code_promo, 'code_promo', {'label_attr': {'class': 'form-label'}}) }}
                 {{ form_widget(form.code_promo, {'attr': {'class': 'form-control'}}) }}

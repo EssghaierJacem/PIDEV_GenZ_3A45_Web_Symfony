@@ -1,7 +1,7 @@
 {% extends "frontbase.html.twig" %}
 
 {% block title %}
-    Accommodations List
+    Listes d'Hébergements
 {% endblock %}
 
 {% block body %}
@@ -38,11 +38,10 @@
     <section class="breadcrumbs">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center">
-                <h2>Portfolio Details</h2>
+                <h2>Liste d'Hébergements</h2>
                 <ol>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="portfolio.html">Your Entity</a></li>
-                    <li>Addition mta3 Entity mtaaek</li>
+                    <li><a href="{{path ('app_front') }}">Home</a></li>
+                    <li><a href="{{ path('front_hebergement')}}">Hébergements</a></li>
                 </ol>
             </div>
         </div>

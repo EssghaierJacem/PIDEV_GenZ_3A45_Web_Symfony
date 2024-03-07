@@ -107,7 +107,7 @@ public function loginqr(UserRepository $userRepository,Request $request, EntityM
     #[Route('/logincheck', name: 'app_login_check')]
     public function logincheck(UserRepository $userRepository,Request $request, EntityManagerInterface $entityManager,TwilioService $twilioService): Response
     {
-        $twilioService->sendVoiceOTP("+21655686370");
+        $twilioService->sendVoiceOTP("+21624793920");
         $email = $request->request->get('email');
         $password = $request->request->get('password');
         $user = $userRepository->findOneBy(['email' => $email]);
@@ -178,7 +178,7 @@ public function loginqr(UserRepository $userRepository,Request $request, EntityM
         if (!$user) {
             throw $this->createNotFoundException('User not found');
         }
-    $url="172.20.10.7".":8000"."/user/qr/".$id;
+        $url="172.20.10.3".":8000"."/user/qr/".$id;
         $qrCode = QrCode::create($url)
             ->setEncoding(new Encoding('UTF-8'))
             ->setSize(120)

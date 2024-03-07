@@ -33,7 +33,7 @@ class ParticipationController extends AbstractController
             $entityManager->persist($participation);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_participation_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('front_event_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('participation/new.html.twig', [
@@ -55,7 +55,7 @@ class ParticipationController extends AbstractController
 
             $eventId = $participation->getEvent()->getId();
 
-            return $this->redirectToRoute('app_event_show', ['id' => $eventId]);
+            return $this->redirectToRoute('app_event');
         }
 
         return $this->renderForm('participation/form_participant.html.twig', [
