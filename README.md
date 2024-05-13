@@ -15,6 +15,7 @@ Office + Back Office` en respectant le modèle `MVC`.
 1. Gérer des formulaires avancés `avec la validation des champs de saisies`
 1. Intégrer des bundles externes `Rating, Statistiques, Partage sur les réseaux sociaux etc....`.
 
+
 ## Planning
 ![image](https://user-images.githubusercontent.com/61393700/221413444-e838c951-b1f0-4c1c-be96-a29660d96fb0.png)
 ## Répartition des séances
@@ -25,3 +26,10 @@ Chaque module doit contenir au minimum deux entités liées avec jointure
 - Une Seule Base de données partagée entre les 3 clients
 - Pas d’utilisation du bundle `FOSUSER `
 - Pas d’utilisation du Bundle `adminBundle` pour la gestion de la partie backoffice pour le Sprint Web
+
+## 🛡️ Important to Run the project ## 
+  ** composer require dompdf/dompdf ** 
+  ** composer require knplabs/knp-paginator-bundle **
+  ** composer require symfony/mailer ** 
+  ** composer require endroid/qr-code **
+  ** composer require twilio/sdk **
